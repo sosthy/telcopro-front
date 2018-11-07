@@ -1,23 +1,45 @@
-<div class="container">
-  <div class="d-flex justify-content-between mb-5">
-    <div>
-      <button class="btn btn-primary" (click)="open(createRole)">Create Role</button>
-    </div>
-    <div class="u-search" *ngIf="mode == 1">
-      <form>
-        <div class="form-group">
-          <input type="search" placeholder="Search" class="form-control">
-        </div>
-      </form>
-    </div>
+
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formRole)">Create Role</button>
+  </div>
+  <div class="u-search" *ngIf="mode == 1">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control">
+      </div>
+    </form>
   </div>
 </div>
-<div class="d-flex flex-wrap justify-content-center" *ngIf="mode == 1">
-  <div class="d-flex flex-nowrap bg-white m-2 u-item shadow" *ngFor="let i of [1,2,3,4,5,6]" (click)="open(userDetails)">
-    <a href="" class="u-close"><span class="badge badge-danger rounded-circle">X</span></a>
-    <div class="ml-2">
-      <strong class="h5">ADMIN</strong> <br />
-      <small>Software Developer</small>
+
+<div class="card">
+  <div class="card-header">
+    List of roles
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+          <tr>
+            <th>#</th>
+            <th>Role Name</th>
+            <th>Menu(s)</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of roles; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td class="text-uppercase">{{ role.roleName }}</td>
+            <td><span class="badge badge-success mr-1" *ngFor="let rolemenu of role.menus">{{ rolemenu.name }}</span></td>
+            <td>{{ role.description }}</td>
+            <td>
+              <a href="javascript:;" (click)="open(formRole, role)">edit</a> &nbsp;&nbsp;
+              <a href="javascript:;" (click)="open(deleteRole, role)">delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -26,10 +48,10 @@
   <p>Edition de contact</p>
 </div>
 
-<ng-template #userDetails let-c="close" let-d="dismiss">
+<ng-template #deleteRole let-c="close">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">Modal title</h6>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h6 class="modal-title text-uppercase">Delete Role</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -37,15 +59,16 @@
     <p>One fine body&hellip;</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onDeleteRole()">Yes</button>
   </div>
 </ng-template>
 
 <ng-template ngbModalContainer></ng-template>
-<ng-template #createRole let-c="close" let-d="dismiss">
+<ng-template #formRole let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -56,7 +79,7 @@
         <div class="form-group row">
           <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">RoleName</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" value="" id="role-text-input">
+            <input class="form-control" type="text" [(ngModel)]="role.roleName" id="role-text-input" name="roleName">
           </div>
         </div>
         <div class="form-group row">
@@ -64,20 +87,20 @@
           <div class="col-sm-9 col-md-8 col-lg-9">
             <div class="row">
               <div class="col">
-                <select id="exampleSelect2" multiple name="roles" [(ngModel)]="rolesSel" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="roleItem" *ngFor="let roleItem of roles">{{roleItem}}</option>
+                <select id="exampleSelect2" multiple name="menus" [(ngModel)]="menusSel" class="form-control" [compareWith]="compareFn">
+                  <option [ngValue]="menuItem" *ngFor="let menuItem of menus">{{ menuItem.name }}</option>
                 </select>
                 <div class="text-right mt-1">
-                  <button class="btn btn-secondary btn-sm" (click)="addRole()">Push <i class="fa fa-chevron-right"></i></button>
+                  <button class="btn btn-secondary btn-sm" (click)="addMenu()">Push <i class="fa fa-chevron-right"></i></button>
                 </div>
               </div>
               <div class="col">
-                <select multiple name="rolesSel" [(ngModel)]="rolSelRemoved" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="r" *ngFor="let r of roleSelected">{{r}}</option>
+                <select multiple name="menusSel" [(ngModel)]="menusRemoved" class="form-control" [compareWith]="compareFn">
+                  <option [ngValue]="m" *ngFor="let m of role.menus">{{ m.name }}</option>
                 </select>
                 <!-- <span *ngFor="let r of roleSelected" class="badge badge-success rounded">{{r}} &nbsp; </span> -->
                 <div class="text-right mt-1">
-                  <button class="btn btn-warning btn-sm" (click)="clearSelectedRole()">Remove</button>
+                  <button class="btn btn-warning btn-sm" (click)="clearSelectedMenu()">Remove</button>
                 </div>
               </div>
             </div>
@@ -86,7 +109,7 @@
         <div class="form-group row">
           <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Description</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <textarea class="form-control" type="text" value="" id="desc-text-input"></textarea>
+            <textarea class="form-control" type="text" [(ngModel)]="role.description" id="desc-text-input"></textarea>
           </div>
         </div>
       </div>
@@ -94,7 +117,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveRole()">Save changes</button>
   </div>
 </ng-template>
 

@@ -1,37 +1,55 @@
-<div class="container">
-  <div class="d-flex justify-content-between mb-5">
-    <div>
-      <button class="btn btn-primary" (click)="open(createUser)">Create User</button>
-    </div>
-    <div class="u-search" *ngIf="mode == 1">
-      <form>
-        <div class="form-group">
-          <input type="search" placeholder="Search" class="form-control">
-        </div>
-      </form>
-    </div>
+
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formUser)">Create User</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control">
+      </div>
+    </form>
   </div>
 </div>
-<div class="d-flex flex-wrap justify-content-center" *ngIf="mode == 1">
-  <div class="d-flex flex-nowrap bg-white m-2 u-item shadow" *ngFor="let i of [1,2,3,4,5,6]" (click)="open(userDetails)">
-    <a href="" class="u-close"><span class="badge badge-danger rounded-circle">X</span></a>
-    <div class="">
-      <img src="assets/images/avatar.jpg" height="80" width="80" alt="user" title="user">
-    </div>
-    <div class="ml-2">
-      <strong>Sosthene Nouebissi</strong> <br />
-      <small>Software Developer</small>
+
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let usr of users">
+    <div class="card card-body card-widget bg-white card-inverse">
+      <div ngbDropdown class="imenu">
+        <a id="downMenu" href="javascript:;" ngbDropdownToggle>
+          <i class="fa fa-ellipsis-v"></i>
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="downMenu">
+          <a class="dropdown-item" href="javascript:;" (click)="open(formUser, usr, 1)">
+            <i class="icon icon-basic-settings mr-3"></i>
+            <span>Edit</span>
+          </a>
+          <a class="dropdown-item" href="javascript:;" (click)="open(deleteUserConfirmation, usr, 2)">
+            <i class="icon icon-basic-postcard mr-3"></i>
+            <span>Delete</span>
+          </a>
+          <a class="dropdown-item" href="javascript:;">
+            <i class="icon icon-basic-message-multiple mr-3"></i>
+            <span>Details</span>
+          </a>
+        </div>
+      </div>
+      <a href="javascript:;">
+        <img src="assets/images/avatar.jpg" class="avatar-sm rounded-circle" alt="">
+      </a>
+      <div class="pl-3 pr-3">
+        <p class="ff-headers mb-0 text-uppercase"><strong>{{ usr.username }}</strong></p>
+        <small class="d-block">{{ usr.email }} </small>
+        <small class="d-block">{{ usr.roles }}</small>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="" *ngIf="mode == 3">
-  <p>Edition de contact</p>
-</div>
 
 <ng-template #userDetails let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">Modal title</h6>
+    <h6 class="modal-title text-uppercase">D</h6>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -44,8 +62,24 @@
   </div>
 </ng-template>
 
+<ng-template #deleteUserConfirmation let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{ addEditCardHeader }}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete <strong>{{ user.username | uppercase }}</strong> records ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="onDeleteUser()">OK</button>
+  </div>
+</ng-template>
+
 <ng-template ngbModalContainer></ng-template>
-<ng-template #createUser let-c="close" let-d="dismiss">
+<ng-template #formUser let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -59,20 +93,20 @@
         <div class="form-group row">
           <label for="example-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Username</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" value="" id="example-text-input">
+            <input class="form-control" type="text" [(ngModel)]="user.username" name="username" id="example-text-input">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Password</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <button class="btn btn-primary">Generate</button> &nbsp;
-            <strong>{{password}}</strong>
+            <button class="btn btn-primary" (click)="generatePassword()">Generate</button> &nbsp;
+            <strong>{{ user.password }}</strong>
           </div>
         </div>
         <div class="form-group row">
-          <label for="example-email-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
+          <label for="email-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="email" value="" id="example-email-input">
+            <input class="form-control" type="email" [(ngModel)]="user.email" name="email" id="email-input">
           </div>
         </div>
         <div class="form-group row">
@@ -80,13 +114,11 @@
           <div class="col-sm-9 col-md-8 col-lg-9">
             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
               <div class="input-group-addon"><i class="fa fa-user"></i></div>
-              <input list="employees" name="employee" [(ngModel)]="employee" class="form-control" id="employee-input">
-            </div>
-            <datalist id="employees">
-              <select>
-                <option [ngValue]="empItem" *ngFor="let empItem of employees">{{empItem}}</option>
+              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input">
+                <option [ngValue]="user.employee" selected >{{ user.employee.name }} {{ user.employee.surname }}</option>
+                <option [ngValue]="empItem" *ngFor="let empItem of employees">{{ empItem.name }} {{ empItem.surname }}</option>
               </select>
-            </datalist>
+            </div>
           </div>
         </div>
         <div class="form-group row">
@@ -95,7 +127,7 @@
             <div class="row">
               <div class="col">
                 <select id="exampleSelect2" multiple name="roles" [(ngModel)]="rolesSel" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="roleItem" *ngFor="let roleItem of roles">{{roleItem}}</option>
+                  <option [ngValue]="roleItem" *ngFor="let roleItem of roles">{{roleItem.roleName}}</option>
                 </select>
                 <div class="text-right mt-1">
                   <button class="btn btn-secondary btn-sm" (click)="addRole()">Push <i class="fa fa-chevron-right"></i></button>
@@ -103,7 +135,7 @@
               </div>
               <div class="col">
                 <select multiple name="rolesSel" [(ngModel)]="rolSelRemoved" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="r" *ngFor="let r of roleSelected">{{r}}</option>
+                  <option [ngValue]="r" *ngFor="let r of user.roles">{{ r.roleName }}</option>
                 </select>
                 <!-- <span *ngFor="let r of roleSelected" class="badge badge-success rounded">{{r}} &nbsp; </span> -->
                 <div class="text-right mt-1">
@@ -118,7 +150,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveUser()">Save changes</button>
   </div>
 </ng-template>
 

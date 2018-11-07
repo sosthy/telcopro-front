@@ -5,6 +5,7 @@ import {Http} from '@angular/http';
 import {TELCOPRO_URL} from '../models/config.model';
 import {AuthenticationService} from '../authentication/authentication.service';
 import { AppMenu } from '../models/appmenu.model';
+import 'rxjs/add/operator/timeout';
 
 @Injectable()
 export class AccountsService {
@@ -18,6 +19,10 @@ export class AccountsService {
 
   getMenu(id) {
     return this.http.get(TELCOPRO_URL + '/');
+  }
+
+  getMenusOfRole(id) {
+    return this.http.get(TELCOPRO_URL + '/menus-of-role/' + id, this.auth.getHeaders()).map(res => res.json());
   }
 
   saveMenu(menu: AppMenu) {
@@ -38,31 +43,31 @@ export class AccountsService {
   }
 
   saveRole(menu) {
-    return this.http.post(TELCOPRO_URL + '/', menu, this.auth.getHeaders()).map(res => res.json());
+    return this.http.post(TELCOPRO_URL + '/roles', menu, this.auth.getHeaders()).map(res => res.json());
   }
 
   deleteRole(id) {
-    return this.http.delete(TELCOPRO_URL + '/');
+    return this.http.delete(TELCOPRO_URL + '/roles/' + id, this.auth.getHeaders()).timeout(1000).map(res => res.json());
   }
 // ------------------------------------------------------------
   getAllUsers() {
-    return this.http.get(TELCOPRO_URL + '/');
+    return this.http.get(TELCOPRO_URL + '/users', this.auth.getHeaders()).map(res => res.json());
   }
 
   getUser(id) {
     return this.http.get(TELCOPRO_URL + '/');
   }
 
-  saveUser(menu) {
-    return this.http.post(TELCOPRO_URL + '/', menu, this.auth.getHeaders()).map(res => res.json());
+  saveUser(user) {
+    return this.http.post(TELCOPRO_URL + '/users', user, this.auth.getHeaders()).map(res => res.json());
   }
 
   deleteUser(id) {
-    return this.http.delete(TELCOPRO_URL + '/');
+    return this.http.delete(TELCOPRO_URL + '/users/' + id, this.auth.getHeaders()).map(res => res.json());
   }
 // -------------------------------------------------------------
   getAllEmployees() {
-    return this.http.get(TELCOPRO_URL + '/');
+    return this.http.get(TELCOPRO_URL + '/employees', this.auth.getHeaders()).map(res => res.json());
   }
   getEmployee(id) {
     return this.http.get(TELCOPRO_URL + '/');

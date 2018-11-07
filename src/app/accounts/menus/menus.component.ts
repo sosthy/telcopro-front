@@ -20,6 +20,7 @@ export class MenusComponent implements OnInit {
   content: any;
   addEditCardHeader: string;
   menus: Array<AppMenu> = new Array();
+  menu: AppMenu = new AppMenu();
   mode = 1;
 
   constructor(private modalService: NgbModal,
@@ -27,7 +28,6 @@ export class MenusComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountsSerice.getAllMenus().subscribe(data => {
-      console.log(data);
       this.menus = data;
     });
   }
@@ -50,12 +50,12 @@ export class MenusComponent implements OnInit {
     }
   }
 
-  onCreateMenu(form: any) {
-    console.log(form.value);
-    this.accountsSerice.saveMenu(form.value).subscribe(data => {
+  onCreateMenu(): boolean {
+    this.accountsSerice.saveMenu(this.menu).subscribe(data => {
       console.log(data);
       this.menus.push(data);
     });
+    return true;
   }
 
   compareFn(c1: any, c2: any): boolean {

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import {AccountsService} from "../accounts.service";
+import {NgbModal, ModalDismissReasons, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {AccountsService} from '../accounts.service';
+import { AppUser } from '../../models/appuser.model';
+import { Employee } from '../../models/employee.model';
+import { AppRole } from '../../models/approle.model';
 
 
 @Component({
@@ -10,32 +13,68 @@ import {AccountsService} from "../accounts.service";
 })
 export class UsersComponent implements OnInit {
 
+  user: AppUser = new AppUser();
+  users: Array<AppUser> = new Array();
   public data: any[];
   closeResult: string;
   mode: number;
   addEditCardHeader: string;
-  password: string;
-  rolesSel: Array<string> = new Array();
-  roleSelected: Array<string> = new Array();
-  rolSelRemoved: Array<string> = new Array();
-  roles: Array<string> = new Array();
-  employee = '';
-  employeeSelected: Array<string> = new Array();
-  employees: Array<string> = new Array();
+  rolesSel: Array<AppRole> = new Array();
+  roleSelected: Array<AppRole> = new Array();
+  rolSelRemoved: Array<AppRole> = new Array();
+  roles: Array<AppRole> = new Array();
+  employee: Employee;
+  employeeSelected: Array<Employee> = new Array();
+  employees: Array<Employee> = new Array();
+  modalRef: NgbModalRef;
 
   constructor(private modalService: NgbModal, private accountsSerice: AccountsService) {}
 
   ngOnInit(): void {
     this.mode = 1;
     this.addEditCardHeader = 'Create User';
-    this.password = '********';
-    this.roles = ['RH', 'ADMIN', 'MAGASINIER', 'ORDER'];
-    this.employees = ['Sosthene Nouebissi', 'Tcheche Romeo', 'Zuko Tinkam', 'Marie Paul'];
+    this.init();
   }
 
-  open(content) {
-    this.modalService.open(content).result.then((result) => {
+  async init() {
+    this.user = new AppUser();
+    this.rolesSel = new Array();
+    this.roleSelected = new Array();
+    this.rolSelRemoved = new Array();
+
+    this.roles = await this.accountsSerice.getAllRoles().toPromise();
+    this.users = await this.accountsSerice.getAllUsers().toPromise();
+    this.employees = await this.accountsSerice.getAllEmployees().toPromise();
+  }
+
+  open(content, user?: AppUser, mode?: number) {
+    this.user = user ? new AppUser(user) : new AppUser();
+    if (user) {
+      if (mode === 1) {
+        this.addEditCardHeader = 'Edit User';
+      } else {
+        this.addEditCardHeader = 'Delete User';
+      }
+
+      this.user.roles.forEach(role => {
+        this.roles.forEach(r => {
+          if (r.roleName === role.roleName) {
+            const index: number = this.roles.indexOf(r);
+            if (index !== -1) {
+              this.roles.splice(index, 1);
+            }
+          }
+        });
+      });
+    }
+    else {
+      this.addEditCardHeader = 'Create User';
+    }
+
+    this.modalRef = this.modalService.open(content, {backdrop: 'static'});
+    this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
+      this.init();
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
@@ -51,9 +90,34 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  onCreateUser(): void {
-    this.addEditCardHeader = 'Create User';
-    this.mode = 4;
+  async onSaveUser() {
+    if (this.user.id) {
+      const data = await this.accountsSerice.saveUser(this.user).toPromise();
+      const index: number = this.users.indexOf(this.user);
+      if (index !== -1) {
+        this.users[index] = data;
+      }
+    } else {
+      const data = await this.accountsSerice.saveUser(this.user).toPromise();
+    }
+    this.init();
+    this.modalRef.close();
+  }
+
+  onDeleteUser() {
+    this.accountsSerice.deleteUser(this.user.id).subscribe(data => {
+      this.users.forEach(user => {
+        if (user.username === data.username) {
+          const index: number = this.users.indexOf(user);
+          if (index !== -1) {
+            this.roles.splice(index, 1);
+          }
+        }
+      });
+      this.init();
+    });
+
+    this.modalRef.close();
   }
 
   onListUser(): void {
@@ -68,11 +132,11 @@ export class UsersComponent implements OnInit {
   addRole() {
     this.rolesSel.forEach(role => {
       if (role) {
-        if(this.roles.find(r => r === role)) {
-          this.roleSelected.push(role);
+        if (this.roles.find(r => r === role)) {
+          this.user.roles.push(role);
         }
         const index: number = this.roles.indexOf(role);
-        if(index !== -1) {
+        if (index !== -1) {
           this.roles.splice(index, 1);
         }
         this.rolesSel = null;
@@ -84,11 +148,20 @@ export class UsersComponent implements OnInit {
 
   }
 
+  generatePassword() {
+    const length = 8, charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let retVal = '';
+    for (let i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    this.user.password = retVal;
+  }
+
   clearSelectedRole() {
     this.rolSelRemoved.forEach(rol => {
       const index: number = this.roleSelected.indexOf(rol);
-      if(index !== -1) {
-        this.roleSelected.splice(index, 1);
+      if (index !== -1) {
+        this.user.roles.splice(index, 1);
       }
       this.roles.push(rol);
       this.rolSelRemoved = null;
