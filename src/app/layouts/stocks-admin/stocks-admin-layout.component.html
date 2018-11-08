@@ -28,7 +28,7 @@
     <nav class="menu">
       <ul class="navigation" appAccordion>
         <li class="navigation-item" appAccordionLink *ngFor="let menuitem of menuItems.getAllStocksMenu()" group="{{menuitem.state}}">
-          <a class="navigation-link" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+          <a class="navigation-link" appAccordionToggle [routerLink]="['/inventories/', menuitem.state]" *ngIf="menuitem.type === 'link'">
             <i class="icon icon-{{ menuitem.icon }}"></i>
             <span>{{ menuitem.name | translate }}</span>
             <span class="mr-auto"></span>
@@ -55,7 +55,7 @@
           </a>
           <ul class="navigation-submenu" *ngIf="menuitem.type === 'sub'">
             <li class="navigation-item" *ngFor="let childitem of menuitem.children" routerLinkActive="open">
-              <a [routerLink]="['/', menuitem.state, childitem.state ]" class="navigation-link relative">{{ childitem.name | translate }}</a>
+              <a [routerLink]="['/inventories/', menuitem.state, childitem.state ]" class="navigation-link relative">{{ childitem.name | translate }}</a>
             </li>
           </ul>
         </li>
