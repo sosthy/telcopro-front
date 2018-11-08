@@ -31,15 +31,9 @@ export const AppRoutes: Routes = [{
     loadChildren: './accounts/accounts.module#AccountsModule'
   }]
 }, {
-  path: '',
+  path: 'inventories',
   component: StocksAdminLayoutComponent,
-  children: [{
-    path: 'dashboard-stocks',
-    loadChildren: './inventories/dashboard-stocks/dashboard-stocks.module#StocksDashboardModule'
-  }, {
-    path: 'products',
-    loadChildren: './products/products.module#ProductsModule'
-  }]
+  loadChildren: './inventories/inventories.module#InventoriesModule',
 }, {
   path: '**',
   redirectTo: 'error/404'

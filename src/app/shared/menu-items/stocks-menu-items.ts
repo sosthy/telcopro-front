@@ -21,8 +21,8 @@ const STOCKSMENUITEMS = [
     ]
   },
   {
-    state: 'inventories',
-    name: 'INVENTORIES',
+    state: 'transactions',
+    name: 'TRANSACTIONS',
     type: 'link',
     icon: ' fa fa-map-o',
   },

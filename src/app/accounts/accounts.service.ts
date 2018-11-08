@@ -67,7 +67,7 @@ export class AccountsService {
   }
 // -------------------------------------------------------------
   getAllEmployees() {
-    return this.http.get(TELCOPRO_URL + '/employees', this.auth.getHeaders()).map(res => res.json());
+    return this.http.get(TELCOPRO_URL + '/rh/employees', this.auth.getHeaders()).map(res => res.json());
   }
   getEmployee(id) {
     return this.http.get(TELCOPRO_URL + '/');
