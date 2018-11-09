@@ -10,8 +10,7 @@
     [sidebarClass]="'sidebar-panel'" #sidebar>
     <nav class="navbar custom-navbar main-brand">
       <a class="navbar-brand mr-auto" [routerLink]="['/']">
-        <img src="assets/images/logo.png" class="navbar-brand-logo" alt="">
-        <span class="docked-hidden">&nbsp;Decima</span>
+        <span class="docked-hidden">&nbsp;Resources</span>
       </a>
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -26,8 +25,8 @@
     <!-- main navigation -->
     <nav class="menu">
       <ul class="navigation" appAccordion>
-        <li class="navigation-item" appAccordionLink *ngFor="let menuitem of menuItems.getAllEmployeesMenu()" group="{{menuitem.state}}">
-          <a class="navigation-link" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+        <li class="navigation-item" appAccordionLink *ngFor="let menuitem of menuItems.getAllRhMenu()" group="{{menuitem.state}}">
+          <a class="navigation-link" appAccordionToggle [routerLink]="['/rh/', menuitem.state]" *ngIf="menuitem.type === 'link'">
             <i class="icon icon-{{ menuitem.icon }}"></i>
             <span>{{ menuitem.name | translate }}</span>
             <span class="mr-auto"></span>

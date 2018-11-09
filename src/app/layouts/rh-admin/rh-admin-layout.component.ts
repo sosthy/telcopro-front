@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
-import { EmployeesMenuItems } from '../../shared/menu-items/employees-menu-items';
+import { RhMenuItems } from '../../shared/menu-items/rh-menu-items';
 import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,11 +17,11 @@ export interface Options {
 }
 
 @Component({
-  selector: 'app-layout-employees',
-  templateUrl: './employees-admin-layout.component.html',
-  styleUrls: ['./employees-admin-layout.component.scss']
+  selector: 'app-layout-rh',
+  templateUrl: './rh-admin-layout.component.html',
+  styleUrls: ['./rh-admin-layout.component.scss']
 })
-export class EmployeesAdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+export class RhAdminLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private _router: Subscription;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
@@ -41,7 +41,7 @@ export class EmployeesAdminLayoutComponent implements OnInit, OnDestroy, AfterVi
   @ViewChild('sidebar') sidebar;
 
   constructor (
-    public menuItems: EmployeesMenuItems,
+    public menuItems: RhMenuItems,
     private router: Router,
     private route: ActivatedRoute,
     public translate: TranslateService,

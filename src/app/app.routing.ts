@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { EmployeesAdminLayoutComponent } from './layouts/employees-admin/employees-admin-layout.component';
+import { RhAdminLayoutComponent } from './layouts/rh-admin/rh-admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import {StocksAdminLayoutComponent} from './layouts/stocks-admin/stocks-admin-layout.component';
 import {AdminLayoutComponent} from './layouts/admin/admin-layout.component';
@@ -34,6 +34,10 @@ export const AppRoutes: Routes = [{
   path: 'inventories',
   component: StocksAdminLayoutComponent,
   loadChildren: './inventories/inventories.module#InventoriesModule',
+}, {
+  path: 'rh',
+  component: RhAdminLayoutComponent,
+  loadChildren: './rh/rh.module#RhModule',
 }, {
   path: '**',
   redirectTo: 'error/404'

@@ -1,40 +1,36 @@
 import {Menu} from "./menu-items";
 import {Injectable} from "@angular/core";
 
-const EMPLOYEESMENUITEMS = [
+const RHMENUITEMS = [
   {
-    state: '/',
+    state: 'dashboard-rh',
     name: 'HOME',
     type: 'link',
     icon: 'basic-accelerator'
   },
   {
     state: 'employees',
-    name: 'employees',
-    type: 'sub',
+    name: 'Employees',
+    type: 'link',
     icon: 'basic-lock-open',
   },
   {
-    state: 'docs',
-    name: 'DOCS',
+    state: 'recrutments',
+    name: 'Recrutments',
     type: 'link',
     icon: 'basic-sheet-txt'
   }
 ];
 
 @Injectable()
-export class EmployeesMenuItems {
+export class RhMenuItems {
 
   constructor() {
 
   }
 
-  getAllStocksMenu(): Menu[] {
-    return EMPLOYEESMENUITEMS;
-  }
-
-  getAllEmployeesMenu(): Menu[] {
-    return EMPLOYEESMENUITEMS;
+  getAllRhMenu(): Menu[] {
+    return RHMENUITEMS;
   }
 
 }

@@ -1,7 +1,7 @@
 
-import {StocksDashboardComponent} from "./dashboard-stocks/dashboard-stocks.component";
-import {Routes} from "@angular/router";
-import {ProductsComponent} from "./products/products.component";
+import {StocksDashboardComponent} from './dashboard-stocks/dashboard-stocks.component';
+import {Routes} from '@angular/router';
+import {ProductsComponent} from './products/products.component';
 
 export const InventoriesRoutes: Routes = [{
   path: 'dashboard-stocks',

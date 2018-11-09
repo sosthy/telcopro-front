@@ -10,7 +10,7 @@ export class Employee {
   photo: File;
   birthday: Date;
   hiringDate: Date;
-  seniority: number;
+  anciennete: number;
   workspace: Workspace;
 
   constructor(obj?: any) {
@@ -22,7 +22,7 @@ export class Employee {
     this.sex = obj ? (obj.sex ? obj.sex : '') : '';
     this.photo = obj ? (obj.id ? obj.id : '') : '';
     this.birthday = obj ? (obj.id ? obj.id : new Date()) : new Date();
-    this.seniority = obj ? (obj.seniority ? obj.seniority : null) : null;
+    this.anciennete = obj ? (obj.anciennete ? obj.anciennete : null) : null;
     this.workspace = obj ? (obj.workspace ? obj.workspace : new Workspace()) : new Workspace();
   }
 

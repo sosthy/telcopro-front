@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">Employees list</div>
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Seniority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of listEmployees">
+            <td>
+              <img src="assets/images/avatar.jpg" alt="{{employee.name}} photo" class="avatar-md rounded" >
+            </td>
+            <td> {{employee.name}} </td>
+            <td> {{employee.surname}} </td>
+            <!--<td>{{ user.registered | date:'yMMMd' }}</td>-->
+            <td> {{employee.website}} </td>
+            <td> {{employee.phone}} </td>
+            <td>{{employee.anciennete}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

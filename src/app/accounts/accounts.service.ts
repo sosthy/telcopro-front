@@ -70,7 +70,7 @@ export class AccountsService {
     return this.http.get(TELCOPRO_URL + '/rh/employees', this.auth.getHeaders()).map(res => res.json());
   }
   getEmployee(id) {
-    return this.http.get(TELCOPRO_URL + '/');
+    return this.http.get(TELCOPRO_URL + '/rh/employees/' + id);
   }
 
   saveEmployee(menu) {
