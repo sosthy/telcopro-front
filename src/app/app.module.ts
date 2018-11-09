@@ -16,7 +16,7 @@ import { AgmCoreModule } from '@agm/core';
 import { AppRoutes } from './app.routing';
 import { DashboardItems } from './shared/menu-items/dashboard-items';
 import { AppComponent } from './app.component';
-import { EmployeesAdminLayoutComponent } from './layouts/employees-admin/employees-admin-layout.component';
+import { RhAdminLayoutComponent } from './layouts/rh-admin/rh-admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { SharedModule } from './shared/shared.module';
 import {StocksAdminLayoutComponent} from './layouts/stocks-admin/stocks-admin-layout.component';
@@ -40,7 +40,7 @@ export function tokenGetter() {
     AuthLayoutComponent,
     AdminLayoutComponent,
     AccountsAdminLayoutComponent,
-    EmployeesAdminLayoutComponent,
+    RhAdminLayoutComponent,
   ],
   imports: [
     BrowserModule,
