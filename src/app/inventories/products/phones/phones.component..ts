@@ -57,4 +57,7 @@ export class PhonesComponent implements OnInit {
           });
     }
   }
+  onEditPortable(p: Portable) {
+    this.router.navigate(['inventories/products/edit-phones', p]);
+  }
 }

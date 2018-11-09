@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductServices} from '../../services/product.services';
 import {EntrepotServices} from '../../services/entrepot.services';
+import {EditPhonesComponent} from './edit-phones/edit-phones.component';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import {EntrepotServices} from '../../services/entrepot.services';
       FormsModule,
       NgbModule
     ],
-  declarations: [ProductsComponent, PhonesComponent, NewPhonesComponent],
+  declarations: [ProductsComponent, PhonesComponent, NewPhonesComponent, EditPhonesComponent],
   providers: [PortableServices, ProductServices, EntrepotServices],
 
 })

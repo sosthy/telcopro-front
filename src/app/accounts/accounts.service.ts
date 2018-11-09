@@ -1,5 +1,3 @@
-
-
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {TELCOPRO_URL} from '../models/config.model';
@@ -79,5 +77,8 @@ export class AccountsService {
 
   deleteEmployee(id) {
     return this.http.delete(TELCOPRO_URL + '/');
+  }
+  searchUsers(motCle: string) {
+    return this.http.get(TELCOPRO_URL + '/users/search?mc=' + motCle,  this.auth.getHeaders()).map(res => res.json());
   }
 }

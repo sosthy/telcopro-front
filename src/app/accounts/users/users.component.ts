@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit {
   public data: any[];
   closeResult: string;
   mode: number;
+  motcle: string;
   addEditCardHeader: string;
   rolesSel: Array<AppRole> = new Array();
   roleSelected: Array<AppRole> = new Array();
@@ -66,8 +67,7 @@ export class UsersComponent implements OnInit {
           }
         });
       });
-    }
-    else {
+    } else {
       this.addEditCardHeader = 'Create User';
     }
 
@@ -170,5 +170,14 @@ export class UsersComponent implements OnInit {
 
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  searchUser() {
+     this.accountsSerice.searchUsers(this.motcle)
+      .subscribe(data => {
+        this.users = data;
+      },
+        err => {
+        console.log(err);
+        });
   }
 }
