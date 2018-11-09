@@ -7,6 +7,8 @@ import {MeasureUnit} from '../models/manage-stocks/measure-unit.model';
 import {PortableCategory} from '../models/manage-stocks/portable-category.model';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TELCOPRO_URL} from '../models/config.model';
+import {Memory} from '../models/manage-stocks/memory.model';
+import {Cpu} from '../models/manage-stocks/cpu.model';
 
 
 @Injectable()
@@ -31,7 +33,7 @@ export class PortableServices {
 // ===============================================Suppression et récupération d'un portable==============================
 
   deletePortable(id: number) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/portables' + id,
+    return this.http.delete(TELCOPRO_URL + '/stocks/portables/' + id,
       this.authenticationService.getHeaders());
   }
 
@@ -181,6 +183,40 @@ export class PortableServices {
     return this.http.get(TELCOPRO_URL + '/stocks/portables/color' + name,
       this.authenticationService.getHeaders());
   }
-
-
+  // ======================================= Rechercher des portables suivant un mot-clé =======================================
+  searchPortable(motCle: string) {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/search?mc=' + motCle, this.authenticationService.getHeaders());
+  }
+  // ============================Listing, Modification et Sauvegarde des mémoires liés au portable===========================
+  listAllMemory() {
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/memories', this.authenticationService.getHeaders());
+  }
+  listMemory(id: number) {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/memories' + id, this.authenticationService.getHeaders());
+  }
+  saveMemory(memory: Memory) {
+    return this.http.post(TELCOPRO_URL + '/stocks/portables/memories', memory, this.authenticationService.getHeaders());
+  }
+  deleteMemory(id: number) {
+   return this.http.delete(TELCOPRO_URL + '/stocks/portables/memories' + id, this.authenticationService.getHeaders());
+  }
+  updateMemory(memory: Memory) {
+   return this.http.post(TELCOPRO_URL + '/stocks/portables/memories', memory, this.authenticationService.getHeaders());
+  }
+  // ===========================Listing, Modification et Sauvegarde des cpu liés au portable===================================
+  listAllCpu() {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/cpus', this.authenticationService.getHeaders());
+  }
+  listCpu(id: number) {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/cpus' + id, this.authenticationService.getHeaders());
+  }
+  saveCpu(cpu: Cpu) {
+    return this.http.post(TELCOPRO_URL + '/stocks/portables/cpus', cpu, this.authenticationService.getHeaders());
+  }
+  deleteCpu(id: number) {
+   return this.http.delete(TELCOPRO_URL + '/stocks/portables/cpus' + id, this.authenticationService.getHeaders());
+  }
+  updateCpu(cpu: Cpu) {
+    return this.http.post(TELCOPRO_URL + '/stocks/portables/cpus', cpu, this.authenticationService.getHeaders());
+  }
 }

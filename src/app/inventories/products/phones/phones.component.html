@@ -1,12 +1,13 @@
 <div class="container-fluid" >
   <div class="d-flex justify-content-between mb-5">
     <div>
-      <button class="btn btn-primary" [routerLink]="['/products/new-phones']">Create Phone</button>
+      <button class="btn btn-primary" [routerLink]="['/inventories/products/new-phones']">Create Phone</button>
     </div>
     <div class="u-search">
       <form>
         <div class="form-group">
-          <input type="search" placeholder="Search" class="form-control">
+          <input type="search" placeholder="Search" class="form-control" [(ngModel)] ="motcle" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()" style="display:none"><span class="fa fa-search"></span></button>
         </div>
       </form>
     </div>
@@ -16,15 +17,28 @@
     <div class="col-sm-3" *ngFor="let phone of listPortables">
       <div class="card">
         <!--<a [routerLink]="['/products/phones-list']">-->
-          <div class="card-header text-center"><strong>{{phone.designation}}</strong><a class="fa fa-ellipsis-v u-move-to">
+          <div class="card-header text-center"><strong>{{phone.designation}}</strong>
+            <div ngbDropdown class="imenu">
+              <a id="downMenu" class="dropdown-toggle" ngbDropdownToggle href="javascript:;">
+                <i class="fa fa-ellipsis-v"></i>
+              </a>
+              <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="downMenu">
+                <a href="#" class="dropdown-item">
+                  <i class="icon icon-basic-message-multiple mr-3"></i>
+                   <span>Order</span>
+                </a>
+                <a (click)="onEditPortable(phone)" class="dropdown-item">
+                  <i class="icon icon-basic-settings mr-3"></i>
+                  <span>Edit</span>
+                </a>
+                <a (click)="onDeletePhone(phone)" href="javascript:;" class="dropdown-item clickable">
+                  <i class="icon icon-basic-postcard mr-3"></i>
+                  <span>Delete</span>
+                </a>
+              </div>
+            </div>
 
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </ul>
-
-          </a></div>
+          </div>
           <div class="card-body text-center">
           </div>
           <div class="card-footer text-center bg-blue-grey-A100">{{phone.quantity}} {{phone.emplacement?.name}}</div>

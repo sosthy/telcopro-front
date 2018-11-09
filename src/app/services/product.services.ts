@@ -4,6 +4,9 @@ import {Product} from '../models/manage-stocks/product.model';
 import {AppColor} from '../models/manage-stocks/app-color.model';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TELCOPRO_URL} from '../models/config.model';
+import {State} from '../models/manage-stocks/state.model';
+import {MeasureUnit} from '../models/manage-stocks/measure-unit.model';
+import {ProductCategory} from '../models/manage-stocks/product-category.model';
 
 @Injectable()
 export class ProductServices {
@@ -81,9 +84,56 @@ export class ProductServices {
   listProdColor(name: string) {
     return this.http.get(TELCOPRO_URL + '/stocks/poducts-color/blue' + name, this.authenticationService.getHeaders());
   }
+  // ===========================Listing, Modification et Sauvegarde des états d'un produit  ===============================
+  listAllState() {
+    return this.http.get(TELCOPRO_URL + '/stocks/states', this.authenticationService.getHeaders());
+  }
+  saveState(state: State) {
+    return this.http.post(TELCOPRO_URL + '/stocks/states', state, this.authenticationService.getHeaders());
+  }
+   updateState(state: State) {
+    return this.http.post(TELCOPRO_URL + '/stocks/states', state, this.authenticationService.getHeaders());
+  }
 
-
-
+  // ==============================Suppression et récupération d'un élément d'un état=======================================
+  listState(id: number) {
+    return this.http.get(TELCOPRO_URL + '/stocks/states' + id, this.authenticationService.getHeaders());
+  }
+   deleteState(id: number) {
+    return this.http.get(TELCOPRO_URL + '/stocks/states' + id, this.authenticationService.getHeaders());
+  }
+  // =======================Listing,Modification et Sauvegarde des unités de mesure d'un produit =========================
+  listAllMeasureUnit() {
+   return this.http.get(TELCOPRO_URL + '/stocks/measure-units', this.authenticationService.getHeaders());
+  }
+  listMeasureUnit(id: number) {
+    return this.http.get(TELCOPRO_URL + '/stocks/measure-units' + id, this.authenticationService.getHeaders());
+  }
+  deleteMeasureUnit(id: number) {
+     return this.http.delete(TELCOPRO_URL + '/stocks/measure-units' + id, this.authenticationService.getHeaders());
+  }
+  updateMeasureUnit(measureUnit: MeasureUnit) {
+     return this.http.post(TELCOPRO_URL + '/stocks/measure-units', measureUnit, this.authenticationService.getHeaders());
+  }
+  saveMeasureUnit(measureUnit: MeasureUnit) {
+     return this.http.post(TELCOPRO_URL + '/stocks/measure-units', measureUnit, this.authenticationService.getHeaders());
+  }
+  // ==================Listing, Modification et Sauvegarde des catégories des produits=========================================
+  listAllCatPrdct() {
+    return this.http.get(TELCOPRO_URL + '/stocks/categories', this.authenticationService.getHeaders());
+  }
+  saveCatProdct(productCategory: ProductCategory) {
+    return this.http.post(TELCOPRO_URL + '/stocks/categories', productCategory, this.authenticationService.getHeaders());
+  }
+  updateCatProdct(productCategory: ProductCategory) {
+    return this.http.post(TELCOPRO_URL + '/stocks/categories', productCategory, this.authenticationService.getHeaders());
+  }
+  listCatPrdct(id: number) {
+     return this.http.get(TELCOPRO_URL + '/stocks/categories' + id, this.authenticationService.getHeaders());
+  }
+  deleteCatPrdct(id: number) {
+     return this.http.delete(TELCOPRO_URL + '/stocks/categories' + id, this.authenticationService.getHeaders());
+  }
 
 }
 

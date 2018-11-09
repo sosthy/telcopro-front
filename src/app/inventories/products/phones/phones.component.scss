@@ -28,3 +28,12 @@ a:hover
   top: 15px;
   right: 15px;
 }
+
+.dropdown-toggle::after {
+  display: none;
+}
+.imenu {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}

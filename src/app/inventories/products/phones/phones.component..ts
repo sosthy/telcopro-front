@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PortableServices} from '../../../services/portable.services';
 import {Http} from '@angular/http';
 import {Router} from '@angular/router';
+import {Portable} from '../../../models/manage-stocks/portable.model';
 
 @Component({
   selector: 'app-phones',
@@ -11,6 +12,8 @@ import {Router} from '@angular/router';
 
 export class PhonesComponent implements OnInit {
   listPortables: any;
+  motcle: string;
+  portable: Portable;
   constructor(public http: Http, public portableservices: PortableServices, public router: Router) {
   }
   ngOnInit() {
@@ -26,5 +29,32 @@ export class PhonesComponent implements OnInit {
         console.log(err);
         }
         );
+  }
+  search() {
+    this.portableservices.searchPortable(this.motcle)
+      .subscribe(data => {
+        this.listPortables = data.json();
+        console.log(this.listPortables);
+      },
+        err => {
+        console.log(err);
+        });
+  }
+  onDeletePhone(p: Portable) {
+    console.log(p);
+    const confirm = window.confirm('Are you sure?');
+    if (confirm === true) {
+          this.listPortables.splice(
+            this.listPortables.indexOf(p), 1
+          );
+      this.portableservices.deletePortable(p.id)
+        .subscribe(data => {
+          console.log(this.listPortables);
+          alert('successful removal');
+        },
+          err => {
+          alert('problem');
+          });
+    }
   }
 }
