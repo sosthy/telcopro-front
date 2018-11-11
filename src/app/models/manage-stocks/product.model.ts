@@ -5,7 +5,7 @@ import {MeasureUnit} from './measure-unit.model';
 import {Emplacement} from './emplacement.model';
 import {State} from './state.model';
 
-export interface Product {
+export class Product {
   id: number;
   quantity: number;
   dateCreation: Date;
@@ -24,4 +24,8 @@ export interface Product {
   productCategory: ProductCategory;
   appColor: AppColor;
   mouvementLines: MouvmentLine;
+
+  constructor() {
+
+  }
 }
