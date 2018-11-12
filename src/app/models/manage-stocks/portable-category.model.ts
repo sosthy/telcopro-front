@@ -1,6 +1,6 @@
-import {Category} from './category.model';
+import {GenericCategory} from './category.model';
 import {Portable} from './portable.model';
 
-export interface PortableCategory extends Category {
+export interface PortableCategory extends GenericCategory {
   portables: Portable;
 }

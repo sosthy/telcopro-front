@@ -1,6 +1,6 @@
 import {Product} from './product.model';
-import {Category} from './category.model';
+import {GenericCategory} from './category.model';
 
-export interface ProductCategory extends Category {
+export interface ProductCategory extends GenericCategory {
  products: Product;
 }

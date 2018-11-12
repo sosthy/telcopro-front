@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {GenericCategory} from "../../../models/manage-stocks/category.model";
-import {ProductCategoryService} from "./product-category.service";
+import {GenericCategory} from '../../../models/manage-stocks/category.model';
+import {ProductCategoryService} from './product-category.service';
 
 @Component({
   selector: 'app-product-category',
@@ -56,7 +56,7 @@ export class ProductCategoryComponent implements OnInit {
   }
 
   onCreateUser(): void {
-    this.addEditCardHeader = 'Create Category';
+    this.addEditCardHeader = 'Create GenericCategory';
     this.mode = 4;
   }
 

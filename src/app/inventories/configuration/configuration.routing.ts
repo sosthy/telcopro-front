@@ -1,16 +1,16 @@
 
 
-import {ConfigurationComponent} from "./configuration.component";
-import {PhoneCategoryComponent} from "./phone-category/phone-category.component";
-import {ProductCategoryComponent} from "./product-category/product-category.component";
-import {ProcessorComponent} from "./processor/processor.component";
-import {CameraComponent} from "./camera/camera.component";
-import {MemoryComponent} from "./memory/memory.component";
-import {MeasureComponent} from "./measure/measure.component";
-import {ColorComponent} from "./color/color.component";
-import {StateComponent} from "./state/state.component";
-import {SystemosComponent} from "./systemos/systemos.component";
-import {Routes} from "@angular/router";
+import {ConfigurationComponent} from './configuration.component';
+import {PhoneCategoryComponent} from './phone-category/phone-category.component';
+import {ProductCategoryComponent} from './product-category/product-category.component';
+import {ProcessorComponent} from './processor/processor.component';
+import {CameraComponent} from './camera/camera.component';
+import {MemoryComponent} from './memory/memory.component';
+import {MeasureComponent} from './measure/measure.component';
+import {ColorComponent} from './color/color.component';
+import {StateComponent} from './state/state.component';
+import {SystemosComponent} from './systemos/systemos.component';
+import {Routes} from '@angular/router';
 
 
 export const ConfigurationRoutes: Routes = [{
@@ -21,13 +21,13 @@ export const ConfigurationRoutes: Routes = [{
       path: 'phones-category',
       component: PhoneCategoryComponent,
       data: {
-        heading: 'Phones Category'
+        heading: 'Phones GenericCategory'
       }
     }, {
       path: 'products-category',
       component: ProductCategoryComponent,
       data: {
-        heading: 'Products Category'
+        heading: 'Products GenericCategory'
       }
     }, {
       path: 'processors',
