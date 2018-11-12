@@ -32,6 +32,50 @@ const STOCKSMENUITEMS = [
     type: 'link',
     icon: ' fa fa-users',
   },
+  {
+    state: 'configuration',
+    name: 'CONFIGURATION',
+    type: 'sub',
+    icon: ' fa fa-cubes',
+    children: [
+      {
+        state: 'phones-category',
+        name: 'PHONES CATEGORY'
+      },
+      {
+        state: 'products-category',
+        name: 'PRODUCTS CATEGORY'
+      },
+      {
+        state: 'processors',
+        name: 'PROCESSORS'
+      },
+      {
+        state: 'cameras',
+        name: 'CAMERAS'
+      },
+      {
+        state: 'memory',
+        name: 'MEMORY'
+      },
+      {
+        state: 'measures',
+        name: 'MEASURES'
+      },
+      {
+        state: 'colors',
+        name: 'COLORS'
+      },
+      {
+        state: 'states',
+        name: 'STATES'
+      },
+      {
+        state: 'systemos',
+        name: 'SYSTEM OS'
+      },
+    ]
+  },
 ];
 const EMPLOYEESMENUITEMS = [
   {

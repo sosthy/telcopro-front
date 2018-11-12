@@ -5,245 +5,247 @@
       <button class="btn btn-primary">Cancel</button>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md col-lg pr-3">
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 h6">
-          <strong>Product Informations</strong>
+  <div class="card">
+    <div class="row card-body">
+      <div class="col-md col-lg pr-3">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 h6">
+            <strong>Product Informations</strong>
+          </div>
+        </div>
+        <br/>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3">
+            <label for="designation-text-input">Designation</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable"
+                   name="designation" id="designation-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="emplacement-text-input">Emplacement</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="emplacement"
+                   id="emplacement-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="volume-text-input">Volume</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="volume"
+                   id="volume-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="stk-alert-text-input">Stock Alert</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="stk-alert"
+                   id="stk-alert-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="stk-min-text-input">Stock minimum</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="stk-min"
+                   id="stk-min-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="measure-text-input">Measure Unit</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="measure"
+                   id="measure-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="p-categorie-text-input">Product Category</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="p-categorie"
+                   id="p-categorie-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="price-unit-text-input">Price Unit</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="price-unit"
+                   id="price-unit-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="price-semi-whole-text-input">Price Semi-Wholesaler</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="price-semi-whole"
+                   id="price-semi-whole-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="price-whole-text-input">Price Wholesaler</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="price-whole"
+                   id="price-whole-text-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="notes-text-input">Notes</label>
+          </div>
+          <div class="col-lg-8">
+                    <textarea class="form-control" type="text" [(ngModel)]="portable" name="notes"
+                              id="notes-text-input" rows="4"></textarea>
+          </div>
         </div>
       </div>
-      <br/>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3">
-          <label for="designation-text-input">Designation</label>
+      <div class="col-md col-lg pr-3">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 h6">
+            <strong>Phone Details</strong>
+          </div>
         </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable"
-                 name="designation" id="designation-text-input">
+        <br/>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="phone-category-text-input">Phone Category</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="phone-category"
+                   id="phone-category-text-input">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="emplacement-text-input">Emplacement</label>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="os-text-input">System OS</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="phone-category"
+                   id="os-text-input">
+          </div>
         </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="emplacement"
-                 id="emplacement-text-input">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="processor-text-input">Processor</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="processor"
+                   id="processor-text-input">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="volume-text-input">Volume</label>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="memory-text-input">Memory</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="memory"
+                   id="memory-text-input">
+          </div>
         </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="volume"
-                 id="volume-text-input">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="camera-text-input">Camera</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="camera"
+                   id="camera-text-input">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="stk-alert-text-input">Stock Alert</label>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="dimension-text-input">Dimension</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="dimension"
+                   id="dimension-text-input">
+          </div>
         </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="stk-alert"
-                 id="stk-alert-text-input">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="battery-text-input">Battery</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="battery"
+                   id="battery-text-input">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="stk-min-text-input">Stock minimum</label>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="connection-text-input">Connection</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="connection"
+                   id="connection-text-input">
+          </div>
         </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="stk-min"
-                 id="stk-min-text-input">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="iprating-text-input">IP Rating</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="iprating"
+                   id="iprating-text-input">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="measure-text-input">Measure Unit</label>
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="sim-text-input">SIM</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="text" [(ngModel)]="portable" name="sim"
+                   id="sim-text-input">
+          </div>
         </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="measure"
-                 id="measure-text-input">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
+            <label for="weight-text-input">Weight</label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" type="number" [(ngModel)]="portable" name="weight"
+                   id="weight-text-input">
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="p-categorie-text-input">Product Category</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="p-categorie"
-                 id="p-categorie-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="price-unit-text-input">Price Unit</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="price-unit"
-                 id="price-unit-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="price-semi-whole-text-input">Price Semi-Wholesaler</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="price-semi-whole"
-                 id="price-semi-whole-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="price-whole-text-input">Price Wholesaler</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="price-whole"
-                 id="price-whole-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="notes-text-input">Notes</label>
-        </div>
-        <div class="col-lg-8">
-                  <textarea class="form-control" type="text" [(ngModel)]="portable" name="notes"
-                            id="notes-text-input" rows="4"></textarea>
-        </div>
-      </div>
-    </div>
-    <div class="col-md col-lg pr-3">
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 h6">
-          <strong>Phone Details</strong>
-        </div>
-      </div>
-      <br/>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="phone-category-text-input">Phone Category</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="phone-category"
-                 id="phone-category-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="os-text-input">System OS</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="phone-category"
-                 id="os-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="processor-text-input">Processor</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="processor"
-                 id="processor-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="memory-text-input">Memory</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="memory"
-                 id="memory-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="camera-text-input">Camera</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="camera"
-                 id="camera-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="dimension-text-input">Dimension</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="dimension"
-                 id="dimension-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="battery-text-input">Battery</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="battery"
-                 id="battery-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="connection-text-input">Connection</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="connection"
-                 id="connection-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="iprating-text-input">IP Rating</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="iprating"
-                 id="iprating-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="sim-text-input">SIM</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="text" [(ngModel)]="portable" name="sim"
-                 id="sim-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
-          <label for="weight-text-input">Weight</label>
-        </div>
-        <div class="col-lg-8">
-          <input class="form-control" type="number" [(ngModel)]="portable" name="weight"
-                 id="weight-text-input">
-        </div>
-      </div>
-      <div class="form-group row">
-        <div class="col-lg-4 text-lg-right pr-3 ">
+        <div class="form-group row">
+          <div class="col-lg-4 text-lg-right pr-3 ">
 
-        </div>
-        <div class="col-lg-8">
-          <label for="dushproof-input" class="custom-control custom-checkbox">
-            <input id="dushproof-input" type="checkbox" class="custom-control-input">
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Dushproof</span>
-          </label>
-          <label for="waterproof-input" class="custom-control custom-checkbox">
-            <input id="waterproof-input" type="checkbox" class="custom-control-input">
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Waterproof</span>
-          </label>
-          <label for="splashproof-input" class="custom-control custom-checkbox">
-            <input id="splashproof-input" type="checkbox" class="custom-control-input">
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Splashproof</span>
-          </label>
-          <label for="fingerprint-input" class="custom-control custom-checkbox">
-            <input id="fingerprint-input" type="checkbox" class="custom-control-input">
-            <span class="custom-control-indicator"></span>
-            <span class="custom-control-description">Fingerprint</span>
-          </label>
+          </div>
+          <div class="col-lg-8">
+            <label for="dushproof-input" class="custom-control custom-checkbox">
+              <input id="dushproof-input" type="checkbox" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Dushproof</span>
+            </label>
+            <label for="waterproof-input" class="custom-control custom-checkbox">
+              <input id="waterproof-input" type="checkbox" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Waterproof</span>
+            </label>
+            <label for="splashproof-input" class="custom-control custom-checkbox">
+              <input id="splashproof-input" type="checkbox" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Splashproof</span>
+            </label>
+            <label for="fingerprint-input" class="custom-control custom-checkbox">
+              <input id="fingerprint-input" type="checkbox" class="custom-control-input">
+              <span class="custom-control-indicator"></span>
+              <span class="custom-control-description">Fingerprint</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>

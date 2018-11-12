@@ -77,6 +77,16 @@
     "PHONES": "Phones",
 
   "TRANSACTIONS": "Transactions",
+  "CONFIGURATION": "Configuration",
+    "PHONES CATEGORY": "Phones Category",
+    "PRODUCTS CATEGORY": "Products Category",
+    "PROCESSORS": "processors",
+    "CAMERAS": "Cameras",
+    "MEMORY": "Memory",
+    "MEASURES": "Measures",
+    "COLORS": "Colors",
+    "STATES": "States",
+    "SYSTEM OS": "System OS",
 
   "RECIPIENTS": "Providers / Customers",
 
