@@ -1,7 +1,7 @@
 <form>
   <div class="d-flex justify-content-between mb-5">
     <div>
-      <button class="btn btn-primary">Save Changes</button>
+      <button class="btn btn-primary" (click)="savePortable()">Save Changes</button>
       <button class="btn btn-primary">Cancel</button>
     </div>
   </div>
@@ -19,17 +19,18 @@
             <label for="designation-text-input">Designation</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable"
+            <input class="form-control" type="text" [(ngModel)]="portable.designation"
                    name="designation" id="designation-text-input">
           </div>
         </div>
         <div class="form-group row">
           <div class="col-lg-4 text-lg-right pr-3 ">
-            <label for="emplacement-text-input">Emplacement</label>
+            <label for="emplacementSelect">Emplacement</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="emplacement"
-                   id="emplacement-text-input">
+            <select id="emplacementSelect" name="emplacement" [(ngModel)]="portable.emplacement" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="emplace" *ngFor="let emplace of listEmplecement">{{ emplace.name }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -37,7 +38,7 @@
             <label for="volume-text-input">Volume</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="volume"
+            <input class="form-control" type="number" [(ngModel)]="portable.volume" name="volume"
                    id="volume-text-input">
           </div>
         </div>
@@ -46,7 +47,7 @@
             <label for="stk-alert-text-input">Stock Alert</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="stk-alert"
+            <input class="form-control" type="number" [(ngModel)]="portable.stockAlert" name="stk-alert"
                    id="stk-alert-text-input">
           </div>
         </div>
@@ -55,7 +56,7 @@
             <label for="stk-min-text-input">Stock minimum</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="stk-min"
+            <input class="form-control" type="number" [(ngModel)]="portable.stockMinimum" name="stk-min"
                    id="stk-min-text-input">
           </div>
         </div>
@@ -64,8 +65,9 @@
             <label for="measure-text-input">Measure Unit</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="measure"
-                   id="measure-text-input">
+            <select id="measure-text-input" name="measure" [(ngModel)]="portable.priceUnit" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="measur" *ngFor="let measur of listMeasures">{{ measur.unity }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -73,8 +75,9 @@
             <label for="p-categorie-text-input">Product Category</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="p-categorie"
-                   id="p-categorie-text-input">
+            <select id="p-categorie-text-input" name="p-categorie" [(ngModel)]="portable.productCategory" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="productcatego" *ngFor="let productcatego of listProductsCat">{{ productcatego.name }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -82,7 +85,7 @@
             <label for="price-unit-text-input">Price Unit</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="price-unit"
+            <input class="form-control" type="number" [(ngModel)]="portable.priceUnit" name="price-unit"
                    id="price-unit-text-input">
           </div>
         </div>
@@ -91,7 +94,7 @@
             <label for="price-semi-whole-text-input">Price Semi-Wholesaler</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="price-semi-whole"
+            <input class="form-control" type="number" [(ngModel)]="portable.priceUnitSemiWholesaler" name="price-semi-whole"
                    id="price-semi-whole-text-input">
           </div>
         </div>
@@ -100,7 +103,7 @@
             <label for="price-whole-text-input">Price Wholesaler</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="price-whole"
+            <input class="form-control" type="number" [(ngModel)]="portable.priceUnitWholesaler" name="price-whole"
                    id="price-whole-text-input">
           </div>
         </div>
@@ -109,7 +112,7 @@
             <label for="notes-text-input">Notes</label>
           </div>
           <div class="col-lg-8">
-                    <textarea class="form-control" type="text" [(ngModel)]="portable" name="notes"
+                    <textarea class="form-control" type="text" [(ngModel)]="portable.note" name="notes"
                               id="notes-text-input" rows="4"></textarea>
           </div>
         </div>
@@ -126,8 +129,9 @@
             <label for="phone-category-text-input">Phone Category</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="phone-category"
-                   id="phone-category-text-input">
+            <select id="phone-category-text-input" name="ph-categorie" [(ngModel)]="portable.portableCategory" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="portablecatego" *ngFor="let portablecatego of listPortablCat">{{ portablecatego.name }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -135,8 +139,9 @@
             <label for="os-text-input">System OS</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="phone-category"
-                   id="os-text-input">
+            <select id="os-text-input" name="ph-os" [(ngModel)]="portable.os" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="portablecatego" *ngFor="let portablecatego of listPortablCat">{{ portablecatego.name }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -144,8 +149,9 @@
             <label for="processor-text-input">Processor</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="processor"
-                   id="processor-text-input">
+            <select id="processor-text-input" name="processor" [(ngModel)]="portable.cpu" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="cppu" *ngFor="let cppu of listCpu">{{ cppu.brand }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -153,8 +159,9 @@
             <label for="memory-text-input">Memory</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="memory"
-                   id="memory-text-input">
+            <select id="memory-text-input" name="memory" [(ngModel)]="portable.memory" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="memory" *ngFor="let memory of listMemory">{{ memory.brand }} - {{ memory.rom }} / {{ memory.ram }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -162,8 +169,9 @@
             <label for="camera-text-input">Camera</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="camera"
-                   id="camera-text-input">
+            <select id="camera-text-input" name="camera" [(ngModel)]="portable.camera" class="form-control" [compareWith]="compareFn">
+              <option [ngValue]="cam" *ngFor="let cam of listCamera">{{ cam.backCamera }} / {{ cam.frontCamera }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
@@ -171,7 +179,7 @@
             <label for="dimension-text-input">Dimension</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="dimension"
+            <input class="form-control" type="number" [(ngModel)]="portable.dimension" name="dimension"
                    id="dimension-text-input">
           </div>
         </div>
@@ -180,7 +188,7 @@
             <label for="battery-text-input">Battery</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="battery"
+            <input class="form-control" type="text" [(ngModel)]="portable.battery" name="battery"
                    id="battery-text-input">
           </div>
         </div>
@@ -189,7 +197,7 @@
             <label for="connection-text-input">Connection</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="connection"
+            <input class="form-control" type="text" [(ngModel)]="portable.connection" name="connection"
                    id="connection-text-input">
           </div>
         </div>
@@ -198,7 +206,7 @@
             <label for="iprating-text-input">IP Rating</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="iprating"
+            <input class="form-control" type="text" [(ngModel)]="portable.ipRating" name="iprating"
                    id="iprating-text-input">
           </div>
         </div>
@@ -207,7 +215,7 @@
             <label for="sim-text-input">SIM</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="text" [(ngModel)]="portable" name="sim"
+            <input class="form-control" type="text" [(ngModel)]="portable.sim" name="sim"
                    id="sim-text-input">
           </div>
         </div>
@@ -216,7 +224,7 @@
             <label for="weight-text-input">Weight</label>
           </div>
           <div class="col-lg-8">
-            <input class="form-control" type="number" [(ngModel)]="portable" name="weight"
+            <input class="form-control" type="number" [(ngModel)]="portable.weight" name="weight"
                    id="weight-text-input">
           </div>
         </div>

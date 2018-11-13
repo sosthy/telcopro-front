@@ -7,7 +7,7 @@ import {Cpu} from '../../../models/manage-stocks/cpu.model';
 import {PortableCategory} from '../../../models/manage-stocks/portable-category.model';
 import {Memory} from '../../../models/manage-stocks/memory.model';
 import {Camera} from '../../../models/manage-stocks/camera.model';
-import {SystemOs} from '../../../models/manage-stocks/system-os.model';
+import {Systemos} from '../../../models/manage-stocks/system-os.model';
 import {Emplacement} from '../../../models/manage-stocks/emplacement.model';
 import {State} from '../../../models/manage-stocks/state.model';
 import {MeasureUnit} from '../../../models/manage-stocks/measure-unit.model';
@@ -27,7 +27,7 @@ portable: Portable;
   listMeasureUnit: Array<MeasureUnit>;
   listState: Array<State>;
   listEmplacement: Array<Emplacement>;
-  listSystemOs: Array<SystemOs>;
+  listSystemos: Array<Systemos>;
   listCamera: Array<Camera>;
   listMemory: Array<Memory>;
   listPortableCategory: Array<PortableCategory>;
@@ -66,10 +66,10 @@ portable: Portable;
         console.log(err);
         }
         );
-     this.portableServices.listAllSystemOs()
+     this.portableServices.listAllSystemos()
       .subscribe(data => {
-        this.listSystemOs = data.json();
-        console.log(this.listSystemOs);
+        this.listSystemos = data.json();
+        console.log(this.listSystemos);
       },
         err => {
         console.log(err);
