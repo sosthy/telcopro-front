@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/timeout';
-import {AuthenticationService} from "../../../authentication/authentication.service";
-import {TELCOPRO_URL} from "../../../models/config.model";
+import {AuthenticationService} from '../../../authentication/authentication.service';
+import {TELCOPRO_URL} from '../../../models/config.model';
 
 @Injectable()
 export class PhoneCategoryService {
@@ -23,7 +23,8 @@ export class PhoneCategoryService {
   }
 
   deletePhoneCategory(id) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/portables/categories/' + id, this.auth.getHeaders()).timeout(1000).map(res => res.json());
+    return this.http.delete(TELCOPRO_URL + '/stocks/portables/categories/' + id, this.auth.getHeaders())
+      .timeout(1000).map(res => res.json());
   }
 
 }

@@ -1,1 +1,87 @@
-<p>Measure works !</p>
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formMeasure)">Create Measure</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control">
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    List of Meaures
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Unity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let mes of measures; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td class="text-uppercase">{{ mes.unity }}</td>
+          <td>
+            <a href="javascript:;" (click)="open(formMeasure, mes)">edit</a>
+            <a href="javascript:;" (click)="open(deleteMeasure, mes)">delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="" *ngIf="mode == 3">
+  <p>Edit Measure</p>
+</div>
+
+<ng-template #deleteMeasure let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete Measure</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onDeleteMeasure()">Yes</button>
+  </div>
+</ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formMeasure let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Role Informations for Measure</p>
+        <div class="form-group row">
+          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Unity</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="measure.unity" id="role-text-input" name="measureunit">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveMeasure()">Save changes</button>
+  </div>
+</ng-template>

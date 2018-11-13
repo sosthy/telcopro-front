@@ -2,8 +2,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {GenericCategory} from "../../../models/manage-stocks/category.model";
-import {PhoneCategoryService} from "./phone-category.service";
+import {GenericCategory} from '../../../models/manage-stocks/category.model';
+import {PhoneCategoryService} from './phone-category.service';
 
 @Component({
   selector: 'app-phone-category',
@@ -25,7 +25,7 @@ export class PhoneCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Category';
+    this.addEditCardHeader = 'Create GenericCategory';
     this.init();
   }
 
