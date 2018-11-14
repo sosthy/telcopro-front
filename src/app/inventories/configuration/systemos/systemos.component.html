@@ -1,1 +1,95 @@
-<p>System OS works !</p>
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formSystemOs)">Create System Os</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control">
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    List of System Os
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Version</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let sys of systemos; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td class="text-uppercase">{{ sys.name }}</td>
+          <td>{{ sys.version }}</td>
+          <td>
+            <a href="javascript:;" (click)="open(formSystemOs, sys)">edit</a> &nbsp;&nbsp;
+            <a href="javascript:;" (click)="open(deleteSystemOs, sys)">delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="" *ngIf="mode == 3">
+  <p>Edit System Os</p>
+</div>
+
+<ng-template #deleteSystemOs let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete System Os</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onDeleteSystemOs()">Yes</button>
+  </div>
+</ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formSystemOs let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Role Informations for System Os</p>
+        <div class="form-group row">
+          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Name</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="systemo.name" id="role-text-input" name="osName">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Version</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="systemo.version" id="desc-text-input" name="osVersion">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveSystemOs()">Save changes</button>
+  </div>
+</ng-template>

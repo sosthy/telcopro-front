@@ -8,5 +8,4 @@ import {Component} from '@angular/core';
   styleUrls: ['./processor.component.scss']
 })
 export class ProcessorComponent {
-
 }
