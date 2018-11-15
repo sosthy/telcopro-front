@@ -5,7 +5,8 @@
   <div class="u-search">
     <form>
       <div class="form-group">
-        <input type="search" placeholder="Search" class="form-control">
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="searchColor">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchColor()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
     </form>
   </div>
@@ -43,7 +44,7 @@
   <p>Edit Camera</p>
 </div>
 
-<ng-template #deleteCamera let-c="close">
+<ng-template #deleteColor let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">Delete Color</h6>
     <button type="button" class="close" aria-label="Close" (click)="c('Close click')">

@@ -20,6 +20,7 @@ export class ColorComponent implements OnInit {
   colors: Array<AppColor> = new Array();
   color: AppColor = new AppColor();
   modalRef: NgbModalRef;
+  motCle: string;
   constructor(private modalService: NgbModal, private colorService: ColorService) {}
   ngOnInit(): void {
     this.mode = 1;
@@ -80,5 +81,14 @@ export class ColorComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+  searchColor() {
+    this.colorService.searchColors(this.motCle)
+      .subscribe(data => {
+        this.colors = data;
+      },
+        err => {
+        console.log(err);
+        });
   }
 }

@@ -19,6 +19,7 @@ export class MeasureComponent implements OnInit {
   measures: Array<MeasureUnit> = new Array();
   measure: MeasureUnit = new MeasureUnit();
   modalRef: NgbModalRef;
+  motCle: string;
   constructor(private modalService: NgbModal, private measureService: MeasureService) {}
   ngOnInit(): void {
     this.mode = 1;
@@ -80,5 +81,15 @@ export class MeasureComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+  searchMeasure() {
+    console.log(this.motCle);
+    this.measureService.searchMeasures(this.motCle)
+      .subscribe(data => {
+        this.measures = data;
+      },
+        err => {
+        console.log(err);
+        });
   }
 }

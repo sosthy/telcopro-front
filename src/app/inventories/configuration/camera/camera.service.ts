@@ -26,7 +26,11 @@ export class CameraService {
   }
 
    deleteCamera(id: number) {
-     return this.http.get(TELCOPRO_URL + '/stocks/portables/cameras/' + id, this.auth.getHeaders())
+     return this.http.delete(TELCOPRO_URL + '/stocks/portables/cameras/' + id, this.auth.getHeaders())
       .timeout(1000).map(res => res.json());
+   }
+   searchCameras(motCle: string) {
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/cameras/search?mc=' + motCle,
+      this.auth.getHeaders()).map(res => res.json());
    }
  }

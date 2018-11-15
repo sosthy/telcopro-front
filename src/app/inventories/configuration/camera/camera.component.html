@@ -5,7 +5,8 @@
   <div class="u-search">
     <form>
       <div class="form-group">
-        <input type="search" placeholder="Search" class="form-control">
+        <input type="search" placeholder="Search" [(ngModel)] ="motCle" class="form-control" name="cameraSearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchCamera()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
     </form>
   </div>
