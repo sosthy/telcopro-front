@@ -19,6 +19,7 @@ export class MemoryComponent implements OnInit {
   memories: Array<Memory> = new Array();
   memory: Memory = new Memory();
   modalRef: NgbModalRef;
+  motCle: String;
    constructor(private modalService: NgbModal, private memoryService: MemoryService) {}
    ngOnInit(): void {
     this.mode = 1;
@@ -79,5 +80,14 @@ export class MemoryComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+  searchMemory() {
+     this.memoryService.searchMemories(this.motCle)
+       .subscribe(data => {
+         this.memories = data;
+       },
+         err => {
+         console.log(err);
+         });
   }
 }

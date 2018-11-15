@@ -26,5 +26,8 @@ export class MeasureService {
     return this.http.delete(TELCOPRO_URL + '/stocks/measure-units/' + id,
       this.auth.getHeaders()).timeout(1000).map(res => res.json());
   }
+  searchMeasures(motCle: string) {
+    return this.http.get(TELCOPRO_URL + '/stocks/measure-units/search?mc=' + motCle, this.auth.getHeaders()).map(res => res.json());
+  }
 
 }

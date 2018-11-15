@@ -25,6 +25,7 @@ import {ProductServices} from '../../services/product.services';
 import {StateService} from './state/state.service';
 import {SystemosService} from './systemos/systemos.service';
 import {ColorService} from './color/color.service';
+import {ProcessorService} from './processor/processor.service';
 
 
 @NgModule({
@@ -47,6 +48,6 @@ import {ColorService} from './color/color.service';
     SystemosComponent,
   ],
   providers: [PhoneCategoryService, ProductCategoryService, CameraService, MeasureService, MemoryService, ProductServices,
-  StateService, SystemosService, ColorService]
+  StateService, SystemosService, ColorService, ProcessorService]
 })
 export class ConfigurationModule {}

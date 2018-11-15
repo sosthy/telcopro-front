@@ -18,17 +18,23 @@ export class SystemosComponent implements OnInit {
   systemos: Array<Systemos> = new Array();
   systemo: Systemos = new Systemos();
   modalRef: NgbModalRef;
-  constructor(private modalService: NgbModal, private systemosService: SystemosService) {}
-   ngOnInit(): void {
+  motCle: string;
+
+  constructor(private modalService: NgbModal, private systemosService: SystemosService) {
+  }
+
+  ngOnInit(): void {
     this.mode = 1;
     this.addEditCardHeader = 'Create Systemos';
     this.init();
   }
+
   // --------------------------------------------------- ----------------------------------------------------------------------
   async init() {
     this.systemo = new Systemos();
     this.systemos = await this.systemosService.getAllSystemos().toPromise();
   }
+
   // ---------------------------------------------------- ---------------------------------------------------------------------
   open(content, sys?: Systemos) {
     this.systemo = sys ? new Systemos(sys) : new Systemos();
@@ -41,6 +47,7 @@ export class SystemosComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
+
   // ---------------------------------------------- -----------------------------------------------------------------------------
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -48,9 +55,10 @@ export class SystemosComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
+
   // ----------------------------------------------------------------- ----------------------------------------------------------
   async onSaveSystemOs() {
     const data = await this.systemosService.saveSystemOs(this.systemo).toPromise();
@@ -63,6 +71,7 @@ export class SystemosComponent implements OnInit {
     this.init();
     this.modalRef.close();
   }
+
   // ---------------------------------------------------------------- ---------------------------------------------------------
   onDeleteSystemOs() {
     this.systemosService.deleteSystemOs(this.systemo.id).subscribe(data => {
@@ -78,5 +87,15 @@ export class SystemosComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+
+  searchSystemO() {
+    this.systemosService.searchSystemOs(this.motCle)
+      .subscribe(data => {
+          this.systemos = data;
+        },
+        err => {
+          console.log(err);
+        });
   }
 }

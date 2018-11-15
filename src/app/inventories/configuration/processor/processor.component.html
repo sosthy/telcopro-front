@@ -1,1 +1,96 @@
-<p>Processors works !</p>
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formProcessor)">Create Processor</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" [(ngModel)] ="motCle" class="form-control" name="processorSearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchProcessor()" style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    List of Processors
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Brand</th>
+          <th>Frequency</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let pro of processors; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td class="text-uppercase">{{ pro.brand }}</td>
+          <td>{{ pro.frequency }}</td>
+          <td>
+            <a href="javascript:;" (click)="open(formProcessor, pro)">edit</a> &nbsp;&nbsp;
+            <a href="javascript:;" (click)="open(deleteProcessor, pro)">delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="" *ngIf="mode == 3">
+  <p>Edit Processor</p>
+</div>
+
+<ng-template #deleteProcessor let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete Processor</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onDeleteProcessor()">Yes</button>
+  </div>
+</ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formProcessor let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Role Informations for Processor</p>
+        <div class="form-group row">
+          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">BRAND: </label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="processor.brand" id="role-text-input" name="processorBrand">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Frequency: </label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="number" [(ngModel)]="processor.frequency" id="desc-text-input" name="processorFrequency">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveProcessor()">Save changes</button>
+  </div>
+</ng-template>

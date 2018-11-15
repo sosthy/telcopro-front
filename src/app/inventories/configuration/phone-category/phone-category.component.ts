@@ -20,7 +20,7 @@ export class PhoneCategoryComponent implements OnInit {
   categories: Array<GenericCategory> = new Array();
   category: GenericCategory = new GenericCategory();
   modalRef: NgbModalRef;
-
+  motCle: string;
   constructor(private modalService: NgbModal, private phoneCategoryService: PhoneCategoryService) {}
 
   ngOnInit(): void {
@@ -96,6 +96,15 @@ export class PhoneCategoryComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+  searchPhoneCategory() {
+    this.phoneCategoryService.searchPhoneCategories(this.motCle)
+      .subscribe(data => {
+        this.categories = data;
+      },
+        err => {
+        console.log(err);
+        });
   }
 
   compareFn(c1: any, c2: any): boolean {

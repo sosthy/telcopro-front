@@ -20,6 +20,7 @@ export class CameraComponent implements OnInit {
   cameras: Array<Camera> = new Array();
   camera: Camera = new Camera();
   modalRef: NgbModalRef;
+  motCle: string;
   constructor(private modalService: NgbModal, private cameraService: CameraService) {}
   ngOnInit(): void {
     this.mode = 1;
@@ -80,5 +81,15 @@ export class CameraComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+  searchCamera() {
+    console.log(this.motCle);
+    this.cameraService.searchCameras(this.motCle)
+      .subscribe(data => {
+        this.cameras = data;
+      },
+        err => {
+        console.log(err);
+        });
   }
 }

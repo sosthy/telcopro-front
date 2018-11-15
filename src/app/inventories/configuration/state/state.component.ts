@@ -19,6 +19,7 @@ export class StateComponent implements OnInit {
   states: Array<State> = new Array();
   state: State = new State();
   modalRef: NgbModalRef;
+  motCle: string;
   // ------------------------------------------------------  ------------------------------------------------------------------
   constructor(private modalService: NgbModal, private stateService: StateService) {}
   // ------------------------------------------------------ -------------------------------------------------------------------
@@ -81,6 +82,15 @@ export class StateComponent implements OnInit {
     });
 
     this.modalRef.close();
+  }
+  searchState() {
+    this.stateService.searchStates(this.motCle)
+      .subscribe(data => {
+        this.states = data;
+      },
+        err => {
+        console.log(err);
+        });
   }
    compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;

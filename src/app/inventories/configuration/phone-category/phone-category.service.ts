@@ -26,5 +26,7 @@ export class PhoneCategoryService {
     return this.http.delete(TELCOPRO_URL + '/stocks/portables/categories/' + id, this.auth.getHeaders())
       .timeout(1000).map(res => res.json());
   }
-
+  searchPhoneCategories(motCle: string) {
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/categories/search?mc=' + motCle, this.auth.getHeaders()).map(res => res.json());
+  }
 }

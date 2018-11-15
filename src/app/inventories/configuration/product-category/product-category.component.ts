@@ -19,7 +19,7 @@ export class ProductCategoryComponent implements OnInit {
   categories: Array<GenericCategory> = new Array();
   category: GenericCategory = new GenericCategory();
   modalRef: NgbModalRef;
-
+  motCle: string;
   constructor(private modalService: NgbModal, private productCategoryService: ProductCategoryService) {}
 
   ngOnInit(): void {
@@ -96,7 +96,15 @@ export class ProductCategoryComponent implements OnInit {
 
     this.modalRef.close();
   }
-
+  searchProductCategory() {
+    this.productCategoryService.searchProductCategories(this.motCle)
+      .subscribe(data => {
+        this.categories = data;
+      },
+        err => {
+        console.log(err);
+        });
+  }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
