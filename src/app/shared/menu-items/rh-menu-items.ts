@@ -9,16 +9,22 @@ const RHMENUITEMS = [
     icon: 'basic-accelerator'
   },
   {
+    state: 'work-spaces',
+    name: 'Work Spaces',
+    type: 'link',
+    icon: 'home',
+  },
+  {
     state: 'employees',
     name: 'Employees',
     type: 'link',
-    icon: 'basic-lock-open',
+    icon: 'users', // FontAWesome library
   },
   {
     state: 'recrutments',
     name: 'Recrutments',
     type: 'link',
-    icon: 'basic-sheet-txt'
+    icon: 'archive'
   }
 ];
 

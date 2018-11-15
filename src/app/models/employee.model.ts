@@ -1,4 +1,4 @@
-import { Workspace } from './workspace.model';
+import { WorkSpace } from './workSpace.model';
 
 export class Employee {
   id: number;
@@ -7,11 +7,12 @@ export class Employee {
   phone: string;
   website: string;
   sex: string;
-  photo: File;
+  cni: string;
+  photo: string;
   birthday: Date;
   hiringDate: Date;
   seniority: number;
-  workspace: Workspace;
+  workSpace: WorkSpace;
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.id : null) : null;
@@ -20,10 +21,11 @@ export class Employee {
     this.phone = obj ? (obj.phone ? obj.phone : '') : '';
     this.website = obj ? (obj.website ? obj.website : '') : '';
     this.sex = obj ? (obj.sex ? obj.sex : '') : '';
+    this.cni = obj ? (obj.cni ? obj.cni : '') : '';
     this.photo = obj ? (obj.id ? obj.id : '') : '';
     this.birthday = obj ? (obj.id ? obj.id : new Date()) : new Date();
     this.seniority = obj ? (obj.seniority ? obj.seniority : null) : null;
-    this.workspace = obj ? (obj.workspace ? obj.workspace : new Workspace()) : new Workspace();
+    this.workSpace = obj ? (obj.workSpace ? obj.workSpace : new WorkSpace()) : new WorkSpace();
   }
 
 }

@@ -26,27 +26,27 @@
     <nav class="menu">
       <ul class="navigation" appAccordion>
         <li class="navigation-item" appAccordionLink *ngFor="let menuitem of menuItems.getAllRhMenu()" group="{{menuitem.state}}">
-          <a class="navigation-link" appAccordionToggle [routerLink]="['/rh/', menuitem.state]" *ngIf="menuitem.type === 'link'">
-            <i class="icon icon-{{ menuitem.icon }}"></i>
-            <span>{{ menuitem.name | translate }}</span>
+          <a class="navigation-link row" appAccordionToggle [routerLink]="['/rh/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+            <i class="fa fa-{{ menuitem.icon }} fa-2x col-lg-2"></i>
+            <span class="col-lg-2">{{ menuitem.name | translate }}</span>
             <span class="mr-auto"></span>
             <span class="badge badge-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
           <a class="navigation-link" appAccordionToggle href="{{menuitem.state}}" *ngIf="menuitem.type === 'extLink'">
-            <i class="icon icon-{{ menuitem.icon }}"></i>
-            <span>{{ menuitem.name | translate }}</span>
+            <i class="fa fa-{{ menuitem.icon }} fa-2x"></i>
+            <span>  {{ menuitem.name | translate }}</span>
             <span class="mr-auto"></span>
             <span class="badge badge-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
           <a class="navigation-link" appAccordionToggle href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
-            <i class="icon icon-{{ menuitem.icon }}"></i>
-            <span>{{ menuitem.name | translate }}</span>
+            <i class="fa fa-{{ menuitem.icon }} fa-2x"></i>
+            <span>  {{ menuitem.name | translate }}</span>
             <span class="mr-auto"></span>
             <span class="badge badge-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
           </a>
           <a class="navigation-link" appAccordionToggle href="javascript:;" *ngIf="menuitem.type === 'sub'">
-            <i class="icon icon-{{ menuitem.icon }}"></i>
-            <span>{{ menuitem.name | translate }}</span>
+            <i class="fa fa-{{ menuitem.icon }} fa-2x"></i>
+            <span>  {{ menuitem.name | translate }}</span>
             <span class="mr-auto"></span>
             <span class="badge badge-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
             <i class="menu-caret icon icon-arrows-right"></i>

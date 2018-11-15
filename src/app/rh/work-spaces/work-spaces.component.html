@@ -1,0 +1,103 @@
+<div *ngIf="pageToLoad == 'listing page'">
+  <div class="d-flex justify-content-between mb-5">
+    <div>
+      <button class="btn btn-success" (click)="loadAddPage()" >Add Work Space</button>
+    </div>
+    <div class="u-search">
+      <form>
+        <div class="form-group">
+          <input type="search" placeholder="Search" class="form-control" [(ngModel)] ="keyWords" name="search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()" style="display:none"><span class="fa fa-search"></span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Work Spaces list</div>
+    <div class="table-responsive" *ngIf="listWorkSpaces.length != 0">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Localisation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let workSpace of listWorkSpaces">
+            <td> {{workSpace.name}} </td>
+            <td> {{workSpace.localisation}} </td>
+            <td>
+              <button (click)="loadDetailPage(workSpace)" class="btn btn-primary">
+                  <i class="icon icon-basic-message-multiple mr-3"></i>
+                   <span>View order</span>
+                </button>
+                <button (click)="loadEditionPage(workSpace)" class="btn btn-success">
+                  <i class="icon icon-basic-settings mr-3"></i>
+                  <span>Edit</span>
+                </button>
+                <button (click)="deleteWorkSpaceRequest(workSpace)" href="javascript:;" class="btn btn-danger">
+                  <i class="icon icon-basic-postcard mr-3"></i>
+                  <span>Delete</span>
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <strong *ngIf="listWorkSpaces.length == 0">
+      {{tableMessage}}
+    </strong>
+  </div>
+</div>
+
+<div class="card" *ngIf="pageToLoad == 'add page' || pageToLoad == 'edit page'">
+  <strong class="card-header" *ngIf="pageToLoad == 'add page'">New workSpace</strong>
+  <strong class="card-header" *ngIf="pageToLoad == 'edit page'">Edit workSpace</strong>
+  <div class="card-body row">
+    <div class="col-sm-3"></div>
+    <div class="form-group col-sm-6">
+
+      <label class="control-label">Name:</label>
+      <input class="form-control bottom-spacer" type="text" [(ngModel)]="workSpace.name" name="name">
+
+      <label class="control-label">Localisation:</label>
+      <input class="form-control bottom-spacer" type="text" [(ngModel)]="workSpace.localisation" name="localisation">
+
+    </div>
+  </div>
+  <div class="card-footer row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <button class="btn btn-success navbar-btn" (click)="submitForm()">Submit</button>
+      <button class="btn btn-success navbar-btn" (click)="pageToLoad = 'listing page'">Discard</button>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="pageToLoad.startsWith('confirm') || pageToLoad == 'details page'">
+  <strong class="card-header" *ngIf="pageToLoad == 'confirm edit page' || pageToLoad == 'confirm add page'">Confirm registration work space</strong>
+  <strong class="card-header" *ngIf="pageToLoad == 'details page'">Work Space details</strong>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-3">
+          <p *ngIf="pageToLoad == 'details page' || pageToLoad == 'confirm edit page'">Work Space Number: <strong>{{workSpace.id}}</strong></p>
+          <p>Name: <strong>{{workSpace.name}}</strong> </p>
+      </div>
+      <div class="col-lg-4">
+          <p>Localisation: <strong>{{workSpace.localisation}}</strong> </p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-success navbar-btn" *ngIf="pageToLoad == 'details page'" (click)="pageToLoad = 'listing page'">Ok</button>
+    <div *ngIf="pageToLoad.includes('confirm')">
+      <button class="btn btn-success navbar-btn"  (click)="saveInformation()">
+        <span *ngIf="pageToLoad.includes('add')">Save</span>
+        <span *ngIf="pageToLoad.includes('edit')">Update</span>
+      </button>
+      <button class="btn btn-success navbar-btn" (click)="pageToLoad = pageToLoad.replace('confirm ','')">Discard</button>
+    </div>
+  </div>
+</div>
+
