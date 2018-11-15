@@ -4,24 +4,39 @@ import {TELCOPRO_URL} from '../models/config.model';
 import {AuthenticationService} from '../authentication/authentication.service';
 import { AppMenu } from '../models/appmenu.model';
 import 'rxjs/add/operator/timeout';
+import {Employee} from '../models/employee.model';
 
 @Injectable()
 export class EmployeeService {
 
-  constructor(private http: Http, private auth: AuthenticationService) {}
+  constructor(private http: Http, private auth: AuthenticationService) { }
 
   getAllEmployees() {
     return this.http.get(TELCOPRO_URL + '/rh/employees', this.auth.getHeaders());
   }
   getEmployee(id) {
-    return this.http.get(TELCOPRO_URL + '/rh/employees/' + id);
+    return this.http.get(TELCOPRO_URL + '/rh/employees/' + id, this.auth.getHeaders());
   }
+  /*
 
-  saveEmployee(employee) {
-    return this.http.post(TELCOPRO_URL + '/rh/employees', employee);
+  saveEmployee(employee: Employee, photo: File) {
+    const formData: FormData = new FormData();
+    formData.append('photo', photo);
+    formData.append('employee', JSON.stringify(employee));
+    return this.http.post(TELCOPRO_URL + '/rh/employees', formData, this.auth.getHeaders());
+  }
+   */
+  saveEmployee(employee: Employee) {
+    return this.http.post(TELCOPRO_URL + '/rh/employees', employee, this.auth.getHeaders());
   }
 
   deleteEmployee(id) {
-    return this.http.delete(TELCOPRO_URL + '/rh/employees' + id);
+    return this.http.delete(TELCOPRO_URL + '/rh/employees/' + id, this.auth.getHeaders());
+  }
+  search(keyWords) {
+    return this.http.get(TELCOPRO_URL + '/rh/employees/search?mc=' + keyWords, this.auth.getHeaders());
+  }
+  getWorkSpaces() {
+    return this.http.get(TELCOPRO_URL + '/rh/workSpaces', this.auth.getHeaders());
   }
 }

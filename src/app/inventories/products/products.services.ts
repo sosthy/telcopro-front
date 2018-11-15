@@ -16,7 +16,7 @@ export class ProductServices {
 
   // ==============================listting et sauvegarde des stocks=====================================================
   listAllStocks() {
-    return this.http.get(TELCOPRO_URL + '/stocks', this.authenticationService.getHeaders());
+    return this.http.get(TELCOPRO_URL + '/stocks', this.authenticationService.getHeaders()).map(res => res.json());
   }
 
   saveStocks(products: Product) {

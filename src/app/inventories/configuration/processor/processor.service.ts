@@ -19,9 +19,10 @@ export class ProcessorService {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/cpus', cpu, this.auth.getHeaders()).map(res => res.json());
   }
   deleteProcessor(id: number) {
-   return this.http.delete(TELCOPRO_URL + '/stocks/portables/cpus' + id, this.auth.getHeaders());
+   return this.http.delete(TELCOPRO_URL + '/stocks/portables/cpus/' + id, this.auth.getHeaders())
+      .timeout(1000).map(res => res.json());
   }
-  updateProcessor(cpu: Cpu) {
-    return this.http.post(TELCOPRO_URL + '/stocks/portables/cpus', cpu, this.auth.getHeaders());
+  searchProcessors(motCle: string) {
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/cpus/search?mc=' + motCle, this.auth.getHeaders()).map(res => res.json());
   }
 }
