@@ -2,7 +2,7 @@ import {Http, RequestOptions} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {Portable} from '../models/manage-stocks/portable.model';
 import {Camera} from '../models/manage-stocks/camera.model';
-import {SystemOs} from '../models/manage-stocks/system-os.model';
+import {Systemos} from '../models/manage-stocks/system-os.model';
 import {MeasureUnit} from '../models/manage-stocks/measure-unit.model';
 import {PortableCategory} from '../models/manage-stocks/portable-category.model';
 import {AuthenticationService} from '../authentication/authentication.service';
@@ -93,12 +93,12 @@ export class PortableServices {
 
 // ====================================================Listing et sauvegarde des systemOS================================
 
-  listAllSystemOs() {
+  listAllSystemos() {
     return this.http.get(TELCOPRO_URL + '/stocks/portables/systemos',
       this.authenticationService.getHeaders());
   }
 
-  saveSystemOs(systemOs: SystemOs) {
+  saveSystemOs(systemOs: Systemos) {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/systemos', systemOs,
       this.authenticationService.getHeaders());
   }
@@ -115,7 +115,7 @@ export class PortableServices {
        this.authenticationService.getHeaders());
   }
 
-  updateSystemOs(systemOs: SystemOs) {
+  updateSystemOs(systemOs: Systemos) {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/systemos', systemOs,
       this.authenticationService.getHeaders());
   }

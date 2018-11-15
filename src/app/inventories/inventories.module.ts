@@ -7,6 +7,7 @@ import {ProductsComponent} from './products/products.component';
 import {StocksDashboardComponent} from './dashboard-stocks/dashboard-stocks.component';
 import {StocksDashboardModule} from './dashboard-stocks/dashboard-stocks.module';
 import {ProductsModule} from './products/products.module';
+import {ConfigurationModule} from "./configuration/configuration.module";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {ProductsModule} from './products/products.module';
     FormsModule,
     ReactiveFormsModule,
     StocksDashboardModule,
-    ProductsModule
+    ProductsModule,
+    ConfigurationModule
   ],
   declarations: [ ],
 })
