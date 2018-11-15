@@ -1,13 +1,13 @@
-import {GenericEntrepot} from './entrepot.model';
 
-export class Emplacement {
+
+export class AppWorkspace {
   id: number;
   name: string;
-  entrepot: GenericEntrepot;
+  location: string;
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.id : null) : null;
     this.name = obj ? (obj.name ? obj.name : null) : null;
-    this.entrepot = obj ? (obj.entrepot ? obj.entrepot : null) : null;
+    this.location = obj ? (obj.location ? obj.location : null) : null;
   }
 }

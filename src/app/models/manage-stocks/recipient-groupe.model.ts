@@ -1,7 +1,11 @@
 import {Recipient} from './recipient.model';
 
-export interface RecipientGroupe {
-   id: number;
+export class RecipientGroupe {
+  id: number;
   name: string;
-  recipients: Recipient;
+
+  constructor(obj?: any) {
+    this.id = obj ? (obj.id ? obj.connection : null) : null;
+    this.name = obj ? (obj.name ? obj.name : null) : null;
+  }
 }

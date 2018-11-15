@@ -5,7 +5,7 @@ export class Systemos {
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.id : null) : null;
-    this.name = obj ? (obj.name ? obj.name : '') : '';
-    this.version = obj ? (obj.version ? obj.version : '') : '';
+    this.name = obj ? (obj.name ? obj.name : null) : null;
+    this.version = obj ? (obj.version ? obj.version : null) : null;
   }
 }

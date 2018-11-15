@@ -1,4 +1,4 @@
-export interface PortableUnit {
+export class PortableUnit {
   id: number;
   name: string;
 }

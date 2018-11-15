@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {Product} from '../models/manage-stocks/product.model';
-import {AppColor} from '../models/manage-stocks/app-color.model';
-import {AuthenticationService} from '../authentication/authentication.service';
-import {TELCOPRO_URL} from '../models/config.model';
-import {State} from '../models/manage-stocks/state.model';
-import {MeasureUnit} from '../models/manage-stocks/measure-unit.model';
-import {ProductCategory} from '../models/manage-stocks/product-category.model';
+import {Product} from '../../models/manage-stocks/product.model';
+import {AppColor} from '../../models/manage-stocks/app-color.model';
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {TELCOPRO_URL} from '../../models/config.model';
+import {State} from '../../models/manage-stocks/state.model';
+import {MeasureUnit} from '../../models/manage-stocks/measure-unit.model';
+import {GenericCategory} from "../../models/manage-stocks/category.model";
 
 @Injectable()
 export class ProductServices {
@@ -122,10 +122,10 @@ export class ProductServices {
   listAllCatPrdct() {
     return this.http.get(TELCOPRO_URL + '/stocks/categories', this.authenticationService.getHeaders());
   }
-  saveCatProdct(productCategory: ProductCategory) {
+  saveCatProdct(productCategory: GenericCategory) {
     return this.http.post(TELCOPRO_URL + '/stocks/categories', productCategory, this.authenticationService.getHeaders());
   }
-  updateCatProdct(productCategory: ProductCategory) {
+  updateCatProdct(productCategory: GenericCategory) {
     return this.http.post(TELCOPRO_URL + '/stocks/categories', productCategory, this.authenticationService.getHeaders());
   }
   listCatPrdct(id: number) {

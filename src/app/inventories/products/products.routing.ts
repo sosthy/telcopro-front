@@ -1,5 +1,5 @@
 import {ProductsComponent} from './products.component';
-import {PhonesComponent} from './phones/phones.component.';
+import {PhonesComponent} from './phones/phones.component';
 import {NewPhonesComponent} from './new-phones/new-phones.component';
 import {EditPhonesComponent} from './edit-phones/edit-phones.component';
 

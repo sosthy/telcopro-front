@@ -44,3 +44,4 @@ package.json
 package-lock.json
 package.json
 package-lock.json
+src/app/models/config.model.ts

@@ -1,14 +1,14 @@
-import {Http, RequestOptions} from '@angular/http';
+import {Http} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {Portable} from '../models/manage-stocks/portable.model';
 import {Camera} from '../models/manage-stocks/camera.model';
 import {Systemos} from '../models/manage-stocks/system-os.model';
 import {MeasureUnit} from '../models/manage-stocks/measure-unit.model';
-import {PortableCategory} from '../models/manage-stocks/portable-category.model';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {TELCOPRO_URL} from '../models/config.model';
 import {Memory} from '../models/manage-stocks/memory.model';
 import {Cpu} from '../models/manage-stocks/cpu.model';
+import {GenericCategory} from "../models/manage-stocks/category.model";
 
 
 @Injectable()
@@ -155,7 +155,7 @@ export class PortableServices {
     return this.http.get(TELCOPRO_URL + '/stocks/portables/categories',
       this.authenticationService.getHeaders());
   }
-  saveCatPort(portCat: PortableCategory) {
+  saveCatPort(portCat: GenericCategory) {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/categories', portCat,
       this.authenticationService.getHeaders());
   }
@@ -172,7 +172,7 @@ export class PortableServices {
       this.authenticationService.getHeaders());
   }
 
-  updateCatPorta(portCat: PortableCategory) {
+  updateCatPorta(portCat: GenericCategory) {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/categories', portCat,
       this.authenticationService.getHeaders());
   }
