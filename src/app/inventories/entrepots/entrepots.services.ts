@@ -16,7 +16,7 @@ export class EntrepotService {
   }
 
   deleteEntrepot(id: number) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/entrepots' + id, this.authenticationService.getHeaders()).map(res => res.json());
+    return this.http.delete(TELCOPRO_URL + '/stocks/entrepots/' + id, this.authenticationService.getHeaders()).map(res => res.json());
   }
 
   saveEntrepot(entrepot: GenericEntrepot) {
@@ -28,10 +28,16 @@ export class EntrepotService {
   }
 
   deleteEmplacement(id: number) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/entrepots' + id, this.authenticationService.getHeaders()).map(res => res.json());
+    return this.http.delete(TELCOPRO_URL + '/stocks/entrepots/emplacements/' + id, this.authenticationService.getHeaders()).map(res => res.json());
   }
 
   saveEmplacement(entrepot: GenericEntrepot) {
-    return this.http.post(TELCOPRO_URL + '/stocks/entrepots', entrepot, this.authenticationService.getHeaders()).map(res => res.json());
+    return this.http.post(TELCOPRO_URL + '/stocks/entrepots/emplacements', entrepot, this.authenticationService.getHeaders()).map(res => res.json());
+  }
+  search(keyWords) {
+    return this.http.get(TELCOPRO_URL + '/stocks/entrepots/search?mc=' + keyWords, this.authenticationService.getHeaders());
+  }
+  searchEmplacement(keyWords) {
+    return this.http.get(TELCOPRO_URL + '/stocks/entrepots/emplacements/search?mc=' + keyWords, this.authenticationService.getHeaders());
   }
 }

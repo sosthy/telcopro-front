@@ -23,7 +23,7 @@ export class EmplacementListComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if(params['name']) {
+      if (params['name']) {
         this.entrepot = new GenericEntrepot(params);
         this.entrepotService.listAllEmplacement(this.entrepot.id).subscribe(resp => {
           this.listEmplacement = resp;

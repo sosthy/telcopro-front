@@ -1,10 +1,8 @@
-
-
-import {Component, OnInit} from "@angular/core";
-import {GenericEntrepot} from "../../../models/manage-stocks/entrepot.model";
-import {EntrepotService} from "../entrepots.services";
-import {ModalDismissReasons, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {GenericEntrepot} from '../../../models/manage-stocks/entrepot.model';
+import {EntrepotService} from '../entrepots.services';
+import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -16,10 +14,10 @@ export class EntrepotListComponent implements OnInit {
 
   listEntrepot: Array<GenericEntrepot> = [];
   entrepot: GenericEntrepot = new GenericEntrepot();
-  addEditCardHeader: string = 'Create Entrepot';
+  addEditCardHeader = 'Create Entrepot';
   closeResult: string;
   modalRef: NgbModalRef;
-
+  motcle = '';
   constructor(private entrepotService: EntrepotService,
               private modalService: NgbModal,
               private router: Router) { }
@@ -87,5 +85,14 @@ export class EntrepotListComponent implements OnInit {
 
     this.modalRef.close();
   }
-
+  search() {
+    this.entrepotService.search(this.motcle)
+      .subscribe(data => {
+        this.listEntrepot = data.json();
+      },
+        err => {
+        console.log(err);
+        }
+        );
+  }
 }
