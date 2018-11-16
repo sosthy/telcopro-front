@@ -1,0 +1,38 @@
+.u-search {
+  min-width: 250px;
+}
+
+u-col {
+  min-width: 240px;
+}
+
+.u-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+.imenu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.u-item {
+  position: relative;
+  min-width: 300px;
+  min-height: 80px;
+  max-height: 80px;
+  border-radius: 3px;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+.u-item:hover {
+  cursor: pointer;
+}
+
+.u-details {
+  width: 800px;
+}

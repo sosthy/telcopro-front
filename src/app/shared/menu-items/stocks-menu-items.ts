@@ -80,6 +80,10 @@ const STOCKSMENUITEMS = [
         state: 'systemos',
         name: 'SYSTEM OS'
       },
+      {
+        state: 'recipientsgroupe',
+        name: 'Fournisseur/client(config)'
+      },
     ]
   },
 ];
