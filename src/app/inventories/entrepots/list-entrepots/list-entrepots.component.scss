@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+.u-search {
+  min-width: 250px;
+}
 
-</body>
-</html>
+.u-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.u-item {
+  position: relative;
+  min-width: 180px;
+  min-height: 80px;
+  max-height: 80px;
+  border-radius: 3px;
+  padding: 5px 2px 5px 5px;
+}
+
+a:hover
+{
+  background: rgb(235, 235, 235);
+  color: #0d47a1;
+}
+
+.idetails {
+
+}
+
+.card-body:hover {
+  cursor: pointer;
+}
+
+.u-move-to {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+.imenu {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}

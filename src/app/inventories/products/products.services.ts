@@ -10,6 +10,7 @@ import {GenericCategory} from "../../models/manage-stocks/category.model";
 
 @Injectable()
 export class ProductServices {
+
   constructor(public http: Http, public authenticationService: AuthenticationService) {
 
   }

@@ -94,7 +94,7 @@ export class PortableServices {
 // ====================================================Listing et sauvegarde des systemOS================================
 
   listAllSystemos() {
-    return this.http.get(TELCOPRO_URL + '/stocks/portables/systemos',
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/system-os',
       this.authenticationService.getHeaders());
   }
 
@@ -106,17 +106,17 @@ export class PortableServices {
   // ===========================================Suppression et récupération d'un systemOS================================
 
   listSystemOs(id: number) {
-    return this.http.get(TELCOPRO_URL + '/stocks/portables/systemos' + id,
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/systemos/' + id,
       this.authenticationService.getHeaders());
   }
 
   deleteSystemOs(id: number) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/portables/systemos' + id,
+    return this.http.delete(TELCOPRO_URL + '/stocks/portables/systemos/' + id,
        this.authenticationService.getHeaders());
   }
 
   updateSystemOs(systemOs: Systemos) {
-    return this.http.post(TELCOPRO_URL + '/stocks/portables/systemos', systemOs,
+    return this.http.post(TELCOPRO_URL + '/stocks/portables/systemos/', systemOs,
       this.authenticationService.getHeaders());
   }
 
@@ -135,12 +135,12 @@ export class PortableServices {
   // =======================================Suppression et récupération d'une unité liés au portable ====================
 
   listMeasusreUnit(id: number) {
-    return this.http.get(TELCOPRO_URL + '/stocks/portables/units' + id,
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/units/' + id,
        this.authenticationService.getHeaders());
   }
 
   deleteMeasureUnit(id: number) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/portables/units' + id,
+    return this.http.delete(TELCOPRO_URL + '/stocks/portables/units/' + id,
       this.authenticationService.getHeaders());
   }
 

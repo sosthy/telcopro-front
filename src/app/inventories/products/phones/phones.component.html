@@ -39,8 +39,8 @@
         <img src="assets/images/avatar.jpg" class="avatar-md rounded" alt="">
       </a>
       <div class="pl-3 pr-3">
-        <p class="ff-headers mb-0 text-uppercase"><strong>{{ phone.designation }}</strong></p>
-        <small class="d-block">Price : {{ phone.priceUnit }} FCFA</small>
+        <p class="ff-headers mb-0 text-uppercase mb-2"><strong>{{ phone.designation }}</strong></p>
+        <small class="d-block">Price : <strong>{{ phone.priceUnit }} FCFA</strong></small>
         <small class="d-block">Quantity : {{ phone.quantity }} {{ phone.measureUnit.unity }}</small>
         <small class="d-block">Entrepot : {{ phone.emplacement.entrepot.name }}</small>
       </div>

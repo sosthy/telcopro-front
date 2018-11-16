@@ -9,7 +9,7 @@ export class GenericEntrepot extends  AppWorkspace{
   volumeSecurity: number;
 
   constructor(obj?: any) {
-    super();
+    super(obj);
     this.id = obj ? (obj.id ? obj.id : null) : null;
     this.name = obj ? (obj.name ? obj.name : null) : null;
     this.nbOfProduct = obj ? (obj.nbOfProduct ? obj.nbOfProduct : null) : null;

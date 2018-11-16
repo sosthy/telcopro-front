@@ -65,8 +65,7 @@ portable: Portable;
         console.log(err);
         }
         );
-     this.portableServices.listAllSystemos()
-      .subscribe(data => {
+     this.portableServices.listAllSystemos().subscribe(data => {
         this.listSystemos = data.json();
         console.log(this.listSystemos);
       },

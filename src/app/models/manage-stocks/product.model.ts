@@ -26,7 +26,7 @@ export class Product {
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.connection : null) : null;
     this.quantity = obj ? (obj.quantity ? obj.quantity : null) : null;
-    this.dateCreation = obj ? (obj.dateCreation ? obj.dateCreation : new Date()) : new Date();
+    this.dateCreation = obj ? (obj.dateCreation ? obj.dateCreation : null) : null;
     this.designation = obj ? (obj.designation ? obj.designation : null) : null;
     this.image = obj ? (obj.image ? obj.image : null) : null;
     this.priceUnit = obj ? (obj.priceUnit ? obj.priceUnit : null) : null;
