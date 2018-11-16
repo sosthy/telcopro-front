@@ -21,11 +21,11 @@ import {ProductCategoryService} from './product-category/product-category.servic
 import {CameraService} from './camera/camera.service';
 import {MeasureService} from './measure/measure.service';
 import {MemoryService} from './memory/memory.service';
-import {ProductServices} from '../../services/product.services';
 import {StateService} from './state/state.service';
 import {SystemosService} from './systemos/systemos.service';
 import {ColorService} from './color/color.service';
 import {ProcessorService} from './processor/processor.service';
+import {ProductServices} from "../products/products.services";
 
 
 @NgModule({

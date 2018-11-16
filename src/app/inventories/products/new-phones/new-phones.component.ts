@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {Portable} from '../../../models/manage-stocks/portable.model';
-import {ProductCategory} from '../../../models/manage-stocks/product-category.model';
 import {MeasureUnit} from '../../../models/manage-stocks/measure-unit.model';
 import {State} from '../../../models/manage-stocks/state.model';
 import {Emplacement} from '../../../models/manage-stocks/emplacement.model';
@@ -10,10 +9,12 @@ import {Memory} from '../../../models/manage-stocks/memory.model';
 import {Cpu} from '../../../models/manage-stocks/cpu.model';
 import {PortableServices} from '../../../services/portable.services';
 import {EntrepotServices} from '../../../services/entrepot.services';
-import {ProductServices} from '../../../services/product.services';
-import {Router} from '@angular/router';
-import {PortableCategory} from '../../../models/manage-stocks/portable-category.model';
+import {ProductServices} from '../products.services';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Product} from '../../../models/manage-stocks/product.model';
+import {GenericCategory} from "../../../models/manage-stocks/category.model";
+import {MeasureService} from "../../configuration/measure/measure.service";
+import {ProductCategoryService} from "../../configuration/product-category/product-category.service";
 
 @Component({
   selector: 'app-new-phones',
@@ -22,66 +23,103 @@ import {Product} from '../../../models/manage-stocks/product.model';
 })
 export class NewPhonesComponent implements OnInit {
   portable: Portable = new Portable();
-  listMeasureUnit: Array<MeasureUnit>;
-  listState: Array<State>;
   listEmplacement: Array<Emplacement>;
+  listMeasureUnit: Array<MeasureUnit>;
+  listProductCategory: Array<GenericCategory>;
+  listPortableCategory: Array<GenericCategory>;
   listSystemOs: Array<Systemos>;
-  listCamera: Array<Camera>;
-  listMemory: Array<Memory>;
   listCpu: Array<Cpu>;
-  listPortableCategory: Array<PortableCategory>;
+  listMemory: Array<Memory>;
+  listCamera: Array<Camera>;
+  editOrCreatePhone: string = 'Create'
   mode = 1;
 
 
-constructor(public portableServices: PortableServices, public router: Router) {}
+  constructor(public portableServices: PortableServices,
+              public measureService: MeasureService,
+              public productCategoryService: ProductCategoryService,
+              public route: ActivatedRoute,
+              public router: Router) {
+  }
 
 
-ngOnInit() {
-  this.portableServices.listAllcatPorta()
-    .subscribe(data => {
-      this.listPortableCategory = data.json();
-    },
-      err => {
-      console.log(err);
-      });
+  ngOnInit() {
+    this.init();
+    this.route.params.subscribe(params => {
+      if(params['designation']) {
+        this.portable = new Portable(params);
+        this.editOrCreatePhone = 'Edit';
+      }
+    });
+  }
 
-  this.portableServices.listAllCamera()
+  init() {
+    this.editOrCreatePhone = 'Create';
+    this.portableServices.listAllcatPorta()
       .subscribe(data => {
-        this.listCamera = data.json();
-      },
+          this.listPortableCategory = data.json();
+        },
         err => {
-        console.log(err);
+          console.log(err);
         });
 
-     this.portableServices.listAllSystemos()
+    this.measureService.getAllMeasure()
       .subscribe(data => {
-        this.listSystemOs = data.json();
-      },
+          this.listMeasureUnit = data;
+        },
         err => {
-        console.log(err);
+          console.log(err);
         });
 
-      this.portableServices.listAllCpu()
+    this.productCategoryService.getAllProductCategory()
       .subscribe(data => {
-        this.listCpu = data.json();
-      },
+          this.listProductCategory = data;
+        },
         err => {
-        console.log(err);
+          console.log(err);
         });
-      this.portableServices.listAllMemory()
+
+    this.portableServices.listAllCamera()
       .subscribe(data => {
-        this.listMemory = data.json();
-      },
+          this.listCamera = data.json();
+        },
         err => {
-        console.log(err);
+          console.log(err);
         });
-}
- submitForm() {
+
+    this.portableServices.listAllSystemos()
+      .subscribe(data => {
+          this.listSystemOs = data.json();
+        },
+        err => {
+          console.log(err);
+        });
+
+    this.portableServices.listAllCpu()
+      .subscribe(data => {
+          this.listCpu = data.json();
+        },
+        err => {
+          console.log(err);
+        });
+
+    this.portableServices.listAllMemory()
+      .subscribe(data => {
+          this.listMemory = data.json();
+        },
+        err => {
+          console.log(err);
+        });
+  }
+
+  submitForm() {
     this.mode = 2;
   }
-   savePortable() {
-     console.log(this.portable);
+
+  savePortable() {
+    console.log(this.portable);
   }
+
   cancel() {
     this.mode = 1;
   }

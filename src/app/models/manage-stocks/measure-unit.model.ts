@@ -4,6 +4,6 @@ export class MeasureUnit {
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.id : null) : null;
-    this.unity = obj ? (obj.unity ? obj.unity : '') : '';
+    this.unity = obj ? (obj.unity ? obj.unity : null) : null;
   }
 }

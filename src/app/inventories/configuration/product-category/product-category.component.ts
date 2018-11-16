@@ -55,20 +55,6 @@ export class ProductCategoryComponent implements OnInit {
     }
   }
 
-  onCreateUser(): void {
-    this.addEditCardHeader = 'Create GenericCategory';
-    this.mode = 4;
-  }
-
-  onListUser(): void {
-    this.mode = 1;
-  }
-
-  onDetailsUser(id: number): void {
-    console.log(id);
-    this.mode = 2;
-  }
-
   async onSaveProductCategory() {
     const data = await this.productCategoryService.saveProductCategory(this.category).toPromise();
     if (this.category.id) {

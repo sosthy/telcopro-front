@@ -1,18 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {PortableServices} from '../../../services/portable.services';
-import {ProductServices} from '../../../services/product.services';
+import {ProductServices} from '../products.services';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EntrepotServices} from '../../../services/entrepot.services';
 import {Cpu} from '../../../models/manage-stocks/cpu.model';
-import {PortableCategory} from '../../../models/manage-stocks/portable-category.model';
 import {Memory} from '../../../models/manage-stocks/memory.model';
 import {Camera} from '../../../models/manage-stocks/camera.model';
 import {Systemos} from '../../../models/manage-stocks/system-os.model';
 import {Emplacement} from '../../../models/manage-stocks/emplacement.model';
 import {State} from '../../../models/manage-stocks/state.model';
 import {MeasureUnit} from '../../../models/manage-stocks/measure-unit.model';
-import {ProductCategory} from '../../../models/manage-stocks/product-category.model';
 import {Portable} from '../../../models/manage-stocks/portable.model';
+import {GenericCategory} from "../../../models/manage-stocks/category.model";
 
 @Component({
   selector: 'app-edit-phones',
@@ -23,14 +22,14 @@ import {Portable} from '../../../models/manage-stocks/portable.model';
 export class EditPhonesComponent implements OnInit {
 
 portable: Portable;
-  listProductCategory: Array<ProductCategory>;
+  listProductCategory: Array<GenericCategory>;
   listMeasureUnit: Array<MeasureUnit>;
   listState: Array<State>;
   listEmplacement: Array<Emplacement>;
   listSystemos: Array<Systemos>;
   listCamera: Array<Camera>;
   listMemory: Array<Memory>;
-  listPortableCategory: Array<PortableCategory>;
+  listPortableCategory: Array<GenericCategory>;
   listCpu: Array<Cpu>;
   mode = 1;
   constructor(public portableServices: PortableServices, public entrepotService: EntrepotServices,
@@ -66,8 +65,7 @@ portable: Portable;
         console.log(err);
         }
         );
-     this.portableServices.listAllSystemos()
-      .subscribe(data => {
+     this.portableServices.listAllSystemos().subscribe(data => {
         this.listSystemos = data.json();
         console.log(this.listSystemos);
       },
