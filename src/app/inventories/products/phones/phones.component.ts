@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PortableServices} from '../../../services/portable.services';
 import {Http} from '@angular/http';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Portable} from '../../../models/manage-stocks/portable.model';
 
 @Component({
@@ -14,7 +14,9 @@ export class PhonesComponent implements OnInit {
   listPortables: any;
   motcle: string;
   portable: Portable;
-  constructor(public http: Http, public portableservices: PortableServices, public router: Router) {
+  constructor(public http: Http,
+              public portableservices: PortableServices,
+              public router: Router) {
   }
   ngOnInit() {
     this.showPhones();
@@ -23,7 +25,6 @@ export class PhonesComponent implements OnInit {
     this.portableservices.listAllPortable()
       .subscribe(data => {
         this.listPortables = data.json();
-        console.log(this.listPortables);
       },
         err => {
         console.log(err);
@@ -34,7 +35,6 @@ export class PhonesComponent implements OnInit {
     this.portableservices.searchPortable(this.motcle)
       .subscribe(data => {
         this.listPortables = data.json();
-        console.log(this.listPortables);
       },
         err => {
         console.log(err);
@@ -58,6 +58,6 @@ export class PhonesComponent implements OnInit {
     }
   }
   onEditPortable(p: Portable) {
-    this.router.navigate(['inventories/products/edit-phones', p]);
+    this.router.navigate(['inventories/products/new-phones', p]);
   }
 }

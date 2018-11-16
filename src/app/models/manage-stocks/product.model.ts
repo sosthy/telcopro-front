@@ -1,6 +1,4 @@
-import {MouvmentLine} from './mouvment-line.model';
 import {AppColor} from './app-color.model';
-import {ProductCategory} from './product-category.model';
 import {MeasureUnit} from './measure-unit.model';
 import {Emplacement} from './emplacement.model';
 import {State} from './state.model';
@@ -27,21 +25,21 @@ export class Product {
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.connection : null) : null;
-    this.quantity = obj ? (obj.quantity ? obj.quantity : 0) : 0;
-    this.dateCreation = obj ? (obj.dateCreation ? obj.dateCreation : new Date()) : new Date();
-    this.designation = obj ? (obj.designation ? obj.designation : '') : '';
-    this.image = obj ? (obj.image ? obj.image : '') : '';
-    this.priceUnit = obj ? (obj.priceUnit ? obj.priceUnit : 0) : 0;
-    this.priceUnitWholesaler = obj ? (obj.priceUnitWholesaler ? obj.priceUnitWholesaler : 0) : 0;
-    this.priceUnitSemiWholesaler = obj ? (obj.priceUnitSemiWholesaler ? obj.priceUnitSemiWholesaler : 0) : 0;
-    this.stockMinimum = obj ? (obj.stockMinimum ? obj.stockMinimum : 0) : 0;
-    this.stockAlert = obj ? (obj.stockAlert ? obj.stockAlert : 0) : 0;
-    this.volume = obj ? (obj.volume ? obj.volume : 0) : 0;
-    this.note = obj ? (obj.note ? obj.note : '') : '';
-    this.state = obj ? (obj.state ? obj.state : new State()) : new State();
-    this.emplacement = obj ? (obj.emplacement ? obj.emplacement : new Emplacement()) : new Emplacement();
-    this.measureUnit = obj ? (obj.measureUnit ? obj.measureUnit : new MeasureUnit()) : new MeasureUnit();
-    this.productCategory = obj ? (obj.productCategory ? obj.productCategory : new GenericCategory()) : new GenericCategory();
-    this.appColor = obj ? (obj.appColor ? obj.appColor : new AppColor()) : new AppColor();
+    this.quantity = obj ? (obj.quantity ? obj.quantity : null) : null;
+    this.dateCreation = obj ? (obj.dateCreation ? obj.dateCreation : null) : null;
+    this.designation = obj ? (obj.designation ? obj.designation : null) : null;
+    this.image = obj ? (obj.image ? obj.image : null) : null;
+    this.priceUnit = obj ? (obj.priceUnit ? obj.priceUnit : null) : null;
+    this.priceUnitWholesaler = obj ? (obj.priceUnitWholesaler ? obj.priceUnitWholesaler : null) : null;
+    this.priceUnitSemiWholesaler = obj ? (obj.priceUnitSemiWholesaler ? obj.priceUnitSemiWholesaler : null) : null;
+    this.stockMinimum = obj ? (obj.stockMinimum ? obj.stockMinimum : null) : null;
+    this.stockAlert = obj ? (obj.stockAlert ? obj.stockAlert : null) : null;
+    this.volume = obj ? (obj.volume ? obj.volume : null) : null;
+    this.note = obj ? (obj.note ? obj.note : null) : null;
+    this.state = obj ? (obj.state ? obj.state : null) : null;
+    this.emplacement = obj ? (obj.emplacement ? obj.emplacement : null) : null;
+    this.measureUnit = obj ? (obj.measureUnit ? obj.measureUnit : null ) : null ;
+    this.productCategory = obj ? (obj.productCategory ? obj.productCategory : null) : null;
+    this.appColor = obj ? (obj.appColor ? obj.appColor : null) : null;
   }
 }

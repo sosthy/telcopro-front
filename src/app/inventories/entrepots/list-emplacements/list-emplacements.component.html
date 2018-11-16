@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formSystemOs)">Create Emplacement</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="searchSystemos">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchSystemO()" style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    List of Emplacements
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Product Count</th>
+          <th>Total Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let emplace of listEmplacement; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ emplace.name }}</td>
+          <td>{{ emplace.nbOfProduct}}</td>
+          <td>{{ emplace.priceTotalOfProduct }}</td>
+          <td>
+            <a href="javascript:;" (click)="open(formSystemOs, sys)">edit</a> &nbsp;&nbsp;
+            <a href="javascript:;" (click)="open(deleteSystemOs, sys)">delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
