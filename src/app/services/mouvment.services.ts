@@ -13,15 +13,15 @@ export class MouvmentServices {
   }
 
   listAllMvt() {
-    return this.http.get(TELCOPRO_URL + '/stocks/mouvments', this.authenticationService.getHeaders());
+    return this.http.get(TELCOPRO_URL + '/stocks/mouvments', this.authenticationService.getHeaders()).map(res => res.json());
   }
 
   saveMvt(mouvement: Mouvment) {
-    return this.http.post(TELCOPRO_URL + '/stocks/mouvments', mouvement, this.authenticationService.getHeaders());
+    return this.http.post(TELCOPRO_URL + '/stocks/mouvments', mouvement, this.authenticationService.getHeaders()).map(res => res.json());
   }
 
   listMvt(id: number) {
-    return this.http.get(TELCOPRO_URL + '/stocks/mouvments' + id, this.authenticationService.getHeaders());
+    return this.http.get(TELCOPRO_URL + '/stocks/mouvments' + id, this.authenticationService.getHeaders()).map(res => res.json());
   }
 
   deleteMvt(id: number) {
@@ -29,7 +29,8 @@ export class MouvmentServices {
   }
 
   update(mouvement: Mouvment) {
-    return this.http.post(TELCOPRO_URL + '/stocks/mouvments', mouvement, this.authenticationService.getHeaders());
+    return this.http.post(TELCOPRO_URL + '/stocks/mouvments', mouvement, this.authenticationService.getHeaders())
+      .timeout(1000).map(res => res.json());
   }
 
   // ============================listing des types d'un mouvemet donnee==================================================

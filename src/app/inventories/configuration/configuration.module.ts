@@ -26,6 +26,8 @@ import {StateService} from './state/state.service';
 import {SystemosService} from './systemos/systemos.service';
 import {ColorService} from './color/color.service';
 import {ProcessorService} from './processor/processor.service';
+import {RecipientsGroupeComponent} from './recipients-groupe/recipients-groupe.component';
+import {RecipientsGroupeService} from './recipients-groupe/recipients-groupe.service';
 
 
 @NgModule({
@@ -46,8 +48,9 @@ import {ProcessorService} from './processor/processor.service';
     ProcessorComponent,
     StateComponent,
     SystemosComponent,
+    RecipientsGroupeComponent
   ],
   providers: [PhoneCategoryService, ProductCategoryService, CameraService, MeasureService, MemoryService, ProductServices,
-  StateService, SystemosService, ColorService, ProcessorService]
+  StateService, SystemosService, ColorService, ProcessorService, RecipientsGroupeService]
 })
 export class ConfigurationModule {}

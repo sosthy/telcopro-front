@@ -1,7 +1,8 @@
 import {StocksDashboardComponent} from './dashboard-stocks/dashboard-stocks.component';
 import {Routes} from '@angular/router';
 import {ProductsComponent} from './products/products.component';
-import {ConfigurationComponent} from "./configuration/configuration.component";
+import {ConfigurationComponent} from './configuration/configuration.component';
+import {RecipientsComponent} from './recipients/recipients.component';
 
 export const InventoriesRoutes: Routes = [{
   path: 'dashboard-stocks',
@@ -15,7 +16,13 @@ export const InventoriesRoutes: Routes = [{
   path: 'configurations',
   component: ConfigurationComponent,
   loadChildren: './configuration/configuration.module#ConfigurationModule'
-}, {
+},
+  {
+  path: 'recipients',
+  component: RecipientsComponent,
+  loadChildren: './recipients/recipients.module#RecipientsModule'
+},
+  {
   path: '**',
   redirectTo: 'dashboard-stocks'
 }]

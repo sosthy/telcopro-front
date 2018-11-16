@@ -1,7 +1,8 @@
-import {Recipient} from './recipient.model';
-
-export interface RecipientGroupe {
+export class RecipientGroupe {
    id: number;
   name: string;
-  recipients: Recipient;
+  constructor(obj?: any) {
+    this.id = obj ? (obj.id ? obj.id : null ) : null;
+    this.name = obj ? (obj.name ? obj.name : '') : '';
+  }
 }

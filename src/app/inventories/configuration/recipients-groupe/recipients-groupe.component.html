@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary" (click)="open(formGroup)">Create Group</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" [(ngModel)] ="motCle" class="form-control" name="groupSearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchGroup()" style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    List of Groups
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Group Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let gro of groupes; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td class="text-uppercase">{{ gro.name }}</td>
+          <td>
+            <a href="javascript:;" (click)="open(formGroup, gro)">edit</a> &nbsp;&nbsp;
+            <a href="javascript:;" (click)="open(deleteGroup, gro)">delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="" *ngIf="mode == 3">
+  <p>Edit Group</p>
+</div>
+
+<ng-template #deleteGroup let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete Group</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onDeleteGroup()">Yes</button>
+  </div>
+</ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formGroup let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Role Informations for Group</p>
+        <div class="form-group row">
+          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Group Name</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="groupe.name" id="role-text-input" name="groupName">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveGroup()">Save changes</button>
+  </div>
+</ng-template>

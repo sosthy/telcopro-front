@@ -11,6 +11,7 @@ import {ColorComponent} from './color/color.component';
 import {StateComponent} from './state/state.component';
 import {SystemosComponent} from './systemos/systemos.component';
 import {Routes} from '@angular/router';
+import {RecipientsGroupeComponent} from './recipients-groupe/recipients-groupe.component';
 
 
 export const ConfigurationRoutes: Routes = [{
@@ -70,7 +71,12 @@ export const ConfigurationRoutes: Routes = [{
       component: SystemosComponent,
       data: {
         heading: 'System OS'
+      }}, {
+      path: 'recipientsgroupe',
+      component: RecipientsGroupeComponent,
+      data: {
+        heading: 'Fournisseur/Client(configure)'
       }
-    },
+    }
   ]
 }];
