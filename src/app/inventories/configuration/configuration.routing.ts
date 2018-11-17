@@ -22,13 +22,13 @@ export const ConfigurationRoutes: Routes = [{
       path: 'phones-category',
       component: PhoneCategoryComponent,
       data: {
-        heading: 'Phones GenericCategory'
+        heading: 'Phones Category'
       }
     }, {
       path: 'products-category',
       component: ProductCategoryComponent,
       data: {
-        heading: 'Products GenericCategory'
+        heading: 'Products Category'
       }
     }, {
       path: 'processors',
@@ -75,7 +75,7 @@ export const ConfigurationRoutes: Routes = [{
       path: 'recipientsgroupe',
       component: RecipientsGroupeComponent,
       data: {
-        heading: 'Fournisseur/Client(configure)'
+        heading: 'Recipients'
       }
     }
   ]

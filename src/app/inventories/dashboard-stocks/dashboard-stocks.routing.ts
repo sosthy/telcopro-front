@@ -11,7 +11,7 @@ export const StocksDashboardRoutes: Routes = [{
   path: '',
   component: StocksDashboardComponent,
   data: {
-    heading: 'Dashboard'
+    heading: 'Inventories'
   },
   children: [{
     path: 'bar',

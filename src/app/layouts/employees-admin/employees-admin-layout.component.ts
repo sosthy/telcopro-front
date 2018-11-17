@@ -96,7 +96,7 @@ export class EmployeesAdminLayoutComponent implements OnInit, OnDestroy, AfterVi
   }
 
   setTitle( newTitle: string) {
-    this.titleService.setTitle( 'Decima - Bootstrap 4 Angular Admin Template | ' + newTitle );
+    this.titleService.setTitle( 'Telcopro ERP | ' + newTitle );
   }
 
   toogleSidebar(): void {

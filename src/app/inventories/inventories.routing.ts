@@ -3,8 +3,7 @@ import {Routes} from '@angular/router';
 import {ProductsComponent} from './products/products.component';
 import {ConfigurationComponent} from './configuration/configuration.component';
 import {RecipientsComponent} from './recipients/recipients.component';
-import {ConfigurationComponent} from "./configuration/configuration.component";
-import {EntrepotComponent} from "./entrepots/entrepots.component";
+import {EntrepotComponent} from './entrepots/entrepots.component';
 
 
 export const InventoriesRoutes: Routes = [{
@@ -32,4 +31,4 @@ export const InventoriesRoutes: Routes = [{
   {
   path: '**',
   redirectTo: 'dashboard-stocks'
-}]
+}];
