@@ -1,69 +1,53 @@
 <div *ngIf="pageToLoad == 'listing page'">
-  <div class="d-flex justify-content-between mb-5">
-    <div>
-      <button class="btn btn-primary" (click)="loadAddPage()" >Add Employee</button>
-    </div>
-    <div class="u-search">
-      <form>
-        <div class="form-group">
-          <input type="search" placeholder="Search" class="form-control" [(ngModel)] ="keyWords" name="search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()" style="display:none"><span class="fa fa-search"></span></button>
+<div class="d-flex justify-content-between mb-5">
+  <div>
+    <button class="btn btn-primary" (click)="loadAddPage()" >Add Employee</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)] ="keyWords" name="search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()" style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let employee of listEmployees">
+    <div class="card card-body card-widget bg-white card-inverse">
+      <div ngbDropdown class="imenu" placement="bottom-right">
+        <a id="downMenu" href="javascript:;" ngbDropdownToggle>
+          <i class="fa fa-ellipsis-v"></i>
+        </a>
+        <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="downMenu">
+          <a class="dropdown-item" href="javascript:;" (click)="loadDetailPage(employee)">
+            <i class="icon icon-basic-settings mr-3"></i>
+            <span>Details</span>
+          </a>
+          <a class="dropdown-item" href="javascript:;" (click)="loadEditionPage(employee)">
+            <i class="icon icon-basic-postcard mr-3"></i>
+            <span>Edit</span>
+          </a>
+          <a class="dropdown-item" href="javascript:;" (click)="deleteEmployeeRequest(employee)">
+            <i class="icon icon-basic-message-multiple mr-3"></i>
+            <span>Delete</span>
+          </a>
         </div>
-      </form>
+      </div>
+      <a href="javascript:;">
+        <img src="assets/images/avatar.jpg" class="avatar-md rounded" alt="">
+      </a>
+      <div class="pl-3 pr-3">
+        <p class="ff-headers mb-0 text-uppercase mb-2"><strong>{{ employee.name }}</strong> {{ employee.surname }}</p>
+        <small class="d-block">Poste : {{ employee.poste }}</small>
+        <small class="d-block">Phone : {{ employee.phone }}</small>
+        <small class="d-block">Email : {{ employee.email }}</small>
+        <small class="d-block">Workspace : {{ employee?.workSpace.name }}</small>
+      </div>
     </div>
   </div>
-
-
-  <div class="card">
-    <div class="card-header">Employees list</div>
-    <div class="table-responsive" *ngIf="listEmployees.length != 0">
-      <table class="table align-middle mb-0">
-        <thead>
-          <tr>
-            <th>Photo</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let employee of listEmployees">
-            <td>
-              <img src="assets/images/avatar.jpg" alt="{{employee.name}} photo" class="avatar-md rounded" >
-            </td>
-            <td> {{employee.name}} </td>
-            <td> {{employee.surname}} </td>
-            <!--<td>{{ user.registered | date:'yMMMd' }}</td>-->
-            <td> {{employee.website}} </td>
-            <td> {{employee.phone}} </td>
-            <td>
-              <div class="navbar">
-                <div >
-                  <a (click)="loadDetailPage(employee)" class="dropdown-item">
-                    <i class="icon icon-basic-message-multiple mr-3"></i>
-                     <span>View order</span>
-                  </a>
-                  <a (click)="loadEditionPage(employee)" class="dropdown-item">
-                    <i class="icon icon-basic-settings mr-3"></i>
-                    <span>Edit</span>
-                  </a>
-                  <a (click)="deleteEmployeeRequest(employee)" href="javascript:;" class="dropdown-item clickable">
-                    <i class="icon icon-basic-postcard mr-3"></i>
-                    <span>Delete</span>
-                  </a>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <strong *ngIf="listEmployees.length == 0">
-      {{tableMessage}}
-    </strong>
-  </div>
+</div>
 </div>
 
 <div class="card" *ngIf="pageToLoad == 'add page' || pageToLoad == 'edit page'">
@@ -135,44 +119,44 @@
   </div>
 </div>
 
-<div class="card" *ngIf="pageToLoad.startsWith('confirm') || pageToLoad == 'details page'">
-  <strong class="card-header" *ngIf="pageToLoad == 'confirm edit page' || pageToLoad == 'confirm add page'">Confirm registration employee</strong>
-  <strong class="card-header" *ngIf="pageToLoad == 'details page'">Employee details</strong>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-lg-3">
-         <p>
-          <img class="avatar-lg center-img" src="assets/images/avatar.jpg" alt="Card image"/>
-        </p>
+  <div class="card" *ngIf="pageToLoad.startsWith('confirm') || pageToLoad == 'details page'">
+    <strong class="card-header" *ngIf="pageToLoad == 'confirm edit page' || pageToLoad == 'confirm add page'">Confirm registration employee</strong>
+    <strong class="card-header" *ngIf="pageToLoad == 'details page'">Employee details</strong>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3">
+           <p>
+            <img class="avatar-lg center-img" src="assets/images/avatar.jpg" alt="Card image"/>
+          </p>
 
-        <h5>
-          {{employee.name}} {{employee.surname}}
-        </h5>
+          <h5>
+            {{employee.name}} {{employee.surname}}
+          </h5>
+        </div>
+        <div class="col-lg-4">
+            <p *ngIf="pageToLoad == 'details page' || pageToLoad == 'confirm edit page'">Employee Number: <strong>{{employee.id}}</strong></p>
+            <p>Email: <strong>{{employee.website}}</strong> </p>
+            <p>Cni: <strong>{{employee.cni}}</strong> </p>
+            <p>Phone: <strong>{{employee.phone}}</strong> </p>
+            <p>Birthday: <strong>{{employee.birthday}}</strong> </p>
+        </div>
+        <div class="col-lg-5">
+            <p>Sex: <strong>{{employee.sex}}</strong> </p>
+            <p>Work Space: <strong>{{employee.workSpace.name}}</strong> </p>
+            <p>Hiring Date: <strong>{{employee.hiringDate}}</strong> </p>
+            <p *ngIf="pageToLoad == 'details page'">Seniority: <strong>{{employee.seniority}}</strong> </p>
+        </div>
       </div>
-      <div class="col-lg-4">
-          <p *ngIf="pageToLoad == 'details page' || pageToLoad == 'confirm edit page'">Employee Number: <strong>{{employee.id}}</strong></p>
-          <p>Email: <strong>{{employee.website}}</strong> </p>
-          <p>Cni: <strong>{{employee.cni}}</strong> </p>
-          <p>Phone: <strong>{{employee.phone}}</strong> </p>
-          <p>Birthday: <strong>{{employee.birthday}}</strong> </p>
-      </div>
-      <div class="col-lg-5">
-          <p>Sex: <strong>{{employee.sex}}</strong> </p>
-          <p>Work Space: <strong>{{employee.workSpace.name}}</strong> </p>
-          <p>Hiring Date: <strong>{{employee.hiringDate}}</strong> </p>
-          <p *ngIf="pageToLoad == 'details page'">Seniority: <strong>{{employee.seniority}}</strong> </p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary navbar-btn" *ngIf="pageToLoad == 'details page'" (click)="pageToLoad = 'listing page'">Ok</button>
+      <div *ngIf="pageToLoad.includes('confirm')">
+        <button class="btn btn-primary navbar-btn"  (click)="saveInformation()">
+          <span *ngIf="pageToLoad.includes('add')">Save</span>
+          <span *ngIf="pageToLoad.includes('edit')">Update</span>
+        </button>
+        <button class="btn btn-primary navbar-btn" (click)="pageToLoad = pageToLoad.replace('confirm ','')">Discard</button>
       </div>
     </div>
   </div>
-  <div class="card-footer">
-    <button class="btn btn-primary navbar-btn" *ngIf="pageToLoad == 'details page'" (click)="pageToLoad = 'listing page'">Ok</button>
-    <div *ngIf="pageToLoad.includes('confirm')">
-      <button class="btn btn-primary navbar-btn"  (click)="saveInformation()">
-        <span *ngIf="pageToLoad.includes('add')">Save</span>
-        <span *ngIf="pageToLoad.includes('edit')">Update</span>
-      </button>
-      <button class="btn btn-primary navbar-btn" (click)="pageToLoad = pageToLoad.replace('confirm ','')">Discard</button>
-    </div>
-  </div>
-</div>
 
