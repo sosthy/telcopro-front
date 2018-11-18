@@ -15,6 +15,9 @@ import {Product} from '../../../models/manage-stocks/product.model';
 import {GenericCategory} from "../../../models/manage-stocks/category.model";
 import {MeasureService} from "../../configuration/measure/measure.service";
 import {ProductCategoryService} from "../../configuration/product-category/product-category.service";
+import {AccountsService} from "../../../accounts/accounts.service";
+import {AuthenticationService} from "../../../authentication/authentication.service";
+import {WorkSpace} from "../../../models/workspace.model";
 
 @Component({
   selector: 'app-new-phones',
@@ -23,6 +26,7 @@ import {ProductCategoryService} from "../../configuration/product-category/produ
 })
 export class NewPhonesComponent implements OnInit {
   portable: Portable = new Portable();
+  listEntrepot: Array<WorkSpace>;
   listEmplacement: Array<Emplacement>;
   listMeasureUnit: Array<MeasureUnit>;
   listProductCategory: Array<GenericCategory>;
@@ -36,7 +40,10 @@ export class NewPhonesComponent implements OnInit {
 
 
   constructor(public portableServices: PortableServices,
+              public productService: ProductServices,
               public measureService: MeasureService,
+              public accountService: AccountsService,
+              public auth: AuthenticationService,
               public productCategoryService: ProductCategoryService,
               public route: ActivatedRoute,
               public router: Router) {
@@ -55,6 +62,11 @@ export class NewPhonesComponent implements OnInit {
 
   init() {
     this.editOrCreatePhone = 'Create';
+    this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
+      this.productService.getEmplacementsOfEntrepot(resp.employee.workSpace.id).subscribe(resp => {
+        this.listEmplacement = resp.json();
+      });
+    });
     this.portableServices.listAllcatPorta()
       .subscribe(data => {
           this.listPortableCategory = data.json();
@@ -110,6 +122,10 @@ export class NewPhonesComponent implements OnInit {
         err => {
           console.log(err);
         });
+  }
+
+  onChangeEntrepotSelect(value) {
+    console.log(value.name);
   }
 
   submitForm() {

@@ -136,6 +136,10 @@ export class ProductServices {
      return this.http.delete(TELCOPRO_URL + '/stocks/categories' + id, this.authenticationService.getHeaders());
   }
 
+  getEmplacementsOfEntrepot(id) {
+    return this.http.get(TELCOPRO_URL + '/stocks/entrepots/emplacements-of-entrepot/' + id, this.authenticationService.getHeaders());
+  }
+
 }
 
 

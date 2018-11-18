@@ -27,6 +27,16 @@
                      name="designation" id="designation-text-input">
             </div>
           </div>
+          <!--<div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="entrepotSelect">Entrepot</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="entrepotSelect" name="entrepot" (change)="onChangeEntrepotSelect($event.target.value)" class="form-control">
+                <option [ngValue]="entrepot" *ngFor="let entrepot of listEntrepot">{{ entrepot.name }}</option>
+              </select>
+            </div>
+          </div>-->
           <div class="form-group row">
             <div class="col-lg-4 text-lg-right pr-3 ">
               <label for="emplacementSelect">Emplacement</label>
@@ -69,7 +79,7 @@
               <label for="measure-text-input">Measure Unit</label>
             </div>
             <div class="col-lg-8">
-              <select id="measure-text-input" name="measure" [(ngModel)]="portable.priceUnit" class="form-control" [compareWith]="compareFn">
+              <select id="measure-text-input" name="measure" [(ngModel)]="portable.measureUnit" class="form-control" [compareWith]="compareFn">
                 <option [ngValue]="measur" *ngFor="let measur of listMeasureUnit">{{ measur.unity }}</option>
               </select>
             </div>
