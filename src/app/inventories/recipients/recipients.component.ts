@@ -109,7 +109,7 @@ export class RecipientsComponent implements OnInit {
   onDeleteRecipient() {
     this.recipientsService.deleteRecip(this.recipient.id).subscribe(data => {
       this.recipients.forEach(r => {
-        if (r.name === data.name) {
+        if (r.designation === data.designation) {
           const index: number = this.recipients.indexOf(r);
           if (index !== -1) {
             this.recipients.splice(index, 1);
@@ -130,5 +130,8 @@ export class RecipientsComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 }
