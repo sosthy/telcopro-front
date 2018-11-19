@@ -8,3 +8,56 @@
 .left-spacer {
   margin-left: 5px;
 }
+.u-search {
+  min-width: 250px;
+}
+
+u-col {
+  min-width: 240px;
+}
+
+.u-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.dropdown-toggle::after {
+  display:none;
+}
+
+.imenu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.u-item {
+  position: relative;
+  min-width: 300px;
+  min-height: 80px;
+  max-height: 80px;
+  border-radius: 3px;
+}
+
+.shadow	{
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+  -moz-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+}
+
+.shadow:active {
+  -webkit-box-shadow: 0 4px 6px 0 rgba(0,0,0,0.20);
+  -moz-box-shadow: 0 4px 6px 0 rgba(0,0,0,0.20);
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.20);
+}
+
+.u-item:hover {
+  cursor: pointer;
+}
+
+.u-details {
+  width: 800px;
+}

@@ -36,7 +36,4 @@ export class EmployeeService {
   search(keyWords) {
     return this.http.get(TELCOPRO_URL + '/rh/employees/search?mc=' + keyWords, this.auth.getHeaders());
   }
-  getWorkSpaces() {
-    return this.http.get(TELCOPRO_URL + '/rh/workSpaces', this.auth.getHeaders());
-  }
 }
