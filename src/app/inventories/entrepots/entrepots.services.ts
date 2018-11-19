@@ -5,6 +5,7 @@ import {AuthenticationService} from "../../authentication/authentication.service
 import {Http} from "@angular/http";
 import {TELCOPRO_URL} from "../../models/config.model";
 import {GenericEntrepot} from "../../models/manage-stocks/entrepot.model";
+import {Emplacement} from "../../models/manage-stocks/emplacement.model";
 
 @Injectable()
 export class EntrepotService {
@@ -31,8 +32,8 @@ export class EntrepotService {
     return this.http.delete(TELCOPRO_URL + '/stocks/entrepots/emplacements/' + id, this.authenticationService.getHeaders()).map(res => res.json());
   }
 
-  saveEmplacement(entrepot: GenericEntrepot) {
-    return this.http.post(TELCOPRO_URL + '/stocks/entrepots/emplacements', entrepot, this.authenticationService.getHeaders()).map(res => res.json());
+  saveEmplacement(emplacement: Emplacement) {
+    return this.http.post(TELCOPRO_URL + '/stocks/entrepots/emplacements', emplacement, this.authenticationService.getHeaders()).map(res => res.json());
   }
   search(keyWords) {
     return this.http.get(TELCOPRO_URL + '/stocks/entrepots/search?mc=' + keyWords, this.authenticationService.getHeaders());

@@ -1,12 +1,12 @@
 <div class="d-flex justify-content-between">
   <div>
-    <button class="btn btn-primary" (click)="open(formSystemOs)">Create Emplacement</button>
+    <button class="btn btn-primary" (click)="open(formEmplacement)">Create Emplacement</button>
   </div>
   <div class="u-search">
     <form>
       <div class="form-group">
-        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="searchSystemos">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchSystemO()" style="display:none"><span class="fa fa-search"></span></button>
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="searchEmplacement">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
     </form>
   </div>
@@ -28,14 +28,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let emplace of listEmplacement; let i = index">
+        <tr *ngFor="let emplacement of listEmplacement; let i = index">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ emplace.name }}</td>
-          <td>{{ emplace.nbOfProduct}}</td>
-          <td>{{ emplace.priceTotalOfProduct }}</td>
+          <td>{{ emplacement.name }}</td>
+          <td>{{ emplacement.nbOfProduct}}</td>
+          <td>{{ emplacement.priceTotalOfProduct }}</td>
           <td>
-            <a href="javascript:;" (click)="open(formSystemOs, sys)">edit</a> &nbsp;&nbsp;
-            <a href="javascript:;" (click)="open(deleteSystemOs, sys)">delete</a>
+            <a href="javascript:;" (click)="open(formEmplacement, emplacement)">edit</a> &nbsp;&nbsp;
+            <a href="javascript:;" (click)="open(deleteEmplacement, emplacement)">delete</a>
           </td>
         </tr>
         </tbody>
@@ -43,3 +43,46 @@
     </div>
   </div>
 </div>
+
+<ng-template #deleteEmplacement let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete Emplacement</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>One fine body&hellip;</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onDeleteEmplacement()">Yes</button>
+  </div>
+</ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formEmplacement let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Emplacement Informations</p>
+        <div class="form-group row">
+          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Name</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="emplacement.name" id="role-text-input" name="osName">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveEmplacement()">Save changes</button>
+  </div>
+</ng-template>
