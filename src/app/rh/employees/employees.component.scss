@@ -11,17 +11,14 @@
 .u-search {
   min-width: 250px;
 }
-
 u-col {
   min-width: 240px;
 }
-
 .u-close {
   position: absolute;
   top: -8px;
   right: -8px;
 }
-
 .dropdown-toggle::after {
   display:none;
 }
@@ -57,7 +54,32 @@ u-col {
 .u-item:hover {
   cursor: pointer;
 }
+.u-item {
+  position: relative;
+  min-width: 180px;
+  min-height: 80px;
+  max-height: 80px;
+  border-radius: 3px;
+  padding: 5px 2px 5px 5px;
+}
 
-.u-details {
-  width: 800px;
+a:hover
+{
+  background: rgb(235, 235, 235);
+  color: #0d47a1;
+}
+
+.u-move-to {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+.imenu {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }

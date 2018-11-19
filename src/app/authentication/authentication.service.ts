@@ -23,6 +23,7 @@ export class AuthenticationService {
     localStorage.setItem('token', this.token);
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(token);
+    localStorage.setItem("username", decodedToken.sub);
     console.log(decodedToken);
   }
 
@@ -30,8 +31,12 @@ export class AuthenticationService {
     return localStorage.getItem('token');
   }
 
-  setUser(user: User) {
+  setUser(user) {
     this.user = user;
+  }
+
+  getUserName(){
+    return localStorage.getItem('username');
   }
 
   getUser(): User {

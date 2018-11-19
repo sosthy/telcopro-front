@@ -30,6 +30,10 @@ export class EmployeeService {
     return this.http.post(TELCOPRO_URL + '/rh/employees', employee, this.auth.getHeaders());
   }
 
+  getAccountOfEmployee(id) {
+    return this.http.get(TELCOPRO_URL + '/rh/employees/' + id, this.auth.getHeaders());
+  }
+
   deleteEmployee(id) {
     return this.http.delete(TELCOPRO_URL + '/rh/employees/' + id, this.auth.getHeaders());
   }

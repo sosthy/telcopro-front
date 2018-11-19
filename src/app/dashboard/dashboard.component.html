@@ -5,151 +5,18 @@
       <p>All applications you need to work here.</p>
     </div>
     <div class="row pt-sm-5">
-      <!-- <div class="col-sm-3 text-center mb-4">
-        <a routerLink="/employee">
-          <p><i class="fa fa-users fa-5x" aria-hidden="true"></i></p>
-          <p>Employees</p>
-        </a>
-      </div>
-      <div class="col-sm-3 text-center mb-4">
-        <a>
-          <p><i class="fa fa-industry fa-5x" aria-hidden="true"></i></p>
-          <p>Works</p>
-        </a>
-      </div>
-      <div class="col-sm-3 text-center mb-4">
-        <a href="#">
-          <p><i class="fa fa-eur fa-5x" aria-hidden="true"></i></p>
-          <p>Accounting</p>
-        </a>
-      </div>
-      <div class="col-sm-3 text-center mb-4">
-        <a href="#">
-          <p><i class="fa fa-hand-lizard-o fa-5x" aria-hidden="true"></i></p>
-          <p>Recrutment</p>
-        </a>
-      </div>
-      <div class="col-sm-3 text-center mb-4">
-        <a href="#">
-          <p><i class="fa fa-money fa-5x" aria-hidden="true"></i></p>
-          <p>Facturation</p>
-        </a>
-      </div>
-      <div class="col-sm-3 text-center mb-4">
-        <a href="#">
-          <p><i class="fa fa-comments fa-5x" aria-hidden="true"></i></p>
-          <p>Discussion</p>
-        </a>  *ngFor="let item of items.getAllMenu()"
-      </div> -->
-      <div class="col-md-3">
-        <a [routerLink]="['/accounts/users']">
-          <div class="card card-body card-widget bg-green card-inverse">
+      <div class="col-md-3" *ngFor="let menu of menus">
+        <a [routerLink]=[menu.link] >
+          <div class="card card-body card-widget {{ menu.color }} card-inverse">
             <div class="mr-auto">
-              <h4 class="fw-300 mb-0">Accounts</h4>
-              <small>Users Accounts</small>
+              <h4 class="fw-300 mb-0">{{ menu.name }}</h4>
+              <small>{{ menu.description }}</small>
             </div>
             <div class="d-block">
-              <i class="fa fa-user-circle-o fa-3x"></i>
+              <i class="fa {{ menu.icon }} fa-3x"></i>
             </div>
           </div>
         </a>
       </div>
-      <div class="col-md-3">
-        <a href="javascript:;">
-          <div class="card card-body card-widget bg-blue card-inverse">
-            <div class="mr-auto">
-              <h4 class="fw-300 mb-0">CRM</h4>
-              <small>Customer Relationship</small>
-            </div>
-            <div class="d-block">
-              <i class="fa fa-tachometer fa-3x"></i>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a [routerLink]="['/inventories']">
-          <div class="card card-body card-widget bg-brown card-inverse">
-            <div class="mr-auto">
-              <h4 class="fw-300 mb-0">Inventory</h4>
-              <small>Stock Management</small>
-            </div>
-            <div class="d-block">
-              <i class="fa fa-building-o fa-3x"></i>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a [routerLink]="['/rh']">
-          <div class="card card-body card-widget bg-deep-purple card-inverse">
-            <div class="mr-auto">
-              <h4 class="fw-300 mb-0">Resources</h4>
-              <small>Humans Resources Management</small>
-            </div>
-            <div class="d-block">
-              <i class="fa fa-user-o fa-3x"></i>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="javascript:;">
-          <div class="card card-body card-widget bg-purple card-inverse">
-            <div class="mr-auto">
-              <h4 class="fw-300 mb-0">Recrutment</h4>
-              <small>Recrutment Management</small>
-            </div>
-            <div class="d-block">
-              <i class="fa fa-user-plus fa-3x"></i>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="javascript:;">
-          <div class="card card-body card-widget bg-yellow card-inverse">
-            <div class="mr-auto">
-              <h4 class="fw-300 mb-0">Sales</h4>
-              <small>Sales Management</small>
-            </div>
-            <div class="d-block">
-              <i class="fa fa-line-chart fa-3x"></i>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-        <a href="javascript:;">
-          <div class="card card-body card-widget bg-cyan card-inverse">
-            <div class="mr-auto">
-              <h4 class="fw-300 mb-0">P.O Sales</h4>
-              <small>Point Of Sales</small>
-            </div>
-            <div class="d-block">
-              <i class="fa fa-desktop fa-3x"></i>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-3">
-          <a href="javascript:;">
-            <div class="card card-body card-widget bg-red card-inverse">
-              <div class="mr-auto">
-                <h4 class="fw-300 mb-0">Setting</h4>
-                <small>Setting Management</small>
-              </div>
-              <div class="d-block">
-                <i class="fa fa-cog fa-3x"></i>
-              </div>
-            </div>
-          </a>
-        </div>
-      <!-- <div class="col-sm-3 text-center mb-4">
-
-          <p><i class="fa fa-comments fa-5x" aria-hidden="true"></i></p>
-          <p>Inventory</p>
-        </a>
-      </div> -->
     </div>
 </div>

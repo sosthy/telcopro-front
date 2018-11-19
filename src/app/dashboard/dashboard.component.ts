@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardItems } from '../shared/menu-items/dashboard-items';
+import {AccountsService} from "../accounts/accounts.service";
+import {AuthenticationService} from "../authentication/authentication.service";
+import {AppMenu} from "../models/appmenu.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +10,26 @@ import { DashboardItems } from '../shared/menu-items/dashboard-items';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  menus: Array<AppMenu> = new Array();
+  user = {};
 
-  constructor(private items: DashboardItems) {}
+  constructor(private items: DashboardItems,
+              private auth: AuthenticationService,
+              private accountService: AccountsService) {}
 
   ngOnInit(): void {
-    console.log(localStorage.getItem('token'));
+    this.init();
+  }
+
+  init() {
+    this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
+      this.user = resp;
+      console.log(this.user);
+      this.user['roles'].forEach(role => {
+        this.menus = this.menus.concat(role.menus);
+      });
+      console.log(this.menus);
+    });
   }
 
 }

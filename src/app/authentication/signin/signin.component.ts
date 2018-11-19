@@ -26,7 +26,7 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    this.auth.onLogin(new User()).subscribe(resp => {
+    this.auth.onLogin(new User(this.form.value)).subscribe(resp => {
 
       const token = resp.headers.get('Authorization');
       this.auth.setToken(token);

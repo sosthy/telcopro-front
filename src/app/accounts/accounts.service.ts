@@ -52,8 +52,8 @@ export class AccountsService {
     return this.http.get(TELCOPRO_URL + '/users', this.auth.getHeaders()).map(res => res.json());
   }
 
-  getUser(id) {
-    return this.http.get(TELCOPRO_URL + '/');
+  getUser(username) {
+    return this.http.get(TELCOPRO_URL + '/user-with-username/' + username, this.auth.getHeaders()).map(res => res.json());
   }
 
   saveUser(user) {
