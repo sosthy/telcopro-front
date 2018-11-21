@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <button class="btn btn-primary">Make Mouvement</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="mouvmentSearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchMouvment()" style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ngb-accordion (panelChange)="beforeChange($event)">
+  <ngb-panel id="1" title="Mouvment Filter">
+    <ng-template ngbPanelContent>
+      <form class="form-inline mb-4">
+        <label class="m-md-2" for="refFormInput">Reference</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="refFormInput" placeholder="Code">
+
+        <label class="m-md-2" for="ddFormInput">Date debut</label>
+        <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="ddFormInput" >
+
+        <label class="m-md-2" for="dfFormInput">Date Fin</label>
+        <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="dfFormInput" >
+
+        <label class="m-md-2" for="typeFormCustomSelect">Type</label>
+        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="typeFormCustomSelect">
+          <option selected>Choose...</option>
+          <option value="1">APPROVISIONNEMENT</option>
+          <option value="2">LIVRAISON</option>
+          <option value="3">TRANSFERT</option>
+          <option value="3">RETOUR</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </ng-template>
+  </ngb-panel>
+</ngb-accordion>
+
+<div class="card">
+  <div class="card-header">
+    List of Mouvments
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table text-center">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Reference</th>
+          <th>Type</th>
+          <th>Date</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Recipient</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th scope="row">2</th>
+          <td class="text-uppercase">PMMLP4559</td>
+          <td>LIVRAISON</td>
+          <td>11 Juin 2018</td>
+          <td>7</td>
+          <td>137000 FCFA</td>
+          <td>THOMAS (CLI)</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td class="text-uppercase">RLMNP4559</td>
+          <td>APPROVISION</td>
+          <td>28 Juin 2018</td>
+          <td>40</td>
+          <td>1447000 FCFA</td>
+          <td>ORANGE (PRO)</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td class="text-uppercase">DDFTY443</td>
+          <td>TRANSFERT</td>
+          <td>28 Juin 2018</td>
+          <td>10</td>
+          <td>17000 FCFA</td>
+          <td>STARSTEL (POS)</td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td class="text-uppercase">RREDF445</td>
+          <td>RETOUR</td>
+          <td>28 Fev 2018</td>
+          <td>02</td>
+          <td>35000 FCFA</td>
+          <td>STARSTEL (POS)</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
