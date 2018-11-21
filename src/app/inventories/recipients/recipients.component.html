@@ -78,3 +78,64 @@
     <button type="button" class="btn btn-danger" (click)="onDeleteRecipient()">OK</button>
   </div>
 </ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formRecipient let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Role Informations for Recipient</p>
+        <div class="form-group row">
+          <label for="des-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="recipient.designation" id="des-text-input" name="recipientDesignation">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="txt" [(ngModel)]="recipient.website" id="web-text-input" name="recipientWeb">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="phone-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="recipient.phone" id="phone-text-input" name="recipientPhone">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="loc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="txt" [(ngModel)]="recipient.location" id="loc-text-input" name="recipientLocation">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="group-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Groupe</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <select id="group-text-input" name="selectedGroup" [(ngModel)]="recipient.groupe" class="form-control" [compareWith]="compareFn">
+                <option [ngValue]="grp" *ngFor="let grp of groupes">{{ grp.name }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="mouv-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Transactions</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <select id="mouv-text-input" name="selectedTrans" [(ngModel)]="recipient.mouvements" class="form-control" [compareWith]="compareFn">
+                <option [ngValue]="mvt" *ngFor="let mvt of mouvements">{{ mvt.reference}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveRecipient()">Save changes</button>
+  </div>
+</ng-template>

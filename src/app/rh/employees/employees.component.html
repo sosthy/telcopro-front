@@ -127,10 +127,7 @@
             </div>
           </div>
           <label>Photo:   </label>
-          <label class="custom-file">
-            <input class="custom-file-input" type="file" id="file" [(ngModel)]="photoFile">
-            <span class="custom-file-control"></span>
-          </label>
+          <input type="file" (change)="fileInputChange($event)">
         </div>
       </div>
     </div>

@@ -18,4 +18,4 @@ export const RhRoutes: Routes = [{
 }, {
   path: '**',
   redirectTo: 'dashboard-rh'
-}]
+}];

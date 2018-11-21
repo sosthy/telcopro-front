@@ -143,7 +143,16 @@ export class EmployeesComponent implements OnInit {
        console.log(err);
        });
      */
-    this.employeeService.saveEmployee(this.employee)
+    const  fd = new FormData();
+    fd.append('photo', this.photoFile, this.photoFile.name);
+    this.employeeService.upload(fd)
+      .subscribe(data => {
+          console.log('Upload  return: ', data);
+        },
+        err => {
+          console.log(err);
+        });
+    /*this.employeeService.saveEmployee(this.employee)
       .subscribe(data => {
           this.employee = data.json();
           if (page === 'confirm add page') {
@@ -153,8 +162,12 @@ export class EmployeesComponent implements OnInit {
         },
         err => {
           console.log(err);
-        });
+        });*/
     alert('Employee ' + this.employee.name + ' ' + this.employee.surname + ' has been succeful done.');
     this.pageToLoad = 'listing page';
+  }
+  fileInputChange(event) {
+    this.photoFile = event.target.files[0];
+    console.log(this.photoFile);
   }
 }

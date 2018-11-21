@@ -40,4 +40,7 @@ export class EmployeeService {
   search(keyWords) {
     return this.http.get(TELCOPRO_URL + '/rh/employees/search?mc=' + keyWords, this.auth.getHeaders());
   }
+  upload(photo) {
+    return this.http.post(TELCOPRO_URL + '/rh/employees/upload', photo , this.auth.getHeaders());
+  }
 }
