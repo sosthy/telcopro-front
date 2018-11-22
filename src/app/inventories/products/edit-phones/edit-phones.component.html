@@ -1,355 +1,291 @@
 <form>
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="card" *ngIf="mode == 1">
-        <div class="card-header">
-          stocks Informations
-        </div>
-        <div class="card-body">
-
-          <div class="form-group">
-            <label class="control-label">Designation:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.designation" name="designation"/>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Quantity:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.quantity" name="quantity">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Price Unit:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.priceUnit" name="price unit">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Creation Date:</label>
-            <input class="form-control" type="date" [(ngModel)]="portable.dateCreation" name="creatioin date">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Notes:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.note" name="notes">
-          </div>
-          <p class="mt-4">Choose An Image</p>
-          <label class="custom-file">
-            <input type="file" id="file" class="custom-file-input" name="images">
-            <span class="custom-file-control"></span>
-          </label>
-          <div class="form-group">
-            <label class="control-label">Price Unit Semi Whole saler:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.priceUnitSemiWholesaler"
-                   name="priceUnitSemiWholesaler">
-          </div>
-          <div class="form-group">
-            <label class="control-label"> Price Unit Whole Saler</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.priceUnitWholesaler"
-                   name="priceUnitWholesaler">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Stock d'alert:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.stockAlert" name="stockAlert">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Stock Minimum:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.stockMinimum" name="stockMinimum">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Volume:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.volume" name="volume"/>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Product Category:</label>
-            <select [(ngModel)]="portable.productCategory" name="productCategory" class="form-control">
-              <option [ngValue]="portable.productCategory" selected>{{portable.productCategory?.name}}</option>
-              <option [ngValue]="portableCategory" *ngFor="let productCategory of listProductCategory">
-                {{productCategory?.name}}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Measure Unit:</label>
-            <select [(ngModel)]="portable.measureUnit" name="measureUnit" class="form-control">
-              <option [ngValue]="portable.measureUnit" selected>{{portable.measureUnit?.unity}}</option>
-              <option [ngValue]="measureUnit" *ngFor="let measureUnit of listMeasureUnit">{{measureUnit?.unity}}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">State:</label>
-            <select [(ngModel)]="portable.state" name="state" class="form-control">
-              <option [ngValue]="portable.state" selected>{{portable.state?.name}}</option>
-              <option [ngValue]="state" *ngFor="let state of listState">{{state?.name}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Emplacement:</label>
-            <select [(ngModel)]="portable.emplacement" name="emplacement" class="form-control">
-              <option [ngValue]="portable.emplacement" selected>{{portable.emplacement?.name}}</option>
-              <option [ngValue]="emplacement" *ngFor="let emplacement of listEmplacement">{{emplacement?.name}}</option>
-            </select>
-          </div>
-
-        </div>
-
-      </div>
+  <div class="d-flex justify-content-between mb-5">
+    <div>
+      <button class="btn btn-primary" (click)="savePortable()">Save Changes</button>
+      <button class="btn btn-primary" [routerLink]="['/inventories/products/phones']">Cancel</button>
     </div>
-
-    <div class="col-lg-6">
-      <div class="card" *ngIf="mode == 1">
-        <div class="card-header">
-          Phones Informations
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label class="control-label">Battery:</label>
-            <!--<input class="form-control" type="text" [(ngModel)]="portable.battery">-->
-            <input class="form-control" type="text" [(ngModel)]="portable.battery" name="battery">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Connection:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.connection" name="connection">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Dimension:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.dimension" name="dimension">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Dushproof:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.dushproof" name="dushproof">
-          </div>
-          <div class="form-group">
-            <label class="control-label">finger Print:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.fingerprint" name="fingerprint">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Ip Rating:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.ipRating" name="ipRating">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Screen:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.screen" name="screen">
-          </div>
-          <div class="form-group">
-            <label class="control-label">SIM:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.sim" name="sim">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Splash Proof:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.splashproof" name="splashproof">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Water Proof:</label>
-            <input class="form-control" type="text" [(ngModel)]="portable.waterproof" name="waterproof">
-          </div>
-          <div class="form-group">
-            <label class="control-label">Weight:</label>
-            <input class="form-control" type="number" [(ngModel)]="portable.weight" name="weight">
-          </div>
-          <div class="form-group">
-            <label class="control-label">System Os:</label>
-            <select [(ngModel)]="portable.os" name="os" class="form-control">
-              <option [ngValue]="portable.os" selected>{{portable.os?.name}}</option>
-              <option [ngValue]="os" *ngFor="let os of listSystemOs">{{os?.name}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Camera:</label>
-            <select [(ngModel)]="portable.camera" name="camera" class="form-control">
-              <option [ngValue]="portable.camera" selected>{{portable.camera?.frontCamera}}</option>
-              <option [ngValue]="camera" *ngFor="let camera of listCamera">{{camera?.frontCamera}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Memoire:</label>
-            <select [(ngModel)]="portable.memory" name="memory" class="form-control">
-              <option [ngValue]="portable.memory" selected>{{portable.memory?.brand}}</option>
-              <option [ngValue]="memory" *ngFor="let memory of listMemory">{{memory?.brand}}</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Phone Category:</label>
-            <select [(ngModel)]="portable.portableCategory" name="portableCategory" class="form-control">
-              <option [ngValue]="portable.portableCategory" selected>{{portable.portableCategory?.name}}</option>
-              <option [ngValue]="portableCategory" *ngFor="let portableCategory of listPortableCategory">
-                {{portableCategory?.name}}
-              </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="control-label">CPU:</label>
-            <select [(ngModel)]="portable.cpu" name="cpu" class="form-control">
-              <option [ngValue]="portable.cpu" selected>{{portable.cpu?.brand}}</option>
-              <option [ngValue]="cpu" *ngFor="let cpu of listCpu">{{cpu?.brand}}</option>
-            </select>
-          </div>
-
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary" (click)="submitForm()">Submit</button>
-        </div>
-
-      </div>
-    </div>
-
-
   </div>
-
-  <!-- confirmation-->
-
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="card" *ngIf="mode == 2">
-        <div class="card-header">
-          stocks Confirmations
-        </div>
-        <div class="card-body">
-
-          <div class="form-group">
-            <label class="control-label">Designation:</label>
-            <label><strong>{{portable.designation}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Quantity:</label>
-            <label><strong>{{portable.quantity}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Price Unit:</label>
-            <label><strong>{{portable.priceUnit}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Creation Date:</label>
-            <label><strong>{{portable.dateCreation}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Notes:</label>
-            <label><strong>{{portable.note}}</strong></label>
-          </div>
-          <!-- <p class="mt-4">Choose An Image</p>
-            <label class="custom-file">
-            <input type="file" id="file" class="custom-file-input" name="images">
-            <span class="custom-file-control"></span>
-          </label>-->
-          <div class="form-group">
-            <label class="control-label">Price Unit Semi Whole saler:</label>
-            <label><strong>{{portable.priceUnitWholesaler}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label"> Price Unit Whole Saler</label>
-            <label><strong>{{portable.priceUnitWholesaler}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Stock d'alert:</label>
-            <label><strong>{{portable.stockAlert}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Stock Minimum:</label>
-            <label><strong>{{portable.stockMinimum}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Volume:</label>
-            <label><strong>{{portable.volume}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Product Category:</label>
-            <label><strong>{{portable.productCategory?.name}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Measure Unit:</label>
-            <label><strong>{{portable.measureUnit?.unity}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">State:</label>
-            <label><strong>{{portable.state?.name}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Emplacement:</label>
-            <label><strong>{{portable.emplacement?.name}}</strong></label>
-          </div>
-
-        </div>
-
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        {{ editOrCreatePhone }} Phone
       </div>
-    </div>
-
-    <div class="col-lg-6">
-      <div class="card" *ngIf="mode == 2">
-        <div class="card-header">
-          Phones Confirmations
+      <div class="row card-body">
+        <div class="col-md col-lg pr-3">
+          <div class="form-group row justify-content-end">
+            <div class="col-lg-8 pr-3 h6">
+              <strong>Product Informations</strong>
+            </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3">
+              <label for="designation-text-input">Designation</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="portable.designation"
+                     name="designation" id="designation-text-input">
+            </div>
+          </div>
+          <!--<div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="entrepotSelect">Entrepot</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="entrepotSelect" name="entrepot" (change)="onChangeEntrepotSelect($event.target.value)" class="form-control">
+                <option [ngValue]="entrepot" *ngFor="let entrepot of listEntrepot">{{ entrepot.name }}</option>
+              </select>
+            </div>
+          </div>-->
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="emplacementSelect">Emplacement</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="emplacementSelect" name="emplacement" [(ngModel)]="portable.emplacement" class="form-control">
+                <option *ngFor="let emplace of listEmplacement" [selected]="portable.emplacement.id == emplace.id">
+                  {{ emplace.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="volume-text-input">Volume</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.volume" name="volume"
+                     id="volume-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="stk-alert-text-input">Stock Alert</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.stockAlert" name="stk-alert"
+                     id="stk-alert-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="stk-min-text-input">Stock minimum</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.stockMinim" name="stk-min"
+                     id="stk-min-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="measure-text-input">Measure Unit</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="measure-text-input" name="measure" [(ngModel)]="portable.measureUnit" class="form-control">
+                <option *ngFor="let measur of listMeasureUnit" [selected]="portable.measureUnit.id == measur.id">
+                  {{ measur.unity }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="p-categorie-text-input">Product Category</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="p-categorie-text-input" name="p-categorie" [(ngModel)]="portable.productCategory" class="form-control">
+                <option *ngFor="let productcatego of listProductCategory" [selected]="portable.productCategory.id == productcatego.id">
+                  {{ productcatego.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="price-unit-text-input">Price Unit</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.priceUnit" name="price-unit"
+                     id="price-unit-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="price-semi-whole-text-input">Price Semi-Wholesaler</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.priceUnitSemiWholesaler" name="price-semi-whole"
+                     id="price-semi-whole-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="price-whole-text-input">Price Wholesaler</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.priceUnitWholesaler" name="price-whole"
+                     id="price-whole-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="notes-text-input">Notes</label>
+            </div>
+            <div class="col-lg-8">
+                      <textarea class="form-control" type="text" [(ngModel)]="portable.note" name="notes"
+                                id="notes-text-input" rows="4"></textarea>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label class="control-label">Battery:</label>
-            <label><strong>{{portable.battery}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Connection:</label>
-            <label><strong>{{portable.connection}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Dimension:</label>
-            <label><strong>{{portable.dimension}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Dushproof:</label>
-            <label><strong>{{portable.dushproof}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">finger Print:</label>
-            <label><strong>{{portable.fingerprint}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Ip Rating:</label>
-            <label><strong>{{portable.ipRating}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Screen:</label>
-            <label><strong>{{portable.screen}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">SIM:</label>
-            <label><strong>{{portable.sim}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Splash Proof:</label>
-            <label><strong>{{portable.splashproo}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Water Proof:</label>
-            <label><strong>{{portable.waterproof}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Weight:</label>
-            <label><strong>{{portable.weight}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">System Os:</label>
-            <label><strong>{{portable.os?.name}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Camera:</label>
-            <label><strong>{{portable.camera?.frontCamera}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Memoire:</label>
-            <label><strong>{{portable.memory?.brand}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Phone Category:</label>
-            <label><strong>{{portable.portableCategory?.name}}</strong></label>
-          </div>
-          <div class="form-group">
-            <label class="control-label">CPU:</label>
-            <label><strong>{{portable.cpu?.brand}}</strong></label>
-          </div>
 
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary" (click)="updatePortable()" [routerLink]="['/inventories/products/phones']">
-            save
-          </button>
-          <button class="btn btn-primary" (click)="cancel()">Cancel</button>
-        </div>
+        <div class="col-md col-lg pr-3">
+          <div class="form-group row justify-content-end">
+            <div class="col-lg-8 pr-3 h6">
+              <strong>Phone Details</strong>
+            </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="phone-category-text-input">Phone Category</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="phone-category-text-input" name="ph-categorie" [(ngModel)]="portable.portableCategory" class="form-control">
+                <option *ngFor="let portablecatego of listPortableCategory" [selected]="portable.portableCategory.id == portablecatego.id">
+                  {{ portablecatego.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="os-text-input">System OS</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="os-text-input" name="ph-os" [(ngModel)]="portable.os" class="form-control">
+                <option *ngFor="let sysos of listSystemOs" [selected]="portable.os.id == sysos.id">
+                  {{ sysos.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="processor-text-input">Processor</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="processor-text-input" name="processor" [(ngModel)]="portable.cpu" class="form-control">
+                <option *ngFor="let cppu of listCpu" [selected]="portable.cpu.id == cppu.id">{{ cppu.brand }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="memory-text-input">Memory</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="memory-text-input" name="memory" [(ngModel)]="portable.memory" class="form-control">
+                <option *ngFor="let memory of listMemory" [selected]="portable.memory.id == memory.id">
+                  RAM : {{ memory.rom }} Go, ROM : {{ memory.ram }} Go
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="camera-text-input">Camera</label>
+            </div>
+            <div class="col-lg-8">
+              <select id="camera-text-input" name="camera" [(ngModel)]="portable.camera" class="form-control">
+                <option *ngFor="let cam of listCamera" [selected]="portable.camera.id == cam.id">
+                  Back : {{ cam.backCamera }} MPixels, Front : {{ cam.frontCamera }} MPixels
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="dimension-text-input">Dimension</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.dimension" name="dimension"
+                     id="dimension-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="battery-text-input">Battery</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="portable.battery" name="battery"
+                     id="battery-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="connection-text-input">Connection</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="portable.connection" name="connection"
+                     id="connection-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="iprating-text-input">IP Rating</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="portable.ipRating" name="iprating"
+                     id="iprating-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="sim-text-input">SIM</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="portable.sim" name="sim"
+                     id="sim-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="weight-text-input">Weight</label>
+            </div>
+            <div class="col-lg-8">
+              <input class="form-control" type="number" [(ngModel)]="portable.weight" name="weight"
+                     id="weight-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
 
+            </div>
+            <div class="col-lg-8">
+              <label for="dushproof-input" class="custom-control custom-checkbox">
+                <input id="dushproof-input" type="checkbox" class="custom-control-input" [(ngModel)]="portable.dushproof" name="dushproof">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Dushproof</span>
+              </label>
+              <label for="waterproof-input" class="custom-control custom-checkbox">
+                <input id="waterproof-input" type="checkbox" class="custom-control-input" [(ngModel)]="portable.waterproof" name="waterproof">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Waterproof</span>
+              </label>
+              <label for="splashproof-input" class="custom-control custom-checkbox">
+                <input id="splashproof-input" type="checkbox" class="custom-control-input" [(ngModel)]="portable.splashproof" name="splashproof">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Splashproof</span>
+              </label>
+              <label for="fingerprint-input" class="custom-control custom-checkbox">
+                <input id="fingerprint-input" type="checkbox" class="custom-control-input" [(ngModel)]="portable.fingerprint" name="fingerprint">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Fingerprint</span>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
 </form>
-

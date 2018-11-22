@@ -83,7 +83,6 @@ export class RecipientsGroupeComponent implements OnInit {
     this.modalRef.close();
   }
   searchGroup() {
-    console.log(this.motCle);
     this.recipientsGroupeService.searchGroups(this.motCle)
       .subscribe(data => {
         this.groupes = data;

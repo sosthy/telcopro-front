@@ -9,12 +9,12 @@ export const ProductsRoutes = [{
       path: '',
       component: ProductsComponent,
       data: {
-        heading: 'Products'
+        heading: 'Stocks'
       },
       children: [
-        {path: 'phones', component: PhonesComponent, data: {heading: 'Phones'}},
-        {path: 'new-phones', component: NewPhonesComponent, data: {heading: 'New-Phones'}},
-        {path: 'edit-phones', component: EditPhonesComponent, data: {heading: 'edit-Phones'}}
+        {path: 'phones', component: PhonesComponent, data: {heading: 'Phones Stocks'}},
+        {path: 'new-phones', component: NewPhonesComponent, data: {heading: 'New Phones Stock'}},
+        {path: 'edit-phones', component: EditPhonesComponent, data: {heading: 'Edit Phones Stock'}}
       ]
     }]
 }];

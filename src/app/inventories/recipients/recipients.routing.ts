@@ -6,6 +6,6 @@ export const RecipientsRoutes: Routes = [{
   path: '',
   component: RecipientsComponent,
   data: {
-    heading: 'Recipients'
+    heading: 'Fournisseurs/Clients'
   }
 }];

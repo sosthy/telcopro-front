@@ -22,7 +22,6 @@ export class WorkSpacesComponent implements OnInit {
     this.workSpaceService.getWorkSpaces()
       .subscribe(data => {
         this.listWorkSpaces = data.json();
-        console.log(this.listWorkSpaces);
         this.tableMessage = 'No workSpace found';
       },
         err => {
@@ -83,7 +82,6 @@ export class WorkSpacesComponent implements OnInit {
         this.workSpace = data.json();
         if (page === 'confirm add page') {
           this.listWorkSpaces.push(this.workSpace);
-          console.log('Result Save information', this.workSpace);
         }
       },
         err => {

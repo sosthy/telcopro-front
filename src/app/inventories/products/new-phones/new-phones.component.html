@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-between mb-5">
     <div>
       <button class="btn btn-primary" (click)="savePortable()">Save Changes</button>
-      <button class="btn btn-primary">Cancel</button>
+      <button class="btn btn-primary" [routerLink]="['/inventories/products/phones']">Cancel</button>
     </div>
   </div>
   <div class="container">
@@ -27,23 +27,15 @@
                      name="designation" id="designation-text-input">
             </div>
           </div>
-          <!--<div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label for="entrepotSelect">Entrepot</label>
-            </div>
-            <div class="col-lg-8">
-              <select id="entrepotSelect" name="entrepot" (change)="onChangeEntrepotSelect($event.target.value)" class="form-control">
-                <option [ngValue]="entrepot" *ngFor="let entrepot of listEntrepot">{{ entrepot.name }}</option>
-              </select>
-            </div>
-          </div>-->
           <div class="form-group row">
             <div class="col-lg-4 text-lg-right pr-3 ">
               <label for="emplacementSelect">Emplacement</label>
             </div>
             <div class="col-lg-8">
               <select id="emplacementSelect" name="emplacement" [(ngModel)]="portable.emplacement" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="emplace" *ngFor="let emplace of listEmplacement">{{ emplace.name }}</option>
+                <option *ngFor="let emplace of listEmplacement">
+                  {{ emplace.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -70,7 +62,7 @@
               <label for="stk-min-text-input">Stock minimum</label>
             </div>
             <div class="col-lg-8">
-              <input class="form-control" type="number" [(ngModel)]="portable.stockMinimum" name="stk-min"
+              <input class="form-control" type="number" [(ngModel)]="portable.stockMinim" name="stk-min"
                      id="stk-min-text-input">
             </div>
           </div>
@@ -80,7 +72,9 @@
             </div>
             <div class="col-lg-8">
               <select id="measure-text-input" name="measure" [(ngModel)]="portable.measureUnit" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="measur" *ngFor="let measur of listMeasureUnit">{{ measur.unity }}</option>
+                <option *ngFor="let measur of listMeasureUnit">
+                  {{ measur.unity }}
+                </option>
               </select>
             </div>
           </div>
@@ -90,7 +84,9 @@
             </div>
             <div class="col-lg-8">
               <select id="p-categorie-text-input" name="p-categorie" [(ngModel)]="portable.productCategory" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="productcatego" *ngFor="let productcatego of listProductCategory">{{ productcatego.name }}</option>
+                <option *ngFor="let productcatego of listProductCategory">
+                  {{ productcatego.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -145,7 +141,9 @@
             </div>
             <div class="col-lg-8">
               <select id="phone-category-text-input" name="ph-categorie" [(ngModel)]="portable.portableCategory" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="portablecatego" *ngFor="let portablecatego of listPortableCategory">{{ portablecatego.name }}</option>
+                <option *ngFor="let portablecatego of listPortableCategory">
+                  {{ portablecatego.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -155,7 +153,9 @@
             </div>
             <div class="col-lg-8">
               <select id="os-text-input" name="ph-os" [(ngModel)]="portable.os" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="sysos" *ngFor="let sysos of listSystemOs">{{ sysos.name }}</option>
+                <option *ngFor="let sysos of listSystemOs">
+                  {{ sysos.name }}
+                </option>
               </select>
             </div>
           </div>
@@ -165,7 +165,7 @@
             </div>
             <div class="col-lg-8">
               <select id="processor-text-input" name="processor" [(ngModel)]="portable.cpu" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="cppu" *ngFor="let cppu of listCpu">{{ cppu.brand }}</option>
+                <option *ngFor="let cppu of listCpu">{{ cppu.brand }}</option>
               </select>
             </div>
           </div>
@@ -175,7 +175,9 @@
             </div>
             <div class="col-lg-8">
               <select id="memory-text-input" name="memory" [(ngModel)]="portable.memory" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="memory" *ngFor="let memory of listMemory">RAM : {{ memory.rom }} Go, ROM : {{ memory.ram }} Go</option>
+                <option *ngFor="let memory of listMemory">
+                  RAM : {{ memory.rom }} Go, ROM : {{ memory.ram }} Go
+                </option>
               </select>
             </div>
           </div>
@@ -185,7 +187,9 @@
             </div>
             <div class="col-lg-8">
               <select id="camera-text-input" name="camera" [(ngModel)]="portable.camera" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="cam" *ngFor="let cam of listCamera">Back : {{ cam.backCamera }} MPixels, Front : {{ cam.frontCamera }} MPixels</option>
+                <option *ngFor="let cam of listCamera">
+                  Back : {{ cam.backCamera }} MPixels, Front : {{ cam.frontCamera }} MPixels
+                </option>
               </select>
             </div>
           </div>

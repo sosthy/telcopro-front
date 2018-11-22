@@ -13,7 +13,7 @@ export class Product {
   priceUnit: number;
   priceUnitWholesaler: number;
   priceUnitSemiWholesaler: number;
-  stockMinimum: number;
+  stockMinim: number;
   stockAlert: number;
   volume: number;
   note: string;
@@ -24,7 +24,7 @@ export class Product {
   appColor: AppColor;
 
   constructor(obj?: any) {
-    this.id = obj ? (obj.id ? obj.connection : null) : null;
+    this.id = obj ? (obj.id ? obj.id : null) : null;
     this.quantity = obj ? (obj.quantity ? obj.quantity : null) : null;
     this.dateCreation = obj ? (obj.dateCreation ? obj.dateCreation : null) : null;
     this.designation = obj ? (obj.designation ? obj.designation : null) : null;
@@ -32,7 +32,7 @@ export class Product {
     this.priceUnit = obj ? (obj.priceUnit ? obj.priceUnit : null) : null;
     this.priceUnitWholesaler = obj ? (obj.priceUnitWholesaler ? obj.priceUnitWholesaler : null) : null;
     this.priceUnitSemiWholesaler = obj ? (obj.priceUnitSemiWholesaler ? obj.priceUnitSemiWholesaler : null) : null;
-    this.stockMinimum = obj ? (obj.stockMinimum ? obj.stockMinimum : null) : null;
+    this.stockMinim = obj ? (obj.stockMinim ? obj.stockMinim : null) : null;
     this.stockAlert = obj ? (obj.stockAlert ? obj.stockAlert : null) : null;
     this.volume = obj ? (obj.volume ? obj.volume : null) : null;
     this.note = obj ? (obj.note ? obj.note : null) : null;

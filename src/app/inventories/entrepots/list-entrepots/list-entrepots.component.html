@@ -16,10 +16,10 @@
 <div class="row">
   <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let entrepot of listEntrepot">
     <div class="card card-body card-widget bg-white card-inverse">
-      <div ngbDropdown class="imenu" placement="bottom-right">
-        <a id="downMenu" href="javascript:;" ngbDropdownToggle>
+      <div ngbDropdown placement="bottom-right">
+        <button class="imenu" id="downMenu" href="javascript:;" ngbDropdownToggle>
           <i class="fa fa-ellipsis-v"></i>
-        </a>
+        </button>
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="downMenu">
           <a class="dropdown-item" href="javascript:;" (click)="open(formEntrepot, entrepot)">
             <i class="icon icon-basic-settings mr-3"></i>

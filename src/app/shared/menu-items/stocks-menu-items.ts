@@ -10,7 +10,7 @@ const STOCKSMENUITEMS = [
   },
   {
     state: 'products',
-    name: 'PRODUCTS',
+    name: 'Stocks',
     type: 'sub',
     icon: ' fa fa-cubes',
     children: [

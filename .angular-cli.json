@@ -19,6 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "styles.css",
         "assets/fonts/linea/styles.css",
         "assets/fonts/header/_flaticon.scss",
         "../node_modules/dragula/dist/dragula.css",

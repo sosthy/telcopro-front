@@ -16,10 +16,10 @@
 <div class="row">
   <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let usr of users">
     <div class="card card-body card-widget bg-white card-inverse">
-      <div ngbDropdown class="imenu" placement="bottom-right">
-        <a id="downMenu" href="javascript:;" ngbDropdownToggle>
+      <div ngbDropdown placement="bottom-left">
+        <button class="imenu" id="downMenu" href="javascript:;" ngbDropdownToggle>
           <i class="fa fa-ellipsis-v"></i>
-        </a>
+        </button>
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="downMenu">
           <a class="dropdown-item" href="javascript:;" (click)="open(formUser, usr, 1)">
             <i class="icon icon-basic-settings mr-3"></i>
@@ -29,6 +29,7 @@
             <i class="icon icon-basic-postcard mr-3"></i>
             <span>Delete</span>
           </a>
+          <!--<a class="dropdown-item" href="javascript:;" (click)="open(userDetails, usr, 3)">-->
           <a class="dropdown-item" href="javascript:;">
             <i class="icon icon-basic-message-multiple mr-3"></i>
             <span>Details</span>
@@ -40,8 +41,9 @@
       </a>
       <div class="pl-3 pr-3">
         <p class="ff-headers mb-0 text-uppercase"><strong>{{ usr.username }}</strong></p>
+        <small class="d-block">{{ usr.employee.name }}</small>
+        <small class="d-block">{{ usr.employee.surname }}</small>
         <small class="d-block">{{ usr.email }} </small>
-        <small class="d-block">{{ usr.roles }}</small>
       </div>
     </div>
   </div>
@@ -50,32 +52,65 @@
 
 <ng-template #userDetails let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">D</h6>
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-  </div>
-</ng-template>
-
-<ng-template #deleteUserConfirmation let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{ addEditCardHeader }}</h6>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>Are you sure you want to delete <strong>{{ user.username | uppercase }}</strong> records ?</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="onDeleteUser()">OK</button>
+    <div class="card">
+      <div class="card-body">
+        <p>User Informations</p>
+        <div class="form-group row">
+          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Username</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label>{{user.username}}</label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="email-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="email" [(ngModel)]="user.email" name="email" id="email-input">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="employee-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Employee</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+              <div class="input-group-addon"><i class="fa fa-user"></i></div>
+              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input">
+                <option [ngValue]="user.employee" selected >{{ user.employee.name }} {{ user.employee.surname }}</option>
+                <option *ngFor="let empItem of employees" [ngValue]="empItem">{{ empItem.name }} {{ empItem.surname }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="exampleSelect2" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Roles</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <div class="row">
+              <div class="col">
+                <select id="exampleSelect2" multiple name="roles" [(ngModel)]="rolesSel" class="form-control" [compareWith]="compareFn">
+                  <option [ngValue]="roleItem" *ngFor="let roleItem of roles">{{roleItem.roleName}}</option>
+                </select>
+                <div class="text-right mt-1">
+                  <button class="btn btn-secondary btn-sm" (click)="addRole()">Push <i class="fa fa-chevron-right"></i></button>
+                </div>
+              </div>
+              <div class="col">
+                <select multiple name="rolesSel" [(ngModel)]="rolSelRemoved" class="form-control" [compareWith]="compareFn">
+                  <option [ngValue]="r" *ngFor="let r of user.roles">{{ r.roleName }}</option>
+                </select>
+                <!-- <span *ngFor="let r of roleSelected" class="badge badge-success rounded">{{r}} &nbsp; </span> -->
+                <div class="text-right mt-1">
+                  <button class="btn btn-warning btn-sm" (click)="clearSelectedRole()">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
 
@@ -117,7 +152,7 @@
               <div class="input-group-addon"><i class="fa fa-user"></i></div>
               <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input">
                 <option [ngValue]="user.employee" selected >{{ user.employee.name }} {{ user.employee.surname }}</option>
-                <option [ngValue]="empItem" *ngFor="let empItem of employees">{{ empItem.name }} {{ empItem.surname }}</option>
+                <option *ngFor="let empItem of employees" [ngValue]="empItem">{{ empItem.name }} {{ empItem.surname }}</option>
               </select>
             </div>
           </div>

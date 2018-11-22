@@ -24,11 +24,9 @@ export class DashboardComponent implements OnInit {
   init() {
     this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
       this.user = resp;
-      console.log(this.user);
       this.user['roles'].forEach(role => {
         this.menus = this.menus.concat(role.menus);
       });
-      console.log(this.menus);
     });
   }
 

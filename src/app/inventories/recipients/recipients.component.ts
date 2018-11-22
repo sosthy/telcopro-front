@@ -67,9 +67,11 @@ export class RecipientsComponent implements OnInit {
     this.recipient = rec ? new Recipient(rec) : new Recipient();
     if (rec) {
       if (mode === 1) {
-        this.addEditCardHeader = 'Edit Fournisseur/Client';
+        this.addEditCardHeader = 'Edit ' + rec.groupe.name;
+      } else if (mode === 2) {
+        this.addEditCardHeader = 'Delete ' + rec.groupe.name;
       } else {
-        this.addEditCardHeader = 'Delete Fournisseur/Client';
+        this.addEditCardHeader = 'Detail ' + rec.groupe.name;
       }
     } else {
       this.addEditCardHeader = 'Create Fournisseur/Client';
@@ -122,7 +124,6 @@ export class RecipientsComponent implements OnInit {
     this.modalRef.close();
   }
   searchRecipient() {
-    console.log(this.motCle);
     this.recipientsService.searchRecipients(this.motCle)
       .subscribe(data => {
         this.recipients = data;

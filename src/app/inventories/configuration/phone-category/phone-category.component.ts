@@ -66,7 +66,6 @@ export class PhoneCategoryComponent implements OnInit {
   }
 
   onDetailsUser(id: number): void {
-    console.log(id);
     this.mode = 2;
   }
 

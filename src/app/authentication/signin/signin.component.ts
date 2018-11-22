@@ -35,7 +35,6 @@ export class SigninComponent implements OnInit {
       if (resp.ok === true) {
         this.router.navigateByUrl('dashboard');
       }
-      console.log(resp);
     });
 
   }

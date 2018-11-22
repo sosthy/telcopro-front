@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
   employeeSelected: Array<Employee> = new Array();
   employees: Array<Employee> = new Array();
   modalRef: NgbModalRef;
-
+  i = 0;
   constructor(private modalService: NgbModal, private accountsSerice: AccountsService) {}
 
   ngOnInit(): void {
@@ -53,8 +53,10 @@ export class UsersComponent implements OnInit {
     if (user) {
       if (mode === 1) {
         this.addEditCardHeader = 'Edit User';
-      } else {
+      } else if (mode === 1) {
         this.addEditCardHeader = 'Delete User';
+      } else {
+        this.addEditCardHeader = 'Detail User';
       }
 
       this.user.roles.forEach(role => {
@@ -125,7 +127,6 @@ export class UsersComponent implements OnInit {
   }
 
   onDetailsUser(id: number): void {
-    console.log(id);
     this.mode = 2;
   }
 
