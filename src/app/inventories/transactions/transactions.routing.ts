@@ -17,7 +17,7 @@ export const TRANSACTIONSROUTES: Routes = [
           heading: 'Transactions'
         }
       }, {
-        path: 'new-transaction',
+        path: 'register',
         component: NewTransactionComponent,
         data : {
           heading: 'New Transaction'
