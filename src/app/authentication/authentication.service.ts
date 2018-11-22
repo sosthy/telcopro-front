@@ -24,7 +24,6 @@ export class AuthenticationService {
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(token);
     localStorage.setItem("username", decodedToken.sub);
-    console.log(decodedToken);
   }
 
   getToken(): any {

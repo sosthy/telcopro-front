@@ -38,7 +38,7 @@ export class PortableServices {
   }
 
   listPortable(id: number) {
-    return this.http.get(TELCOPRO_URL + '/stocks/portables' + id,
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/' + id,
       this.authenticationService.getHeaders());
   }
 

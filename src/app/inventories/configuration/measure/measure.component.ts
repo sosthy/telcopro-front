@@ -30,7 +30,6 @@ export class MeasureComponent implements OnInit {
   async init() {
     this.measure = new MeasureUnit();
     this.measures = await this.measureService.getAllMeasure().toPromise();
-    console.log(this.measures);
   }
   // ----------------------------- --------------------------------------------------------------------------------------------
    open(content, mes?: MeasureUnit) {
@@ -83,7 +82,6 @@ export class MeasureComponent implements OnInit {
     this.modalRef.close();
   }
   searchMeasure() {
-    console.log(this.motCle);
     this.measureService.searchMeasures(this.motCle)
       .subscribe(data => {
         this.measures = data;

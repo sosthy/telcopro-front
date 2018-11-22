@@ -14,6 +14,7 @@ export class PhonesComponent implements OnInit {
   listPortables: any;
   motcle: string;
   portable: Portable;
+  mode = 1;
   constructor(public http: Http,
               public portableservices: PortableServices,
               public router: Router) {
@@ -49,7 +50,6 @@ export class PhonesComponent implements OnInit {
           );
       this.portableservices.deletePortable(p.id)
         .subscribe(data => {
-          console.log(this.listPortables);
           alert('successful removal');
         },
           err => {
@@ -58,6 +58,10 @@ export class PhonesComponent implements OnInit {
     }
   }
   onEditPortable(p: Portable) {
-    this.router.navigate(['inventories/products/new-phones', p]);
+    this.router.navigate(['inventories/products/edit-phones', p]);
+  }
+  onDetailsPhone(phone) {
+    this.mode = 2;
+    this.portable = phone;
   }
 }

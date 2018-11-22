@@ -52,7 +52,6 @@ export class MenusComponent implements OnInit {
 
   onCreateMenu(): boolean {
     this.accountsSerice.saveMenu(this.menu).subscribe(data => {
-      console.log(data);
       this.menus.push(data);
     });
     return true;

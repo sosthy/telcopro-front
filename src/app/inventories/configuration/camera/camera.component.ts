@@ -83,7 +83,6 @@ export class CameraComponent implements OnInit {
     this.modalRef.close();
   }
   searchCamera() {
-    console.log(this.motCle);
     this.cameraService.searchCameras(this.motCle)
       .subscribe(data => {
         this.cameras = data;

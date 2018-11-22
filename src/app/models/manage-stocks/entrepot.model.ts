@@ -1,8 +1,8 @@
 import {Emplacement} from './emplacement.model';
 import {Mouvment} from './mouvment.model';
-import {AppWorkspace} from "./workspace.model";
+import {WorkSpace} from '../workSpace.model';
 
-export class GenericEntrepot extends  AppWorkspace{
+export class GenericEntrepot extends  WorkSpace {
   nbOfProduct: number;
   priceTotal: number;
   volume: number;

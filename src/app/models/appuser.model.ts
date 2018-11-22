@@ -17,7 +17,7 @@ export class AppUser {
     this.password = obj ? (obj.password ? obj.password : '') : '';
     this.email = obj ? (obj.email ? obj.email : '') : '';
     this.lockStatus = obj ? (obj.lockStatus ? obj.lockStatus : true) : true;
-    this.employee = obj ? (obj.id ? obj.id : new Employee()) : new Employee();
+    this.employee = obj ? (obj.employee ? obj.employee : new Employee()) : new Employee();
     this.roles = obj ? (obj.roles ? obj.roles : []) : [];
   }
 

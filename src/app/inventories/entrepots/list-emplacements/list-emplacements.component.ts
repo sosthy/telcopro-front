@@ -100,7 +100,12 @@ export class EmplacementListComponent implements OnInit {
   search() {
     this.entrepotService.searchEmplacement(this.motCle)
       .subscribe(data => {
-          this.listEmplacement = data.json();
+        this.listEmplacement = [];
+        data.json().forEach(emplacement => {
+          if (('' + emplacement.entrepot.id) === ('' + this.entrepot.id)) {
+              this.listEmplacement.push(emplacement);
+          }
+        });
         },
         err => {
           console.log(err);

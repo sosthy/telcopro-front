@@ -1,7 +1,6 @@
-
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formRecipient)">Create</button>
+    <button class="btn btn-primary" (click)="open(formRecipient)">Create Fournisseur/Client</button>
   </div>
   <div class="u-search">
     <form>
@@ -16,10 +15,10 @@
 <div class="row">
   <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let rec of recipients">
     <div class="card card-body card-widget bg-white card-inverse">
-      <div ngbDropdown class="imenu">
-        <a id="downMenu" href="javascript:;" ngbDropdownToggle>
+      <div ngbDropdown placement="bottom-right">
+        <button class="imenu" id="downMenu" href="javascript:;" ngbDropdownToggle>
           <i class="fa fa-ellipsis-v"></i>
-        </a>
+        </button>
         <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="downMenu">
           <a class="dropdown-item" href="javascript:;" (click)="open(formRecipient, rec, 1)">
             <i class="icon icon-basic-settings mr-3"></i>
@@ -29,7 +28,7 @@
             <i class="icon icon-basic-postcard mr-3"></i>
             <span>Delete</span>
           </a>
-          <a class="dropdown-item" href="javascript:;">
+          <a class="dropdown-item" href="javascript:;" (click)="open(detailRecipient, rec, 3)">
             <i class="icon icon-basic-message-multiple mr-3"></i>
             <span>Details</span>
           </a>
@@ -47,21 +46,6 @@
     </div>
   </div>
 </div>
-
-<ng-template #recipientDetails let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h6 class="modal-title text-uppercase">D</h6>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <p>One fine body&hellip;</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-  </div>
-</ng-template>
 
 <ng-template #deleteRecipient let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -98,7 +82,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website</label>
+          <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website/Email</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <input class="form-control" type="txt" [(ngModel)]="recipient.website" id="web-text-input" name="recipientWeb">
           </div>
@@ -123,19 +107,67 @@
             </select>
           </div>
         </div>
-        <div class="form-group row">
-          <label for="mouv-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Transactions</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <select id="mouv-text-input" name="selectedTrans" [(ngModel)]="recipient.mouvements" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="mvt" *ngFor="let mvt of mouvements">{{ mvt.reference}}</option>
-            </select>
-          </div>
-        </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
     <button type="button" class="btn btn-primary" (click)="onSaveRecipient()">Save changes</button>
+  </div>
+</ng-template>
+<ng-template #detailRecipient let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-6 text-center">
+            <p></p>
+            Informations Recipient
+          </div>
+          <div class="col-sm-6 text-center">
+            <img src="assets/images/avatar.jpg" class="avatar-md rounded-circle" alt="">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="des-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label for="loc-text-input"><strong>{{recipient.designation}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website/Email</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label for="loc-text-input"><strong>{{recipient.website}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="phone-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label for="loc-text-input"><strong>{{recipient.phone}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="loc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label for="loc-text-input"><strong>{{recipient.location}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="group-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Groupe</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label for="group-text-input"><strong>{{recipient.groupe.name}}</strong></label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">OK</button>
   </div>
 </ng-template>

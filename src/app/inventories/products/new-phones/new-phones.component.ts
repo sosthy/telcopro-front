@@ -1,23 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {Portable} from '../../../models/manage-stocks/portable.model';
 import {MeasureUnit} from '../../../models/manage-stocks/measure-unit.model';
-import {State} from '../../../models/manage-stocks/state.model';
 import {Emplacement} from '../../../models/manage-stocks/emplacement.model';
 import {Systemos} from '../../../models/manage-stocks/system-os.model';
 import {Camera} from '../../../models/manage-stocks/camera.model';
 import {Memory} from '../../../models/manage-stocks/memory.model';
 import {Cpu} from '../../../models/manage-stocks/cpu.model';
 import {PortableServices} from '../../../services/portable.services';
-import {EntrepotServices} from '../../../services/entrepot.services';
 import {ProductServices} from '../products.services';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Product} from '../../../models/manage-stocks/product.model';
-import {GenericCategory} from "../../../models/manage-stocks/category.model";
-import {MeasureService} from "../../configuration/measure/measure.service";
-import {ProductCategoryService} from "../../configuration/product-category/product-category.service";
-import {AccountsService} from "../../../accounts/accounts.service";
-import {AuthenticationService} from "../../../authentication/authentication.service";
-import {WorkSpace} from "../../../models/workspace.model";
+import {Router} from '@angular/router';
+import {GenericCategory} from '../../../models/manage-stocks/category.model';
+import {MeasureService} from '../../configuration/measure/measure.service';
+import {ProductCategoryService} from '../../configuration/product-category/product-category.service';
+import {AccountsService} from '../../../accounts/accounts.service';
+import {AuthenticationService} from '../../../authentication/authentication.service';
 
 @Component({
   selector: 'app-new-phones',
@@ -25,8 +21,7 @@ import {WorkSpace} from "../../../models/workspace.model";
   styleUrls: ['./new-phones.component.scss']
 })
 export class NewPhonesComponent implements OnInit {
-  portable: Portable = new Portable();
-  listEntrepot: Array<WorkSpace>;
+  portable: Portable = new Portable(null);
   listEmplacement: Array<Emplacement>;
   listMeasureUnit: Array<MeasureUnit>;
   listProductCategory: Array<GenericCategory>;
@@ -35,7 +30,7 @@ export class NewPhonesComponent implements OnInit {
   listCpu: Array<Cpu>;
   listMemory: Array<Memory>;
   listCamera: Array<Camera>;
-  editOrCreatePhone: string = 'Create'
+  editOrCreatePhone = 'Create';
   mode = 1;
 
 
@@ -45,25 +40,17 @@ export class NewPhonesComponent implements OnInit {
               public accountService: AccountsService,
               public auth: AuthenticationService,
               public productCategoryService: ProductCategoryService,
-              public route: ActivatedRoute,
               public router: Router) {
   }
 
 
   ngOnInit() {
     this.init();
-    this.route.params.subscribe(params => {
-      if(params['designation']) {
-        this.portable = new Portable(params);
-        this.editOrCreatePhone = 'Edit';
-      }
-    });
   }
 
   init() {
-    this.editOrCreatePhone = 'Create';
-    this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
-      this.productService.getEmplacementsOfEntrepot(resp.employee.workSpace.id).subscribe(resp => {
+    this.accountService.getUser(this.auth.getUserName()).subscribe(resp1 => {
+      this.productService.getEmplacementsOfEntrepot(resp1.employee.workSpace.id).subscribe(resp => {
         this.listEmplacement = resp.json();
       });
     });
@@ -123,23 +110,16 @@ export class NewPhonesComponent implements OnInit {
           console.log(err);
         });
   }
-
-  onChangeEntrepotSelect(value) {
-    console.log(value.name);
-  }
-
-  submitForm() {
-    this.mode = 2;
-  }
-
   savePortable() {
-    console.log(this.portable);
+    this.portableServices.savePortable(this.portable)
+      .subscribe(data => {
+          this.portable = data.json();
+        },
+        err => {
+          console.log(err);
+        });
+    this.router.navigate(['inventories/products/phones']);
   }
-
-  cancel() {
-    this.mode = 1;
-  }
-
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }

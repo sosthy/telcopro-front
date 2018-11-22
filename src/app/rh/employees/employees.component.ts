@@ -31,7 +31,6 @@ export class EmployeesComponent implements OnInit {
     this.employeeService.getAllEmployees()
       .subscribe(data => {
           this.listEmployees = data.json();
-          console.log(this.listEmployees);
           this.tableMessage = 'No employee found';
         },
         err => {
@@ -44,7 +43,6 @@ export class EmployeesComponent implements OnInit {
     this.workSpaceService.getWorkSpaces()
     .subscribe(data => {
         this.workSpaces = data.json();
-        console.log(this.workSpaces);
       },
         err => {
         console.log(err);
@@ -57,7 +55,6 @@ export class EmployeesComponent implements OnInit {
     this.entrepotService.listAllEntrepots()
     .subscribe(data => {
         this.workSpaces = data;
-        console.log(this.workSpaces);
       },
         err => {
         console.log(err);
@@ -70,7 +67,6 @@ export class EmployeesComponent implements OnInit {
     this.pointOfSaleService.getPointOfSales()
     .subscribe(data => {
         this.workSpaces = data.json();
-        console.log(this.workSpaces);
       },
         err => {
           console.log(err);
@@ -97,11 +93,9 @@ export class EmployeesComponent implements OnInit {
 
   submitForm() {
     this.pageToLoad = 'confirm ' + this.pageToLoad;
-    console.log(this.photoFile);
   }
 
   loadEditionPage(employee) {
-    console.log(employee.workSpace.workSpaceType);
     if (employee.workSpace.workSpaceType.includes('Point')) {
       this.getSalePoints();
     }else if (employee.workSpace.workSpaceType.includes('Entre')) {
@@ -147,7 +141,6 @@ export class EmployeesComponent implements OnInit {
     fd.append('photo', this.photoFile, this.photoFile.name);
     this.employeeService.upload(fd)
       .subscribe(data => {
-          console.log('Upload  return: ', data);
         },
         err => {
           console.log(err);
@@ -168,6 +161,5 @@ export class EmployeesComponent implements OnInit {
   }
   fileInputChange(event) {
     this.photoFile = event.target.files[0];
-    console.log(this.photoFile);
   }
 }
