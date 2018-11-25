@@ -1,5 +1,6 @@
 import {Mouvment} from './mouvment.model';
 import {Product} from './product.model';
+import {PortableItem} from "./portable-item.model";
 
 export class MouvmentLine {
   id: number;
@@ -9,6 +10,7 @@ export class MouvmentLine {
   mouvement: Mouvment;
   product: Product;
   note: string;
+  listPortableItem: Array<PortableItem>;
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.connection : null) : null;
@@ -18,5 +20,6 @@ export class MouvmentLine {
     this.mouvement = obj ? (obj.mouvement ? obj.mouvement : null) : null;
     this.product = obj ? (obj.product ? obj.product : null) : null;
     this.note = obj ? (obj.note ? obj.note : null) : null;
+    this.listPortableItem = obj ? (obj.listPortableItem ? obj.listPortableItem : new Array()) :  new Array();
   }
 }

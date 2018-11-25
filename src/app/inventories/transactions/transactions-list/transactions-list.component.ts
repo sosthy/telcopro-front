@@ -2,6 +2,10 @@
 import {Component, OnInit} from "@angular/core";
 import {ModalDismissReasons, NgbModal, NgbPanelChangeEvent} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
+import {TransactionService} from "../transaction.service";
+import {MouvmentType} from "../../../models/manage-stocks/mouvment-type.model";
+import {Recipient} from "../../../models/manage-stocks/recipient.model";
+import {Mouvment} from "../../../models/manage-stocks/mouvment.model";
 
 @Component({
   selector: 'app-transaction-list',
@@ -13,12 +17,26 @@ export class TransactionsListComponent implements OnInit {
   acc: any;
   modalRef: any;
   closeResult: any;
+  listMouvmentType: Array<MouvmentType> = new Array();
+  listRecipient: Array<Recipient> = new Array();
+  listMouvment: Array<Mouvment> = new Array();
 
   constructor(public modalService: NgbModal,
-              public router: Router) {}
+              public router: Router,
+              public transactionService: TransactionService) {}
 
   ngOnInit(): void {
+    this.init();
+  }
 
+  init() {
+    this.transactionService.getAllMouvment().subscribe(resp => {
+      this.listMouvment = resp;
+    });
+
+    this.transactionService.getAllType().subscribe(resp => {
+      this.listMouvmentType = resp;
+    });
   }
 
   open(content) {

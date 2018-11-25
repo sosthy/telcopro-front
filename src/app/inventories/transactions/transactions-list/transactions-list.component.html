@@ -1,40 +1,47 @@
-<div class="d-flex justify-content-between">
+<div class="card bg-transparent">
   <div>
     <button class="btn btn-primary" (click)="newMouvmentForm()">Make Mouvement</button>
-  </div>
-  <div class="u-search">
-    <form>
-      <div class="form-group">
-        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="mouvmentSearch">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchMouvment()" style="display:none"><span class="fa fa-search"></span></button>
-      </div>
-    </form>
   </div>
 </div>
 
 <ngb-accordion (panelChange)="beforeChange($event)">
   <ngb-panel id="1" title="Mouvment Filter">
     <ng-template ngbPanelContent>
-      <form class="form-inline mb-4">
-        <label class="m-md-2" for="refFormInput">Reference</label>
-        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="refFormInput" placeholder="Code">
-
-        <label class="m-md-2" for="ddFormInput">Date debut</label>
-        <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="ddFormInput" >
-
-        <label class="m-md-2" for="dfFormInput">Date Fin</label>
-        <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="dfFormInput" >
-
-        <label class="m-md-2" for="typeFormCustomSelect">Type</label>
-        <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="typeFormCustomSelect">
-          <option selected>Choose...</option>
-          <option value="1">APPROVISIONNEMENT</option>
-          <option value="2">LIVRAISON</option>
-          <option value="3">TRANSFERT</option>
-          <option value="3">RETOUR</option>
-        </select>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <form class="mb-4">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="m-md-2" for="refFormInput">Reference</label>
+              <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="refFormInput" placeholder="Code">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="m-md-2" for="ddFormInput">Date debut</label>
+              <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="ddFormInput" >
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="m-md-2" for="dfFormInput">Date Fin</label>
+              <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="dfFormInput" >
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label class="m-md-2" for="typeFormCustomSelect">Type</label>
+              <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" id="typeFormCustomSelect">
+                <option value="{{ null }}" selected>Choose...</option>
+                <option value="{{ mvType }}" *ngFor="let mvType of listMouvmentType">{{ mvType.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
       </form>
     </ng-template>
   </ngb-panel>

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpModule, Http } from '@angular/http';
@@ -24,6 +24,8 @@ import {AdminLayoutComponent} from './layouts/admin/admin-layout.component';
 import {AuthenticationService} from './authentication/authentication.service';
 import {AccountsAdminLayoutComponent} from './layouts/accounts-admin/accounts-admin-layout.component';
 import {JwtModule} from '@auth0/angular-jwt';
+import localeFrCM from '@angular/common/locales/fr-CM';
+import {registerLocaleData} from "@angular/common";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -32,6 +34,8 @@ export function createTranslateLoader(http: HttpClient) {
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
+
+registerLocaleData(localeFrCM, 'fr-CM');
 
 @NgModule({
   declarations: [
@@ -68,7 +72,14 @@ export function tokenGetter() {
       }
     }),
   ],
-  providers: [AuthenticationService, DashboardItems],
+  providers: [
+    AuthenticationService,
+    DashboardItems,
+    {
+      provide: LOCALE_ID,
+      useValue: 'fr-CM'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
