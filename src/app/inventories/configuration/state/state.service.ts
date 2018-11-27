@@ -22,7 +22,7 @@ export class StateService {
     return this.http.get(TELCOPRO_URL + '/stocks/states' + id, this.auth.getHeaders());
   }
    deleteState(id: number) {
-    return this.http.get(TELCOPRO_URL + '/stocks/states' + id, this.auth.getHeaders()).timeout(1000).map(res => res.json());
+    return this.http.get(TELCOPRO_URL + '/stocks/states/' + id, this.auth.getHeaders()).timeout(1000).map(res => res.json());
   }
   searchStates(motCle: string) {
     return this.http.get(TELCOPRO_URL + '/stocks/states/search?mc=' + motCle, this.auth.getHeaders()).map(res => res.json());

@@ -21,6 +21,7 @@ export class EmplacementListComponent implements OnInit {
   modalRef: NgbModalRef;
   motCle: string;
   listEmplacement: Array<Emplacement> = new Array();
+  tableMessage = 'Loading.... Please wait!';
 
   constructor(public route: ActivatedRoute, private modalService: NgbModal, private entrepotService: EntrepotService) { }
 
@@ -106,6 +107,7 @@ export class EmplacementListComponent implements OnInit {
               this.listEmplacement.push(emplacement);
           }
         });
+        this.tableMessage = 'No results matching';
         },
         err => {
           console.log(err);

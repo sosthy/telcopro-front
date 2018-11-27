@@ -18,6 +18,8 @@ export class CameraComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   cameras: Array<Camera> = new Array();
+  filter = '';
+  tableMessage = 'Loading.... Please wait!';
   camera: Camera = new Camera();
   modalRef: NgbModalRef;
   motCle: string;
@@ -86,6 +88,7 @@ export class CameraComponent implements OnInit {
     this.cameraService.searchCameras(this.motCle)
       .subscribe(data => {
         this.cameras = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

@@ -149,17 +149,17 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="email-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
+          <label for="email-input1" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="email" [(ngModel)]="user.email" name="email" id="email-input">
+            <input class="form-control" type="email" [(ngModel)]="user.email" name="email" id="email-input1">
           </div>
         </div>
         <div class="form-group row">
-          <label for="employee-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Employee</label>
+          <label for="employee-input1" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Employee</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
               <div class="input-group-addon"><i class="fa fa-user"></i></div>
-              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input">
+              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input1">
                 <option [ngValue]="user.employee" selected >{{ user.employee.name }} {{ user.employee.surname }}</option>
                 <option *ngFor="let empItem of employees" [ngValue]="empItem">{{ empItem.name }} {{ empItem.surname }}</option>
               </select>
@@ -167,11 +167,11 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleSelect2" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Roles</label>
+          <label for="exampleSelect22" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Roles</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <div class="row">
               <div class="col">
-                <select id="exampleSelect2" multiple name="roles" [(ngModel)]="rolesSel" class="form-control" [compareWith]="compareFn">
+                <select id="exampleSelect22" multiple name="roles" [(ngModel)]="rolesSel" class="form-control" [compareWith]="compareFn">
                   <option [ngValue]="roleItem" *ngFor="let roleItem of roles">{{roleItem.roleName}}</option>
                 </select>
                 <div class="text-right mt-1">

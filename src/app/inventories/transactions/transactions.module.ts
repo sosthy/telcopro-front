@@ -9,6 +9,8 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {TransactionComponent} from "./transactions.component";
 import {TransactionsListComponent} from "./transactions-list/transactions-list.component";
 import {NewTransactionComponent} from "./new-transaction/new-transaction.component";
+import {TransactionService} from "./transaction.service";
+import {RecipientServices} from "../../services/recipient.services";
 
 @NgModule({
   imports: [
@@ -19,6 +21,6 @@ import {NewTransactionComponent} from "./new-transaction/new-transaction.compone
     ReactiveFormsModule
   ],
   declarations: [TransactionComponent, TransactionsListComponent, NewTransactionComponent],
-  providers: []
+  providers: [TransactionService, RecipientServices]
 })
 export class TransactionModule { }

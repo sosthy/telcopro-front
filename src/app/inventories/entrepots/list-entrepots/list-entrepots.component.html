@@ -13,7 +13,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf=" listEntrepot.length != 0">
   <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let entrepot of listEntrepot">
     <div class="card card-body card-widget bg-white card-inverse">
       <div ngbDropdown placement="bottom-right">
@@ -45,6 +45,9 @@
     </div>
   </div>
 </div>
+<strong *ngIf="listEntrepot.length == 0">
+  {{tableMessage}}
+</strong>
 
 <ng-template #deleteEntrepot let-c="close">
   <div class="modal-header">

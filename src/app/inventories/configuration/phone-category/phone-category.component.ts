@@ -18,6 +18,7 @@ export class PhoneCategoryComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   categories: Array<GenericCategory> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   category: GenericCategory = new GenericCategory();
   modalRef: NgbModalRef;
   motCle: string;
@@ -100,6 +101,7 @@ export class PhoneCategoryComponent implements OnInit {
     this.phoneCategoryService.searchPhoneCategories(this.motCle)
       .subscribe(data => {
         this.categories = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

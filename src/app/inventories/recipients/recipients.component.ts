@@ -26,6 +26,7 @@ export class RecipientsComponent implements OnInit {
   addEditCardHeader: string;
   groupe: RecipientGroupe;
   groupes: Array<RecipientGroupe> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   mouvement: Mouvment;
   mouvements: Array<Mouvment> = new Array();
   modalRef: NgbModalRef;
@@ -127,6 +128,7 @@ export class RecipientsComponent implements OnInit {
     this.recipientsService.searchRecipients(this.motCle)
       .subscribe(data => {
         this.recipients = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);
