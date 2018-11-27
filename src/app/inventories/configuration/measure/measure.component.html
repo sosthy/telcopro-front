@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" *ngIf="measures.length != 0">
   <div class="card-header">
     List of Meaures
   </div>
@@ -39,6 +39,9 @@
     </div>
   </div>
 </div>
+<strong *ngIf="measures.length == 0">
+    {{tableMessage}}
+ </strong>
 
 <div class="" *ngIf="mode == 3">
   <p>Edit Measure</p>

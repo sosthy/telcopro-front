@@ -17,6 +17,7 @@ export class StateComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   states: Array<State> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   state: State = new State();
   modalRef: NgbModalRef;
   motCle: string;
@@ -87,6 +88,7 @@ export class StateComponent implements OnInit {
     this.stateService.searchStates(this.motCle)
       .subscribe(data => {
         this.states = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

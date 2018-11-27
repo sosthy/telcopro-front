@@ -12,6 +12,7 @@ import {User} from '../../models/user.model';
 export class SigninComponent implements OnInit {
 
   public form: FormGroup;
+  textMessage = '';
   constructor(
     private fb: FormBuilder, private router: Router,
     private auth: AuthenticationService,
@@ -34,6 +35,7 @@ export class SigninComponent implements OnInit {
 
       if (resp.ok === true) {
         this.router.navigateByUrl('dashboard');
+        this.textMessage = '... checking, please wait!!!';
       }
     });
 

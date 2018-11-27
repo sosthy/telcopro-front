@@ -17,6 +17,7 @@ export class MeasureComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   measures: Array<MeasureUnit> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   measure: MeasureUnit = new MeasureUnit();
   modalRef: NgbModalRef;
   motCle: string;
@@ -85,6 +86,7 @@ export class MeasureComponent implements OnInit {
     this.measureService.searchMeasures(this.motCle)
       .subscribe(data => {
         this.measures = data;
+         this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

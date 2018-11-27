@@ -12,6 +12,7 @@ import {Portable} from '../../../models/manage-stocks/portable.model';
 
 export class PhonesComponent implements OnInit {
   listPortables: any;
+  tableMessage = 'Loading.... Please wait!';
   motcle: string;
   portable: Portable;
   mode = 1;
@@ -36,6 +37,7 @@ export class PhonesComponent implements OnInit {
     this.portableservices.searchPortable(this.motcle)
       .subscribe(data => {
         this.listPortables = data.json();
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

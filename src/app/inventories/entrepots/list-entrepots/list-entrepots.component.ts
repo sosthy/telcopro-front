@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 export class EntrepotListComponent implements OnInit {
 
   listEntrepot: Array<GenericEntrepot> = [];
+  tableMessage = 'Loading.... Please wait!';
   entrepot: GenericEntrepot = new GenericEntrepot();
   addEditCardHeader = 'Create Entrepot';
   closeResult: string;
@@ -89,6 +90,7 @@ export class EntrepotListComponent implements OnInit {
     this.entrepotService.search(this.motcle)
       .subscribe(data => {
         this.listEntrepot = data.json();
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

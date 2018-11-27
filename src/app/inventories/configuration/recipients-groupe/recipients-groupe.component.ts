@@ -16,6 +16,7 @@ export class RecipientsGroupeComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   groupes: Array<RecipientGroupe> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   groupe: RecipientGroupe = new RecipientGroupe();
   modalRef: NgbModalRef;
   motCle: string;
@@ -86,6 +87,7 @@ export class RecipientsGroupeComponent implements OnInit {
     this.recipientsGroupeService.searchGroups(this.motCle)
       .subscribe(data => {
         this.groupes = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

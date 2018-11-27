@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardItems } from '../shared/menu-items/dashboard-items';
-import {AccountsService} from "../accounts/accounts.service";
-import {AuthenticationService} from "../authentication/authentication.service";
-import {AppMenu} from "../models/appmenu.model";
+import {AccountsService} from '../accounts/accounts.service';
+import {AuthenticationService} from '../authentication/authentication.service';
+import {AppMenu} from '../models/appmenu.model';
 
 @Component({
   selector: 'app-dashboard',

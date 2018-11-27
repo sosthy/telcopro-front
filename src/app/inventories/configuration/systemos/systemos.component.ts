@@ -16,6 +16,7 @@ export class SystemosComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   systemos: Array<Systemos> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   systemo: Systemos = new Systemos();
   modalRef: NgbModalRef;
   motCle: string;
@@ -93,6 +94,7 @@ export class SystemosComponent implements OnInit {
     this.systemosService.searchSystemOs(this.motCle)
       .subscribe(data => {
           this.systemos = data;
+          this.tableMessage = 'No results matching';
         },
         err => {
           console.log(err);

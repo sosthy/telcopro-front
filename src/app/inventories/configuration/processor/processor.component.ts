@@ -16,6 +16,7 @@ export class ProcessorComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   processors: Array<Cpu> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   processor: Cpu = new Cpu();
   modalRef: NgbModalRef;
   motCle: string;
@@ -84,6 +85,7 @@ export class ProcessorComponent implements OnInit {
     this.processorService.searchProcessors(this.motCle)
       .subscribe(data => {
         this.processors = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);

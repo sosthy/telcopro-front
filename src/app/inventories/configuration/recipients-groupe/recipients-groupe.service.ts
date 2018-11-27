@@ -46,7 +46,7 @@ export class RecipientsGroupeService {
   }
 
   deletegroup(id: number) {
-    return this.http.delete(TELCOPRO_URL + '/stocks/recipients/groupes' + id,
+    return this.http.delete(TELCOPRO_URL + '/stocks/recipients/groupes/' + id,
       this.auth.getHeaders()).timeout(1000).map(res => res.json());
   }
 

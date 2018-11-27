@@ -17,6 +17,7 @@ export class MemoryComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   memories: Array<Memory> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   memory: Memory = new Memory();
   modalRef: NgbModalRef;
   motCle: String;
@@ -85,6 +86,7 @@ export class MemoryComponent implements OnInit {
      this.memoryService.searchMemories(this.motCle)
        .subscribe(data => {
          this.memories = data;
+          this.tableMessage = 'No results matching';
        },
          err => {
          console.log(err);

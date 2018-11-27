@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" *ngIf="categories.length != 0">
   <div class="card-header">
     List of Phones Category
   </div>
@@ -41,6 +41,9 @@
     </div>
   </div>
 </div>
+<strong *ngIf="categories.length == 0">
+    {{tableMessage}}
+ </strong>
 
 <div class="" *ngIf="mode == 3">
   <p>Edition de contact</p>

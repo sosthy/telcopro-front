@@ -18,6 +18,7 @@ export class ColorComponent implements OnInit {
   mode: number;
   addEditCardHeader: string;
   colors: Array<AppColor> = new Array();
+  tableMessage = 'Loading.... Please wait!';
   color: AppColor = new AppColor();
   modalRef: NgbModalRef;
   motCle: string;
@@ -86,6 +87,7 @@ export class ColorComponent implements OnInit {
     this.colorService.searchColors(this.motCle)
       .subscribe(data => {
         this.colors = data;
+        this.tableMessage = 'No results matching';
       },
         err => {
         console.log(err);
