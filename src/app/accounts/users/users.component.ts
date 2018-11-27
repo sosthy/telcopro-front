@@ -53,7 +53,7 @@ export class UsersComponent implements OnInit {
     if (user) {
       if (mode === 1) {
         this.addEditCardHeader = 'Edit User';
-      } else if (mode === 1) {
+      } else if (mode === 2) {
         this.addEditCardHeader = 'Delete User';
       } else {
         this.addEditCardHeader = 'Detail User';

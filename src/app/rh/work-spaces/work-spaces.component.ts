@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {WorkSpaceService} from '../../services/workSpace.services';
 import {WorkSpace} from '../../models/workSpace.model';
+import {ModalDismissReasons, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-work-spaces',
@@ -14,7 +15,10 @@ export class WorkSpacesComponent implements OnInit {
   pageToLoad = 'listing page'; // listing page, add page, edit page, details page, confirm edit page, confirm add page
   tableMessage = 'Loading.... Please wait!';
   workSpace: any;
-  constructor(public workSpaceService: WorkSpaceService) { }
+  closeResult: string;
+  modalRef: NgbModalRef;
+  modalTitle = 'New Work Space';
+  constructor(private modalService: NgbModal, public workSpaceService: WorkSpaceService) { }
   ngOnInit() {
     this.loadWorkSpaces();
   }
@@ -40,54 +44,67 @@ export class WorkSpacesComponent implements OnInit {
         }
         );
   }
-  loadAddPage() {
-    this.workSpace = new WorkSpace();
-    this.pageToLoad = 'add page';
-  }
-  submitForm() {
-    this.pageToLoad = 'confirm ' + this.pageToLoad;
-  }
-  loadEditionPage(workSpace) {
-    this.workSpace = workSpace;
-    this.pageToLoad = 'edit page';
-  }
-  loadPreviewPageConfirmation() {
-    if (this.pageToLoad === 'confirm edit page') {
-      this.pageToLoad = 'edit page';
-    } else {
-      this.pageToLoad = 'add page';
-    }
-  }
-  deleteWorkSpaceRequest(workSpace) {
-    const confirm = window.confirm('WorkSpace ' + workSpace.name + ' ' + workSpace.surname + ' will be detete.');
-    if (confirm === true) {
-      this.listWorkSpaces.splice( this.listWorkSpaces.indexOf(workSpace), 1);
-      this.workSpaceService.deleteWorkSpace(workSpace.id)
-        .subscribe(data => {
-          alert('WorkSpace ' + workSpace.name + ' ' + workSpace.surname + ' has been succeful removed');
-        },
-          err => {
-          alert('problem');
-          });
-    }
-  }
-  loadDetailPage(workSpace) {
-    this.workSpace = workSpace;
-    this.pageToLoad = 'details page';
+  deleteWorkSpace() {
+    this.listWorkSpaces.splice( this.listWorkSpaces.indexOf(this.workSpace), 1);
+    this.workSpaceService.deleteWorkSpace(this.workSpace.id)
+      .subscribe(data => {
+      },
+        err => {
+        alert('problem');
+        });
   }
   saveInformation() {
-    const page = this.pageToLoad;
-     this.workSpaceService.saveWorkSpace(this.workSpace)
-     .subscribe(data => {
+    const index = this.listWorkSpaces.indexOf(this.workSpace);
+    this.workSpaceService.saveWorkSpace(this.workSpace)
+      .subscribe(data => {
         this.workSpace = data.json();
-        if (page === 'confirm add page') {
+        if (index === -1) {
           this.listWorkSpaces.push(this.workSpace);
         }
       },
-        err => {
+      err => {
         console.log(err);
-        });
-      alert('WorkSpace ' + this.workSpace.name + ' ' + this.workSpace.surname + ' has been succeful done.');
-      this.pageToLoad = 'listing page';
+      });
+  }
+  open(content, workSpace?: WorkSpace, mode?: number) {
+    this.workSpace = workSpace ? workSpace : new WorkSpace();
+    if (workSpace) {
+      if (mode === 1) {
+        this.modalTitle = 'Edit Work Space';
+      } else if (mode === 2) {
+        this.modalTitle = 'Delete Work Space';
+      }  else if (mode === 3) {
+        this.modalTitle = 'Detail Work Space';
+      } else {
+        this.modalTitle = 'Confirm registration work space';
+      }
+    } else {
+      this.modalTitle = 'New Work Space';
+    }
+    this.modalRef = this.modalService.open(content, {backdrop: 'static'});
+    this.modalRef.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+  preview(content) {
+    if (this.modalTitle.includes('Edit')) {
+      this.modalTitle = 'Edit Work Space';
+      this.open(content, this.workSpace, 1);
+    } else {
+      this.modalTitle = 'New Work Space';
+      this.open(content, this.workSpace);
+    }
   }
 }
