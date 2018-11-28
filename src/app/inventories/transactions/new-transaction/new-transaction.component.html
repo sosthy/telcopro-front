@@ -1,15 +1,8 @@
 <div class="card bg-transparent">
   <div class="row">
     <div class="col">
-
-      <!--<button class="btn btn-primary" (click)="saveMouvment()">Save</button>-->
-      <button class="btn btn-primary">Save</button>
-      <button class="btn btn-primary">Cancel</button>
-      <!--<button class="btn btn-primary" (click)="cancelRegister()">Cancel</button>-->
-
       <button class="btn btn-primary" (click)="saveMouvment()">Save</button>
       <button class="btn btn-primary" (click)="cancelRegister()">Cancel</button>
-
     </div>
   </div>
 </div>
@@ -21,8 +14,8 @@
   <div class="card-body">
     <div class="row">
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
-        <label for="idblabla1">Employee</label>
-        <input id="idblabla1" type="text" class="form-control" disabled>
+        <label for="idEmployee">Employee</label>
+        <input id="idEmployee" type="text" class="form-control text-uppercase" value="{{user.employee.name}} {{user.employee.surname}}" disabled>
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="idReference">Reference</label>

@@ -12,19 +12,9 @@ import {ProductServices} from '../../products/products.services';
 import {Router} from '@angular/router';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
-
-import {Component, OnInit} from "@angular/core";
-import {Mouvment} from "../../../models/manage-stocks/mouvment.model";
-import {MouvmentType} from "../../../models/manage-stocks/mouvment-type.model";
-import {Recipient} from "../../../models/manage-stocks/recipient.model";
-import {TransactionService} from "../transaction.service";
-import {RecipientServices} from "../../../services/recipient.services";
-import {MouvmentLine} from "../../../models/manage-stocks/mouvment-line.model";
-import {Product} from "../../../models/manage-stocks/product.model";
-import {ProductServices} from "../../products/products.services";
-import {Router} from "@angular/router";
-import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {PortableItem} from "../../../models/manage-stocks/portable-item.model";
+import {AuthenticationService} from '../../../authentication/authentication.service';
+import {AccountsService} from '../../../accounts/accounts.service';
+import {AppUser} from "../../../models/appuser.model";
 
 
 @Component({
@@ -36,10 +26,7 @@ export class NewTransactionComponent implements OnInit {
 
   modalRef: any;
   closeResult: any;
-
   totalMouvmentPrice = 0;
-
-  totalMouvmentPrice: number = 0;
 
   listMouvmentType: Array<MouvmentType> = new Array();
   listRecipient: Array<Recipient> = new Array();
@@ -52,21 +39,24 @@ export class NewTransactionComponent implements OnInit {
   listPortableItemRemovedTemp: Array<PortableItem> = new Array();
   listPortableItemSelected: Array<PortableItem> = new Array();
   portableItem: PortableItem = new PortableItem();
-
+  user = new  AppUser();
 
 
   constructor(public modalService: NgbModal,
               public router: Router,
+              private auth: AuthenticationService,
+              private accountService: AccountsService,
               public transactionService: TransactionService,
               public recipientService: RecipientServices,
-
               public productServices: ProductServices) {}
 
-              public productServices: ProductServices){}
 
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.init();
+    this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
+      this.user = resp;
+      console.log(this.user);
+    });
   }
 
   init() {
@@ -86,9 +76,6 @@ export class NewTransactionComponent implements OnInit {
 
 
   onAddMouvmentLine() {
-
-  onAddMouvmentLine(){
-
     this.mouvmentLine.quantity = 0;
     this.mouvmentLine.priceTotal = 0;
     // this.totalMouvmentPrice = this.totalMouvmentPrice + this.mouvmentLine.product.priceUnit;
@@ -97,22 +84,13 @@ export class NewTransactionComponent implements OnInit {
   }
 
   open(content, mouvmentLine?: MouvmentLine) {
-
-
     if (mouvmentLine) {
-
-    if(mouvmentLine){
-
       this.productServices.getAllPortableItemsOfPortable(this.mouvmentLine.product.id).subscribe(resp => {
         this.listPortableItem = resp.json();
         console.log(this.listPortableItem);
       });
     }
-
     this.modalRef = this.modalService.open(content, {size: 'lg'});
-
-    this.modalRef = this.modalService.open(content, {size: "lg"});
-
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
