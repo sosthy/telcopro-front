@@ -1,5 +1,3 @@
-
-
 import {Component, OnInit} from '@angular/core';
 import {Mouvment} from '../../../models/manage-stocks/mouvment.model';
 import {MouvmentType} from '../../../models/manage-stocks/mouvment-type.model';
@@ -13,6 +11,11 @@ import {Router} from '@angular/router';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
 
+import {AuthenticationService} from '../../../authentication/authentication.service';
+import {AccountsService} from '../../../accounts/accounts.service';
+import {AppUser} from "../../../models/appuser.model";
+
+
 @Component({
   selector: 'app-new-transaction',
   templateUrl: './new-transaction.component.html',
@@ -22,6 +25,7 @@ export class NewTransactionComponent implements OnInit {
   modalRef: any;
   closeResult: any;
   totalMouvmentPrice = 0;
+
   listMouvmentType: Array<MouvmentType> = new Array();
   listRecipient: Array<Recipient> = new Array();
   listProduct: Array<Product> = new Array();
@@ -33,16 +37,24 @@ export class NewTransactionComponent implements OnInit {
   listPortableItemRemovedTemp: Array<PortableItem> = new Array();
   listPortableItemSelected: Array<PortableItem> = new Array();
   portableItem: PortableItem = new PortableItem();
-
+  user = new  AppUser();
 
 
   constructor(public modalService: NgbModal,
               public router: Router,
+              private auth: AuthenticationService,
+              private accountService: AccountsService,
               public transactionService: TransactionService,
               public recipientService: RecipientServices,
               public productServices: ProductServices) {}
-  ngOnInit(): void {
+
+
+  ngOnInit() {
     this.init();
+    this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
+      this.user = resp;
+      console.log(this.user);
+    });
   }
   init() {
 
