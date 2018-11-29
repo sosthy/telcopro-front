@@ -3,6 +3,7 @@ import { DashboardItems } from '../shared/menu-items/dashboard-items';
 import {AccountsService} from '../accounts/accounts.service';
 import {AuthenticationService} from '../authentication/authentication.service';
 import {AppMenu} from '../models/appmenu.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,10 +13,12 @@ import {AppMenu} from '../models/appmenu.model';
 export class DashboardComponent implements OnInit {
   menus: Array<AppMenu> = new Array();
   user = {};
+  textMessage = '';
 
   constructor(private items: DashboardItems,
               private auth: AuthenticationService,
-              private accountService: AccountsService) {}
+              private accountService: AccountsService,
+              public router: Router) {}
 
   ngOnInit(): void {
     this.init();
@@ -28,6 +31,11 @@ export class DashboardComponent implements OnInit {
         this.menus = this.menus.concat(role.menus);
       });
     });
+  }
+  loading(menu: AppMenu) {
+    this.textMessage = '...loading ' + menu.name + ' Application!';
+    // [routerLink]=[menu.link]
+    this.router.navigateByUrl(menu.link);
   }
 
 }

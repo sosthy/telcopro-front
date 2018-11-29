@@ -1,11 +1,11 @@
 
-import {Component, OnInit} from "@angular/core";
-import {ModalDismissReasons, NgbModal, NgbPanelChangeEvent} from "@ng-bootstrap/ng-bootstrap";
-import {Router} from "@angular/router";
-import {TransactionService} from "../transaction.service";
-import {MouvmentType} from "../../../models/manage-stocks/mouvment-type.model";
-import {Recipient} from "../../../models/manage-stocks/recipient.model";
-import {Mouvment} from "../../../models/manage-stocks/mouvment.model";
+import {Component, OnInit} from '@angular/core';
+import {ModalDismissReasons, NgbModal, NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
+import {TransactionService} from '../transaction.service';
+import {MouvmentType} from '../../../models/manage-stocks/mouvment-type.model';
+import {Recipient} from '../../../models/manage-stocks/recipient.model';
+import {Mouvment} from '../../../models/manage-stocks/mouvment.model';
 
 @Component({
   selector: 'app-transaction-list',
@@ -18,6 +18,7 @@ export class TransactionsListComponent implements OnInit {
   modalRef: any;
   closeResult: any;
   listMouvmentType: Array<MouvmentType> = new Array();
+  textMessage = 'Loading.... Please wait!';
   listRecipient: Array<Recipient> = new Array();
   listMouvment: Array<Mouvment> = new Array();
 

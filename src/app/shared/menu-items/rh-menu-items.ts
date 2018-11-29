@@ -1,5 +1,5 @@
-import {Menu} from "./menu-items";
-import {Injectable} from "@angular/core";
+import {Menu} from './menu-items';
+import {Injectable} from '@angular/core';
 
 const RHMENUITEMS = [
   {

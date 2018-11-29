@@ -2,7 +2,7 @@
   <div>
 
     <!--<button class="btn btn-primary" (click)="newMouvmentForm()">Make Mouvement</button>-->
-    <button class="btn btn-primary">Make Mouvement</button>
+    <!--<button class="btn btn-primary">Make Mouvement</button>-->
 
     <button class="btn btn-primary" (click)="newMouvmentForm()">Make Mouvement</button>
 
@@ -52,7 +52,7 @@
   </ngb-panel>
 </ngb-accordion>
 
-<div class="card">
+<div class="card" *ngIf="listMouvment.length != 0">
   <div class="card-header">
     List of Mouvments
   </div>
@@ -112,3 +112,6 @@
     </div>
   </div>
 </div>
+<strong *ngIf="listMouvment.length == 0">
+  {{textMessage}}
+</strong>

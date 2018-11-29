@@ -10,14 +10,14 @@
         <label for="username" class="form-control-label">
           Enter your username
         </label>
-        <input id="username" type="text" class="form-control" placeholder="username" [formControl]="form.controls['username']" [ngClass]="{'form-control-danger': form.controls['username'].hasError('required') && form.controls['username'].touched}"/>
+        <input id="username" type="text" class="form-control" placeholder="username" [formControl]="form.controls['username']" [ngClass]="{'form-control-danger': form.controls['username'].hasError('required') && form.controls['username'].touched}" (click)="textMessage=''"/>
         <div class="form-control-feedback" *ngIf="form.controls['username'].hasError('required') && form.controls['username'].touched">Username is required.</div>
       </fieldset>
       <fieldset class="form-group" [ngClass]="{'has-danger': form.controls['password'].hasError('required') && form.controls['password'].touched}">
         <label for="password" class="form-control-label">
           Enter your password
         </label>
-        <input id="password" type="password" class="form-control" placeholder="********" [formControl]="form.controls['password']" [ngClass]="{'form-control-danger': form.controls['password'].hasError('required') && form.controls['password'].touched}"/>
+        <input id="password" type="password" class="form-control" placeholder="********" [formControl]="form.controls['password']" [ngClass]="{'form-control-danger': form.controls['password'].hasError('required') && form.controls['password'].touched}" (click)="textMessage=''"/>
         <div class="form-control-feedback" *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched">Password is required.</div>
         <a [routerLink]="['/forgot']" class="form-text"><small>Recover password</small></a>
       </fieldset>
@@ -28,7 +28,7 @@
       </label>
       <div class="block"></div>
       <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Login</button>
-      <strong>{{textMessage}}</strong>
+      <strong class="couleur">{{textMessage}}</strong>
       <a class="btn btn-outline-primary btn-link" [routerLink]="['/signup']">Create an account!</a>
     </form>
   </div>

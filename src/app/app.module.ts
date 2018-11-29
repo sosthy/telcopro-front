@@ -26,6 +26,7 @@ import {AccountsAdminLayoutComponent} from './layouts/accounts-admin/accounts-ad
 import {JwtModule} from '@auth0/angular-jwt';
 import localeFrCM from '@angular/common/locales/fr-CM';
 import {registerLocaleData} from "@angular/common";
+import {EmployeesAdminLayoutComponent} from "./layouts/employees-admin/employees-admin-layout.component";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -45,6 +46,7 @@ registerLocaleData(localeFrCM, 'fr-CM');
     AdminLayoutComponent,
     AccountsAdminLayoutComponent,
     RhAdminLayoutComponent,
+    EmployeesAdminLayoutComponent,
   ],
   imports: [
     BrowserModule,

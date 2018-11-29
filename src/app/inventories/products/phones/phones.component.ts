@@ -11,7 +11,7 @@ import {Portable} from '../../../models/manage-stocks/portable.model';
 })
 
 export class PhonesComponent implements OnInit {
-  listPortables: any;
+  listPortables = [];
   tableMessage = 'Loading.... Please wait!';
   motcle: string;
   portable: Portable;

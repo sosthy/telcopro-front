@@ -13,34 +13,15 @@ import {Router} from '@angular/router';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
 
-import {Component, OnInit} from "@angular/core";
-import {Mouvment} from "../../../models/manage-stocks/mouvment.model";
-import {MouvmentType} from "../../../models/manage-stocks/mouvment-type.model";
-import {Recipient} from "../../../models/manage-stocks/recipient.model";
-import {TransactionService} from "../transaction.service";
-import {RecipientServices} from "../../../services/recipient.services";
-import {MouvmentLine} from "../../../models/manage-stocks/mouvment-line.model";
-import {Product} from "../../../models/manage-stocks/product.model";
-import {ProductServices} from "../../products/products.services";
-import {Router} from "@angular/router";
-import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {PortableItem} from "../../../models/manage-stocks/portable-item.model";
-
-
 @Component({
   selector: 'app-new-transaction',
   templateUrl: './new-transaction.component.html',
   styleUrls: ['./new-transaction.component.scss']
 })
 export class NewTransactionComponent implements OnInit {
-
   modalRef: any;
   closeResult: any;
-
   totalMouvmentPrice = 0;
-
-  totalMouvmentPrice: number = 0;
-
   listMouvmentType: Array<MouvmentType> = new Array();
   listRecipient: Array<Recipient> = new Array();
   listProduct: Array<Product> = new Array();
@@ -59,16 +40,10 @@ export class NewTransactionComponent implements OnInit {
               public router: Router,
               public transactionService: TransactionService,
               public recipientService: RecipientServices,
-
               public productServices: ProductServices) {}
-
-              public productServices: ProductServices){}
-
-
   ngOnInit(): void {
     this.init();
   }
-
   init() {
 
     this.productServices.listAllStocks().subscribe(resp => {
@@ -83,36 +58,21 @@ export class NewTransactionComponent implements OnInit {
       this.listRecipient = resp.json();
     });
   }
-
-
   onAddMouvmentLine() {
-
-  onAddMouvmentLine(){
-
     this.mouvmentLine.quantity = 0;
     this.mouvmentLine.priceTotal = 0;
     // this.totalMouvmentPrice = this.totalMouvmentPrice + this.mouvmentLine.product.priceUnit;
     this.listMouvmentLine.push(this.mouvmentLine);
     this.mouvmentLine = new MouvmentLine();
   }
-
   open(content, mouvmentLine?: MouvmentLine) {
-
-
     if (mouvmentLine) {
-
-    if(mouvmentLine){
-
       this.productServices.getAllPortableItemsOfPortable(this.mouvmentLine.product.id).subscribe(resp => {
         this.listPortableItem = resp.json();
         console.log(this.listPortableItem);
       });
     }
-
     this.modalRef = this.modalService.open(content, {size: 'lg'});
-
-    this.modalRef = this.modalService.open(content, {size: "lg"});
-
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

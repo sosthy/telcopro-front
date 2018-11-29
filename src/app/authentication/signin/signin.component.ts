@@ -27,6 +27,7 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
+    this.textMessage = '... checking, please wait!!!';
     this.auth.onLogin(new User(this.form.value)).subscribe(resp => {
 
       const token = resp.headers.get('Authorization');
@@ -35,9 +36,13 @@ export class SigninComponent implements OnInit {
 
       if (resp.ok === true) {
         this.router.navigateByUrl('dashboard');
-        this.textMessage = '... checking, please wait!!!';
       }
-    });
+    },
+      err => {
+        console.log(err);
+        this.textMessage = '  your username or your password incorrect!!!';
+      }
+    );
 
   }
 
