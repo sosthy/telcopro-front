@@ -8,7 +8,6 @@ export class Recipient {
   phone: string;
   location: string;
   groupe: RecipientGroupe;
-  mouvements: Mouvment;
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.id : null) : null;
@@ -17,6 +16,5 @@ export class Recipient {
     this.phone = obj ? (obj.phone ? obj.phone : '') : '';
     this.location = obj ? (obj.location ? obj.location : '') : '';
     this.groupe = obj ? (obj.groupe ? obj.groupe : new RecipientGroupe()) : new RecipientGroupe();
-    this.mouvements = obj ? (obj.id ? obj.id : new Mouvment()) : new Mouvment();
   }
 }

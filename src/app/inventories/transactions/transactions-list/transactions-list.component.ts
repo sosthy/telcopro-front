@@ -64,6 +64,10 @@ export class TransactionsListComponent implements OnInit {
     this.router.navigateByUrl('/inventories/transactions/register');
   }
 
+  makeApprovision() {
+    this.router.navigateByUrl('/inventories/transactions/new-approvision');
+  }
+
   public beforeChange($event: NgbPanelChangeEvent) {
     if ($event.panelId === '2') {
       $event.preventDefault();
@@ -71,6 +75,10 @@ export class TransactionsListComponent implements OnInit {
     if ($event.panelId === '3' && $event.nextState === false) {
       $event.preventDefault();
     }
+  }
+
+  newLivraison(){
+    this.router.navigateByUrl('/inventories/transactions/new-livraison');
   }
 
 }
