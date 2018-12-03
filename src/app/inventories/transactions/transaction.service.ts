@@ -31,4 +31,8 @@ export class TransactionService {
   saveMouvmentLine(mouvmentLine: MouvmentLine){
     return this.http.post(TELCOPRO_URL + '/stocks/mouvments/lines', mouvmentLine, this.auth.getHeaders()).map(resp => resp.json());
   }
+
+  getAllPortableItemOfProduct(id){
+    return this.http.get(TELCOPRO_URL + '/stocks/portables/items-of-portable/' + id, this.auth.getHeaders()).map(resp => resp.json());
+  }
 }

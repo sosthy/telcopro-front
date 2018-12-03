@@ -17,6 +17,11 @@ export class EmployeeService {
   getEmployee(id) {
     return this.http.get(TELCOPRO_URL + '/rh/employees/' + id, this.auth.getHeaders());
   }
+
+  getEmployeeByUser(id) {
+    return this.http.get(TELCOPRO_URL + '/rh/employees/user/' + id, this.auth.getHeaders());
+  }
+
   /*
 
   saveEmployee(employee: Employee, photo: File) {

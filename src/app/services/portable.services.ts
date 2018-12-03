@@ -9,6 +9,7 @@ import {TELCOPRO_URL} from '../models/config.model';
 import {Memory} from '../models/manage-stocks/memory.model';
 import {Cpu} from '../models/manage-stocks/cpu.model';
 import {GenericCategory} from "../models/manage-stocks/category.model";
+import {PortableItem} from "../models/manage-stocks/portable-item.model";
 
 
 @Injectable()
@@ -198,7 +199,7 @@ export class PortableServices {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/memories', memory, this.authenticationService.getHeaders());
   }
   deleteMemory(id: number) {
-   return this.http.delete(TELCOPRO_URL + '/stocks/portables/memories' + id, this.authenticationService.getHeaders());
+   return this.http.delete(TELCOPRO_URL + '/stocks/portables/memories/' + id, this.authenticationService.getHeaders());
   }
   updateMemory(memory: Memory) {
    return this.http.post(TELCOPRO_URL + '/stocks/portables/memories', memory, this.authenticationService.getHeaders());
@@ -214,9 +215,31 @@ export class PortableServices {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/cpus', cpu, this.authenticationService.getHeaders());
   }
   deleteCpu(id: number) {
-   return this.http.delete(TELCOPRO_URL + '/stocks/portables/cpus' + id, this.authenticationService.getHeaders());
+   return this.http.delete(TELCOPRO_URL + '/stocks/portables/cpus/' + id, this.authenticationService.getHeaders());
   }
   updateCpu(cpu: Cpu) {
     return this.http.post(TELCOPRO_URL + '/stocks/portables/cpus', cpu, this.authenticationService.getHeaders());
+  }
+  // ===========================Listing, Modification et Sauvegarde des item liés au portable===================================
+  listAllPortableItem() {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/items', this.authenticationService.getHeaders());
+  }
+  getPortableItems(idPortable) {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/items-of-portable/' + idPortable, this.authenticationService.getHeaders());
+  }
+  listPortableItem(id: number) {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/items/' + id, this.authenticationService.getHeaders());
+  }
+  savePortableItem(item: PortableItem) {
+    return this.http.post(TELCOPRO_URL + '/stocks/portables/items', item, this.authenticationService.getHeaders());
+  }
+  deletePortableItem(id: number) {
+   return this.http.delete(TELCOPRO_URL + '/stocks/portables/items' + id, this.authenticationService.getHeaders());
+  }
+  updatePortableItem(item: PortableItem) {
+    return this.http.post(TELCOPRO_URL + '/stocks/portables/items', item, this.authenticationService.getHeaders());
+  }
+  searchPortableItem(motCle: string) {
+   return this.http.get(TELCOPRO_URL + '/stocks/portables/items/search?mc=' + motCle, this.authenticationService.getHeaders());
   }
 }

@@ -12,7 +12,8 @@ export class Mouvment {
   priceTotal: number;
   entrepotSource: GenericEntrepot;
   entrepotRecipient: GenericEntrepot;
-  mouvementType: MouvmentType;
+  mouvmentType: MouvmentType;
+  mouvmentLines: Array<MouvmentLine>;
   user: Employee;
   recipient: Recipient;
 
@@ -24,8 +25,9 @@ export class Mouvment {
     this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : null) : null;
     this.entrepotSource = obj ? (obj.entrepotSource ? obj.entrepotSource : null) : null;
     this.entrepotRecipient = obj ? (obj.entrepotRecipient ? obj.entrepotRecipient : null) : null;
-    this.mouvementType = obj ? (obj.mouvementType ? obj.mouvementType : null) : null;
+    this.mouvmentType = obj ? (obj.mouvmentType ? obj.mouvmentType : null) : null;
     this.user = obj ? (obj.user ? obj.user : null) : null;
     this.recipient = obj ? (obj.recipient ? obj.recipient : null) : null;
+    this.mouvmentLines = obj ? (obj.mouvmentLines ? obj.mouvmentLines : null) : null;
   }
 }

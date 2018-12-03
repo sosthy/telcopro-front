@@ -1,0 +1,104 @@
+<div class="d-flex justify-content-between mb-5">
+  <div>
+    <button class="btn btn-primary" (click)="open(formItem)">Create Item</button>
+  </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group">
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="itemSearch">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchItem()" style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="card" *ngIf="items.length != 0">
+  <div class="card-header">
+    List of Items
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead class="thead-default">
+        <tr>
+          <th>#</th>
+          <th>Serial</th>
+          <th>Code QRC</th>
+          <th>Code Bar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ite of items; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td class="text-uppercase">{{ ite.serial }}</td>
+          <td>{{ ite.codeQrc }}</td>
+          <td>{{ ite.codeBar}}</td>
+          <td>
+            <a href="javascript:;" (click)="open(formItem, ite)">edit</a> &nbsp;&nbsp;
+            <a href="javascript:;" (click)="open(deleteItem, ite)">delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<strong *ngIf="items.length == 0">
+    {{tableMessage}}
+ </strong>
+
+<ng-template #deleteItem let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete Item</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to delete that item?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="onDeleteItem()">Yes</button>
+  </div>
+</ng-template>
+
+<ng-template ngbModalContainer></ng-template>
+<ng-template #formItem let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Enter Item Informations</p>
+        <div class="form-group row">
+          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">SERIAL: </label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="item.serial" id="role-text-input" name="serialItem">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">CODE QRC: </label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="item.codeQrc" id="desc-text-input" name="codeQrcItem">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">CODE BAR: </label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <input class="form-control" type="text" [(ngModel)]="item.codeBar" id="bra-text-input" name="codeBarItem">
+          </div>
+        </div>
+        <strong [ngStyle] = "{'color': 'red'}">{{message}}</strong>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" [disabled]="message != ''" (click)="onSaveItem()">Save changes</button>
+  </div>
+</ng-template>

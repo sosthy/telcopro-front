@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   menus: Array<AppMenu> = new Array();
   user = {};
   textMessage = '';
+  colorText = '';
 
   constructor(private items: DashboardItems,
               private auth: AuthenticationService,
@@ -33,8 +34,11 @@ export class DashboardComponent implements OnInit {
     });
   }
   loading(menu: AppMenu) {
-    this.textMessage = '...loading ' + menu.name + ' Application!';
-    // [routerLink]=[menu.link]
+    this.colorText = menu.color.replace('bg-', '');
+    if (this.colorText.includes('purple')) {
+      this.colorText = 'purple';
+    }
+    this.textMessage = '...loading ' + menu.name + ' Application, Please wait!';
     this.router.navigateByUrl(menu.link);
   }
 

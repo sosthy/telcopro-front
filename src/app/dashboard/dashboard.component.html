@@ -3,7 +3,7 @@
     <div class="text-center">
       <h2>Applications</h2>
       <p>All applications you need to work here.</p>
-      <strong class="module">{{textMessage}}</strong>
+      <strong [ngStyle]="{'color':colorText}">{{textMessage}}</strong>
     </div>
     <div class="row pt-sm-5">
       <div class="col-md-3" *ngFor="let menu of menus">

@@ -66,4 +66,7 @@ export class PhonesComponent implements OnInit {
     this.mode = 2;
     this.portable = phone;
   }
+  routeToItem(p: Portable) {
+    this.router.navigate(['inventories/products/phones', p.id]);
+  }
 }

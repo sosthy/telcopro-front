@@ -27,6 +27,7 @@ import {JwtModule} from '@auth0/angular-jwt';
 import localeFrCM from '@angular/common/locales/fr-CM';
 import {registerLocaleData} from "@angular/common";
 import {EmployeesAdminLayoutComponent} from "./layouts/employees-admin/employees-admin-layout.component";
+import {FilterPipe, SortByPipe} from "./pipe";
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

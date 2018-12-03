@@ -1,10 +1,7 @@
 <div class="card bg-transparent">
   <div>
-
-    <!--<button class="btn btn-primary" (click)="newMouvmentForm()">Make Mouvement</button>-->
-    <!--<button class="btn btn-primary">Make Mouvement</button>-->
-
-    <button class="btn btn-primary" (click)="newMouvmentForm()">Make Mouvement</button>
+    <button class="btn btn-primary" (click)="newLivraison()">Livraison</button>
+    <button class="btn btn-primary" (click)="makeApprovision()">Approvisionnement</button>
   </div>
 </div>
 
@@ -70,41 +67,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">2</th>
-          <td class="text-uppercase">PMMLP4559</td>
-          <td>LIVRAISON</td>
-          <td>11 Juin 2018</td>
-          <td>7</td>
-          <td>137000 FCFA</td>
-          <td>THOMAS (CLI)</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td class="text-uppercase">RLMNP4559</td>
-          <td>APPROVISION</td>
-          <td>28 Juin 2018</td>
-          <td>40</td>
-          <td>1447000 FCFA</td>
-          <td>ORANGE (PRO)</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td class="text-uppercase">DDFTY443</td>
-          <td>TRANSFERT</td>
-          <td>28 Juin 2018</td>
-          <td>10</td>
-          <td>17000 FCFA</td>
-          <td>STARSTEL (POS)</td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td class="text-uppercase">RREDF445</td>
-          <td>RETOUR</td>
-          <td>28 Fev 2018</td>
-          <td>02</td>
-          <td>35000 FCFA</td>
-          <td>STARSTEL (POS)</td>
+        <tr *ngFor="let mouvment of listMouvment; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td class="text-uppercase">{{mouvment.reference}}</td>
+          <td>{{mouvment.mouvmentType.name}}</td>
+          <td>{{mouvment.date | date}}</td>
+          <td>{{mouvment.quantity}}</td>
+          <td>{{mouvment.priceTotal | currency:'XAF':'symbol':'0.0-0':'fr-CM'}}</td>
+          <td>{{mouvment.recipient?.designation}}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="open()">edit</button>
+            <button class="btn btn-danger btn-sm" (click)="open()">Remove</button>
+            <button class="btn btn-info btn-sm" (click)="open()">Details</button>
+          </td>
         </tr>
         </tbody>
       </table>

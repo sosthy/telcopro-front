@@ -11,8 +11,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductServices} from './products.services';
 import {EntrepotServices} from '../../services/entrepot.services';
 import {EditPhonesComponent} from './edit-phones/edit-phones.component';
-import {AuthenticationService} from "../../authentication/authentication.service";
-import {AccountsService} from "../../accounts/accounts.service";
+import {AuthenticationService} from '../../authentication/authentication.service';
+import {AccountsService} from '../../accounts/accounts.service';
+import {PortableItemComponent} from './items/items.component';
+import {PortableItemServices} from './items/items.services';
+import {EntrepotService} from '../entrepots/entrepots.services';
 
 
 @NgModule({
@@ -22,8 +25,9 @@ import {AccountsService} from "../../accounts/accounts.service";
       FormsModule,
       NgbModule
     ],
-  declarations: [ProductsComponent, PhonesComponent, NewPhonesComponent, EditPhonesComponent],
-  providers: [PortableServices, ProductServices, EntrepotServices, AuthenticationService, AccountsService],
+  declarations: [ProductsComponent, PhonesComponent, NewPhonesComponent, EditPhonesComponent, PortableItemComponent],
+  providers: [PortableServices, ProductServices, EntrepotServices, AuthenticationService, AccountsService,
+    PortableItemServices, EntrepotService],
 
 })
 

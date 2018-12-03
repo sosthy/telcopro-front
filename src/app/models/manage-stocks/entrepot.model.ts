@@ -11,10 +11,10 @@ export class GenericEntrepot extends  WorkSpace {
   constructor(obj?: any) {
     super(obj);
     this.id = obj ? (obj.id ? obj.id : null) : null;
-    this.name = obj ? (obj.name ? obj.name : null) : null;
-    this.nbOfProduct = obj ? (obj.nbOfProduct ? obj.nbOfProduct : null) : null;
-    this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : null) : null;
-    this.volume = obj ? (obj.volume ? obj.volume : null) : null;
-    this.volumeSecurity = obj ? (obj.volumeSecurity ? obj.volumeSecurity : null) : null;
+    this.name = obj ? (obj.name ? obj.name : '') : '';
+    this.nbOfProduct = obj ? (obj.nbOfProduct ? obj.nbOfProduct : 0) : 0;
+    this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : 0) : 0;
+    this.volume = obj ? (obj.volume ? obj.volume : 0) : 0;
+    this.volumeSecurity = obj ? (obj.volumeSecurity ? obj.volumeSecurity : 0) : 0;
   }
 }
