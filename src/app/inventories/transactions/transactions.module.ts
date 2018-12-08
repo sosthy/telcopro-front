@@ -13,10 +13,12 @@ import {TransactionService} from './transaction.service';
 import {RecipientServices} from '../../services/recipient.services';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {AccountsService} from '../../accounts/accounts.service';
-import {NewApprovisionComponent} from "./new-approvision/new-approvision.component";
-import {EmployeeService} from "../../services/employee.services";
-import {NewLivraisonComponent} from "./new-livraison/new-livraison.component";
-import {FilterPipe, SortByPipe} from "../../pipe";
+import {NewApprovisionComponent} from './new-approvision/new-approvision.component';
+import {EmployeeService} from '../../services/employee.services';
+import {NewLivraisonComponent} from './new-livraison/new-livraison.component';
+import {FilterPipe, SortByPipe} from '../../pipe';
+import {WorkSpaceService} from '../../services/workSpace.services';
+import {NewTransfertComponent} from "./new-transfert/new-transfert.component";
 
 @NgModule({
   imports: [
@@ -32,9 +34,10 @@ import {FilterPipe, SortByPipe} from "../../pipe";
     NewTransactionComponent,
     NewApprovisionComponent,
     NewLivraisonComponent,
+    NewTransfertComponent,
     FilterPipe,
     SortByPipe
   ],
-  providers: [TransactionService, RecipientServices, AccountsService, AuthenticationService, EmployeeService]
+  providers: [TransactionService, RecipientServices, AccountsService, AuthenticationService, EmployeeService, WorkSpaceService]
 })
 export class TransactionModule { }

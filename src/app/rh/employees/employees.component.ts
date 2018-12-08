@@ -20,12 +20,14 @@ export class EmployeesComponent implements OnInit {
   tableMessage = 'Loading.... Please wait!';
   employee = new Employee(null);
   workSpaces = [ ];
+  workSpacesView = [ ];
   photoFile: File;
   closeResult: string;
   modalRef: NgbModalRef;
   modalTitle = 'New Employee';
-  constructor(private modalService: NgbModal, public employeeService: EmployeeService, public entrepotService: EntrepotService,
-              public workSpaceService: WorkSpaceService, public pointOfSaleService: PointOfSaleService) { }
+  constructor(private modalService: NgbModal,
+              public employeeService: EmployeeService,
+              public workSpaceService: WorkSpaceService) { }
   ngOnInit() {
     this.loadEmployees();
   }
@@ -39,10 +41,6 @@ export class EmployeesComponent implements OnInit {
         err => {
           console.log(err);
         });
-    this.getWorkSpaces();
-  }
-  getWorkSpaces() {
-    this.filter = 'All';
     this.workSpaceService.getWorkSpaces()
     .subscribe(data => {
         this.workSpaces = data.json();
@@ -52,29 +50,17 @@ export class EmployeesComponent implements OnInit {
         }
         );
   }
+  getWorkSpaces() {
+    this.filter = 'All';
+    this.workSpacesView = this.workSpaces;
+  }
   getEntrepots() {
     this.filter = 'Entrepôts';
-    this.employee.workSpace = new WorkSpace(null);
-    this.entrepotService.listAllEntrepots()
-    .subscribe(data => {
-        this.workSpaces = data;
-      },
-        err => {
-        console.log(err);
-        }
-        );
+    this.workSpacesView = this.workSpaces.filter(spacer => spacer.workSpaceType.includes('Entrepot'));
   }
   getSalePoints() {
     this.filter = 'Points of sale';
-    this.employee.workSpace = new WorkSpace(null);
-    this.pointOfSaleService.getPointOfSales()
-    .subscribe(data => {
-        this.workSpaces = data.json();
-      },
-        err => {
-          console.log(err);
-        }
-      );
+    this.workSpacesView = this.workSpaces.filter(spacer => spacer.workSpaceType.includes('Point'));
   }
 
   search() {
@@ -100,13 +86,18 @@ export class EmployeesComponent implements OnInit {
   }
 
   saveInformation() {
-    const index = this.listEmployees.indexOf(this.employee);
-    this.employeeService.saveEmployee(this.employee)
+    const formData = new FormData();
+    formData.append('user', JSON.stringify(this.employee));
+    formData.append('file', this.photoFile);
+    // const index = this.listEmployees.indexOf(this.employee);
+    this.employeeService.saveEmployee(formData)
       .subscribe(data => {
+        console.log(data);
+        /*
         this.employee = data.json();
         if (index === -1) {
           this.listEmployees.push(this.employee);
-        }
+        }*/
       },
       err => {
         console.log(err);
@@ -114,6 +105,7 @@ export class EmployeesComponent implements OnInit {
   }
   fileInputChange(event) {
     this.photoFile = event.target.files[0];
+    console.log(this.photoFile);
   }
   open(content, employee?: Employee, mode?: number) {
     this.employee = employee ? employee : new Employee();
