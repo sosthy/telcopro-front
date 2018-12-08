@@ -43,6 +43,10 @@ export class NewLivraisonComponent implements OnInit {
   listItemSel: Array<PortableItem> = new Array();
   listItemSelRemoved: Array<PortableItem> = new Array();
 
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
+
 
   constructor(public modalService: NgbModal,
               public router: Router,
@@ -67,7 +71,7 @@ export class NewLivraisonComponent implements OnInit {
     this.transactionService.getAllType().subscribe(resp => {
       this.listMouvmentType = resp;
       this.listMouvmentType.forEach(type => {
-        if(type.name == 'APPROVISIONNEMENT') {
+      if(type.name == 'LIVRAISON') {
           this.mouvment.mouvmentType = type;
         }
       });
@@ -80,6 +84,48 @@ export class NewLivraisonComponent implements OnInit {
     this.accountService.getUser(this.auth.getUserName()).subscribe(resp => {
       this.user = resp;
       this.mouvment.user = this.user.employee;
+    });
+
+    this.dropdownList = [
+      { item_id: 1, item_text: 'Mumbai' },
+      { item_id: 2, item_text: 'Bangaluru' },
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' },
+      { item_id: 5, item_text: 'New Delhi' }
+    ];
+    this.selectedItems = [
+      /*{ item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' }*/
+    ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'serial',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+
+  onRemoveMouvmentLine() {
+    this.mouvment.mouvmentLines.forEach(item => {
+      if(item.product.id === this.mouvmentLine.product.id) {
+        const index = this.mouvment.mouvmentLines.indexOf(item);
+        if(index != -1) {
+          this.mouvment.mouvmentLines.splice(index, 1);
+          this.modalRef.close();
+        }
+      }
     });
   }
 
@@ -109,11 +155,18 @@ export class NewLivraisonComponent implements OnInit {
   }
 
   onAddMouvmentLineItem(){
-    this.mouvmentLine.productsItem.push(this.portableItem);
+    // this.mouvmentLine.productsItem.push(this.portableItem);
     this.mouvmentLine.quantity = this.mouvmentLine.productsItem.length;
     this.mouvmentLine.priceTotal = this.mouvmentLine.productsItem.length * this.mouvmentLine.product.priceUnit;
+    this.mouvment.quantity = 0;
+    this.mouvment.priceTotal = 0;
+    this.mouvment.mouvmentLines.forEach(item => {
+      this.mouvment.quantity += item.quantity;
+      this.mouvment.priceTotal += item.priceTotal;
+    });
+
     console.log(this.mouvmentLine);
-    this.portableItem = new  PortableItem();
+    // this.portableItem = new  PortableItem();
     this.modalRef.close();
   }
 
@@ -121,8 +174,10 @@ export class NewLivraisonComponent implements OnInit {
     if (mouvmentLine) {
       this.mouvmentLine = mouvmentLine;
       this.productServices.getAllPortableItemsOfPortable(this.mouvmentLine.product.id).subscribe(resp => {
-        this.listPortableItem = resp.json();
+        this.dropdownList = resp.json();
       });
+    } else {
+      this.mouvmentLine = new MouvmentLine();
     }
     this.modalRef = this.modalService.open(content, {size: 'lg'});
     this.modalRef.result.then((result) => {
