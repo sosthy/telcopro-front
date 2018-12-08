@@ -5,7 +5,6 @@ import {Employee} from '../employee.model';
 import {Recipient} from './recipient.model';
 
 export class Mouvment {
-  id: number;
   reference: string;
   date: Date;
   quantity: number;
@@ -18,7 +17,6 @@ export class Mouvment {
   recipient: Recipient;
 
   constructor(obj?: any) {
-    this.id = obj ? (obj.id ? obj.connection : null) : null;
     this.reference = obj ? (obj.reference ? obj.reference : null) : null;
     this.date = obj ? (obj.date ? obj.date : new Date()) : new Date();
     this.quantity = obj ? (obj.quantity ? obj.quantity : null) : null;

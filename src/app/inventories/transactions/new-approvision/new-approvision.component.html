@@ -71,8 +71,8 @@
           <td>{{ mouvLine.note }}</td>
           <td>
             <button class="btn btn-primary btn-sm" (click)="open(formAddItem, mouvLine)">Add Item</button>
-            <button class="btn btn-warning btn-sm" (click)="open(formAddProduct, mouvLine)">edit</button>
-            <button class="btn btn-danger btn-sm" (click)="open()">Remove</button>
+            <!--<button class="btn btn-warning btn-sm" (click)="open(formAddProduct, mouvLine)">edit</button>-->
+            <button class="btn btn-danger btn-sm" (click)="open(formRemove, mouvLine)">Remove</button>
             <button class="btn btn-info btn-sm" (click)="open(formMouvLineDetails, mouvLine)">Details</button>
           </td>
         </tr>
@@ -81,6 +81,26 @@
     </div>
   </div>
 </div>
+
+<ng-template #formRemove let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <p>Etes Vous sure de vouloir enlever {{mouvmentLine.product.designation}} ?</p>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-danger" (click)="onRemoveMouvmentLine()">Remove</button>
+  </div>
+</ng-template>
 
 <ng-template #formMouvLineDetails let-c="close">
   <div class="modal-header">
@@ -111,8 +131,7 @@
               <td>{{ portableItem.codeBar }}</td>
               <td>{{ portableItem.codeQrc }}</td>
               <td>
-                <button class="btn btn-warning btn-sm" (click)="open()">edit</button>
-                <button class="btn btn-danger btn-sm" (click)="open()">Remove</button>
+                <button class="btn btn-danger btn-sm" (click)="removeItem(portableItem)">Remove</button>
               </td>
             </tr>
             </tbody>

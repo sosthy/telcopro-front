@@ -109,9 +109,41 @@ export class NewApprovisionComponent implements OnInit {
     this.mouvmentLine.productsItem.push(this.portableItem);
     this.mouvmentLine.quantity = this.mouvmentLine.productsItem.length;
     this.mouvmentLine.priceTotal = this.mouvmentLine.productsItem.length * this.mouvmentLine.product.priceUnit;
+    this.mouvment.priceTotal += this.mouvmentLine.product.priceUnit;
+    this.mouvment.quantity += 1;
     console.log(this.mouvmentLine);
     this.portableItem = new  PortableItem();
     this.modalRef.close();
+  }
+
+  onRemoveMouvmentLine() {
+    this.mouvment.mouvmentLines.forEach(item => {
+      if(item.product.id === this.mouvmentLine.product.id) {
+        const index = this.mouvment.mouvmentLines.indexOf(item);
+        if(index != -1) {
+          this.mouvment.mouvmentLines.splice(index, 1);
+          this.modalRef.close();
+        }
+      }
+    });
+  }
+
+  removeItem(portableItem) {
+    this.mouvment.mouvmentLines.forEach(item => {
+      item.productsItem.forEach(pitem => {
+        if(pitem.serial === portableItem.serial) {
+          const index = item.productsItem.indexOf(pitem);
+          if(index != -1) {
+            item.productsItem.splice(index, 1);
+          }
+        }
+      });
+    });
+
+    this.mouvmentLine.quantity = this.mouvmentLine.productsItem.length;
+    this.mouvmentLine.priceTotal = this.mouvmentLine.productsItem.length * this.mouvmentLine.product.priceUnit;
+    this.mouvment.priceTotal -= this.mouvmentLine.product.priceUnit;
+    this.mouvment.quantity -= 1;
   }
 
   open(content, mouvmentLine?: MouvmentLine) {

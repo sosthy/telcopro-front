@@ -17,6 +17,7 @@ import {NewApprovisionComponent} from "./new-approvision/new-approvision.compone
 import {EmployeeService} from "../../services/employee.services";
 import {NewLivraisonComponent} from "./new-livraison/new-livraison.component";
 import {FilterPipe, SortByPipe} from "../../pipe";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {FilterPipe, SortByPipe} from "../../pipe";
     RouterModule.forChild(TRANSACTIONSROUTES),
     FormsModule,
     NgbModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ReactiveFormsModule
   ],
   declarations: [

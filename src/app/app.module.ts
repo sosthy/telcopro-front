@@ -25,8 +25,9 @@ import {AuthenticationService} from './authentication/authentication.service';
 import {AccountsAdminLayoutComponent} from './layouts/accounts-admin/accounts-admin-layout.component';
 import {JwtModule} from '@auth0/angular-jwt';
 import localeFrCM from '@angular/common/locales/fr-CM';
-import {registerLocaleData} from "@angular/common";
+import {CommonModule, registerLocaleData} from "@angular/common";
 import {EmployeesAdminLayoutComponent} from "./layouts/employees-admin/employees-admin-layout.component";
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import {FilterPipe, SortByPipe} from "./pipe";
 
 export function createTranslateLoader(http: HttpClient) {
@@ -57,6 +58,7 @@ registerLocaleData(localeFrCM, 'fr-CM');
     FormsModule,
     HttpModule,
     HttpClientModule,
+    CommonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
