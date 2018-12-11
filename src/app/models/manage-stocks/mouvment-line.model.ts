@@ -14,12 +14,12 @@ export class MouvmentLine {
 
   constructor(obj?: any) {
     this.id = obj ? (obj.id ? obj.connection : null) : null;
-    this.quantity = obj ? (obj.quantity ? obj.quantity : null) : null;
-    this.priceUnit = obj ? (obj.priceUnit ? obj.priceUnit : null) : null;
-    this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : null) :null;
-    this.mouvement = obj ? (obj.mouvement ? obj.mouvement : null) : null;
-    this.product = obj ? (obj.product ? obj.product : null) : null;
-    this.note = obj ? (obj.note ? obj.note : null) : null;
+    this.quantity = obj ? (obj.quantity ? obj.quantity : 0) : 0;
+    this.priceUnit = obj ? (obj.priceUnit ? obj.priceUnit : 0) : 0;
+    this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : 0) : 0;
+    this.mouvement = obj ? (obj.mouvement ? obj.mouvement : new Mouvment()) : new Mouvment();
+    this.product = obj ? (obj.product ? obj.product : new Product()) : new Product();
+    this.note = obj ? (obj.note ? obj.note : '') : '';
     this.productsItem = obj ? (obj.productsItem ? obj.productsItem : new Array()) :  new Array();
   }
 }

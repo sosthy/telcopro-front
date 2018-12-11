@@ -18,12 +18,18 @@ import {EmployeeService} from '../../services/employee.services';
 import {NewLivraisonComponent} from './new-livraison/new-livraison.component';
 import {FilterPipe, SortByPipe} from '../../pipe';
 
+import {WorkSpaceService} from '../../services/workSpace.services';
+import {NewTransfertComponent} from "./new-transfert/new-transfert.component";
+import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
+
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(TRANSACTIONSROUTES),
     FormsModule,
     NgbModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ReactiveFormsModule
   ],
   declarations: [
@@ -32,9 +38,10 @@ import {FilterPipe, SortByPipe} from '../../pipe';
     NewTransactionComponent,
     NewApprovisionComponent,
     NewLivraisonComponent,
+    NewTransfertComponent,
     FilterPipe,
     SortByPipe
   ],
-  providers: [TransactionService, RecipientServices, AccountsService, AuthenticationService, EmployeeService]
+  providers: [TransactionService, RecipientServices, AccountsService, AuthenticationService, EmployeeService, WorkSpaceService]
 })
 export class TransactionModule { }

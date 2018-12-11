@@ -31,8 +31,8 @@ export class EmployeeService {
     return this.http.post(TELCOPRO_URL + '/rh/employees', formData, this.auth.getHeaders());
   }
    */
-  saveEmployee(employee: Employee) {
-    return this.http.post(TELCOPRO_URL + '/rh/employees', employee, this.auth.getHeaders());
+  saveEmployee(formData) {
+    return this.http.post(TELCOPRO_URL + '/rh/employees', formData, this.auth.getHeaders());
   }
 
   getAccountOfEmployee(id) {

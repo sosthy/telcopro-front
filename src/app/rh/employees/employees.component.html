@@ -83,13 +83,13 @@
           <input class="form-control bottom-spacer" type="date" [(ngModel)]="employee.hiringDate" name="hiringDate">
 
           <div class="form-group bottom-spacer">
-            <label class="control-label">WorkSpace Type:</label>
+            <label class="control-label">Sort WorkSpace By: </label>
             <div ngbDropdown placement="top-right" class="d-inline-block">
               <button class="btn btn-outline-primary" id="dropdownMenu3" ngbDropdownToggle>{{filter}}</button>
               <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
                 <button class="dropdown-item" (click)="getEntrepots()">Entrepots</button>
                 <button class="dropdown-item" (click)="getSalePoints()">Points of sale</button>
-                <button class="dropdown-item" (click)="getWorkSpaces()">All</button>
+                <button class="dropdown-item" (click)="getWorkSpaces()">None</button>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@
                 <span *ngIf="employee.workSpace.name != ''">{{employee.workSpace.name}}</span>
               </button>
               <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpaces">{{workSpace.name}}</button>
+                <button class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpacesView">{{workSpace.name}}</button>
               </div>
             </div>
           </div>
