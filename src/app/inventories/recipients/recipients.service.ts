@@ -32,4 +32,8 @@ export class RecipientsService {
   searchRecipients(motCle: string) {
     return this.http.get(TELCOPRO_URL + '/stocks/recipients/search?mc=' + motCle, this.auth.getHeaders()).map(res => res.json());
   }
+  saveUserProfile(formData: FormData) {
+    return this.http.post(TELCOPRO_URL + '/stocks/recipients',
+      formData, this.auth.getHeadersUpload()).map(res => res.json());
+  }
 }

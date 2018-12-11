@@ -122,7 +122,8 @@
             </div>
           </div>
           <label>Photo:   </label>
-          <input type="file" (change)="fileInputChange($event)">
+          <input type="file" class="form-control-file" accept="image/*"  aria-describedby="fileHelp"
+              (change) ="onselectFile($event)"  name="file">
         </div>
       </div>
     </div>

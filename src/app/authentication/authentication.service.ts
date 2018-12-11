@@ -12,7 +12,8 @@ export class AuthenticationService {
   token: any;
   user: User;
 
-  constructor(private http: Http) {}
+  constructor(private http: Http) {
+  }
 
   onLogin(user: User) {
     return this.http.post(TELCOPRO_URL + '/login', user);
@@ -23,7 +24,7 @@ export class AuthenticationService {
     localStorage.setItem('token', this.token);
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(token);
-    localStorage.setItem("username", decodedToken.sub);
+    localStorage.setItem('username', decodedToken.sub);
   }
 
   getToken(): any {
@@ -34,7 +35,7 @@ export class AuthenticationService {
     this.user = user;
   }
 
-  getUserName(){
+  getUserName() {
     return localStorage.getItem('username');
   }
 
@@ -42,10 +43,27 @@ export class AuthenticationService {
     return this.user;
   }
 
-   getHeaders(): RequestOptions {
+  getHeaders(): RequestOptions {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Authorization', this.getToken());
+    const options = new RequestOptions({headers: headers});
+    return options;
+  }
+
+  getHeadersUpload(): RequestOptions {
+    const headers = new Headers();
+    headers.delete('Content-Type');
+    headers.append('Authorization', this.getToken());
+    const options = new RequestOptions({headers: headers});
+    return options;
+  }
+
+  getHeadersDownload(): RequestOptions {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', this.getToken());
+    headers.append('response-Type', 'blob');
     const options = new RequestOptions({headers: headers});
     return options;
   }

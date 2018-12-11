@@ -14,6 +14,8 @@ import {MeasureService} from '../../configuration/measure/measure.service';
 import {ProductCategoryService} from '../../configuration/product-category/product-category.service';
 import {AccountsService} from '../../../accounts/accounts.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
+import {AppColor} from '../../../models/manage-stocks/app-color.model';
+import {State} from '../../../models/manage-stocks/state.model';
 
 @Component({
   selector: 'app-new-phones',
@@ -32,6 +34,10 @@ export class NewPhonesComponent implements OnInit {
   listCamera: Array<Camera>;
   editOrCreatePhone = 'Create';
   mode = 1;
+  listColor: Array<AppColor>;
+  listState: Array<State>;
+  public phoneFile: any = File;
+  url: any;
 
 
   constructor(public portableServices: PortableServices,
@@ -109,8 +115,22 @@ export class NewPhonesComponent implements OnInit {
         err => {
           console.log(err);
         });
+    this.productService.listAllappColor()
+      .subscribe(data => {
+        this.listColor = data.json();
+      },
+      err => {
+        console.log(err);
+      });
+    this.productService.listAllState()
+      .subscribe(data => {
+        this.listState = data.json();
+      },
+      err => {
+        console.log(err);
+      });
   }
-  savePortable() {
+  /*savePortable() {
     this.portableServices.savePortable(this.portable)
       .subscribe(data => {
           this.portable = data.json();
@@ -119,6 +139,25 @@ export class NewPhonesComponent implements OnInit {
           console.log(err);
         });
     this.router.navigate(['inventories/products/phones']);
+  }*/
+  onselectFile(event) {
+    const file = <File>event.target.files[0];
+     console.log(file);
+    this.phoneFile = file;
+  }
+   savePortable() {
+    console.log(this.phoneFile);
+    console.log(this.portable);
+    const formData = new FormData();
+    formData.append('portable', JSON.stringify(this.portable));
+    formData.append('file', this.phoneFile);
+    this.productService.saveUserProfile(formData).subscribe(data => {
+      this.portable = data.json();
+    },
+    err => {
+      console.log(err);
+    });
+     this.router.navigate(['inventories/products/phones']);
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;

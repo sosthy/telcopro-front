@@ -28,12 +28,21 @@
             </div>
           </div>
           <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3">
+              <label for="exampleInputFile">File input</label>
+            </div>
+            <div class="col-lg-8">
+              <input type="file" class="form-control-file" accept="image/*" id="exampleInputFile" aria-describedby="fileHelp"
+              (change) ="onselectFile($event)"  name="file">
+            </div>
+          </div>
+          <div class="form-group row">
             <div class="col-lg-4 text-lg-right pr-3 ">
               <label for="emplacementSelect">Emplacement</label>
             </div>
             <div class="col-lg-8">
               <select id="emplacementSelect" name="emplacement" [(ngModel)]="portable.emplacement" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let emplace of listEmplacement">
+                <option *ngFor="let emplace of listEmplacement" [ngValue]="emplace">
                   {{ emplace.name }}
                 </option>
               </select>
@@ -72,7 +81,7 @@
             </div>
             <div class="col-lg-8">
               <select id="measure-text-input" name="measure" [(ngModel)]="portable.measureUnit" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let measur of listMeasureUnit">
+                <option *ngFor="let measur of listMeasureUnit" [ngValue]="measur">
                   {{ measur.unity }}
                 </option>
               </select>
@@ -84,8 +93,20 @@
             </div>
             <div class="col-lg-8">
               <select id="p-categorie-text-input" name="p-categorie" [(ngModel)]="portable.productCategory" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let productcatego of listProductCategory">
+                <option *ngFor="let productcatego of listProductCategory" [ngValue]="productcatego">
                   {{ productcatego.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="state-text-input">State </label>
+            </div>
+            <div class="col-lg-8">
+              <select id="state-text-input" name="p-categorie" [(ngModel)]="portable.state" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let sta of listState" [ngValue]="sta">
+                  {{ sta.name }}
                 </option>
               </select>
             </div>
@@ -141,8 +162,21 @@
             </div>
             <div class="col-lg-8">
               <select id="phone-category-text-input" name="ph-categorie" [(ngModel)]="portable.portableCategory" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let portablecatego of listPortableCategory">
+                <option *ngFor="let portablecatego of listPortableCategory" [ngValue]="portablecatego">
                   {{ portablecatego.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="phone-color-text-input">Phone Color
+              </label>
+            </div>
+            <div class="col-lg-8">
+              <select id="phone-color-text-input" name="ph-color" [(ngModel)]="portable.appColor" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let color of listColor" [ngValue]="color">
+                  {{ color.name }}
                 </option>
               </select>
             </div>
@@ -153,7 +187,7 @@
             </div>
             <div class="col-lg-8">
               <select id="os-text-input" name="ph-os" [(ngModel)]="portable.os" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let sysos of listSystemOs">
+                <option *ngFor="let sysos of listSystemOs" [ngValue]="sysos">
                   {{ sysos.name }}
                 </option>
               </select>
@@ -165,7 +199,7 @@
             </div>
             <div class="col-lg-8">
               <select id="processor-text-input" name="processor" [(ngModel)]="portable.cpu" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let cppu of listCpu">{{ cppu.brand }}</option>
+                <option *ngFor="let cppu of listCpu" [ngValue]="cppu">{{ cppu.brand }}</option>
               </select>
             </div>
           </div>
@@ -175,7 +209,7 @@
             </div>
             <div class="col-lg-8">
               <select id="memory-text-input" name="memory" [(ngModel)]="portable.memory" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let memory of listMemory">
+                <option *ngFor="let memory of listMemory" [ngValue]="memory">
                   RAM : {{ memory.rom }} Go, ROM : {{ memory.ram }} Go
                 </option>
               </select>
@@ -187,7 +221,7 @@
             </div>
             <div class="col-lg-8">
               <select id="camera-text-input" name="camera" [(ngModel)]="portable.camera" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let cam of listCamera">
+                <option *ngFor="let cam of listCamera" [ngValue]="cam">
                   Back : {{ cam.backCamera }} MPixels, Front : {{ cam.frontCamera }} MPixels
                 </option>
               </select>

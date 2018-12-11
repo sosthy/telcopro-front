@@ -17,8 +17,9 @@
   <div class="row" *ngIf="listPortables.length != 0">
     <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let phone of listPortables">
       <a class="card card-body card-widget bg-white card-inverse" (click)="routeToItem(phone)">
-        <a href="javascript:;">
-          <img src="assets/images/avatar.jpg" class="avatar-md rounded" alt="">
+        <a href="javascript:;" class="d-block mb-4 h-100">
+          <!--<img [src]="searchImages(phone.image)" class="avatar-md rounded" alt="">-->
+          <img [src]="searchImages(phone.image)" class="avatar-md rounded" alt="">
         </a>
         <div class="pl-3 pr-3">
           <p class="ff-headers mb-0 text-uppercase mb-2"><strong>{{ phone.designation }}</strong></p>
@@ -69,7 +70,8 @@
         Details Phone
       </div>
       <div class="card-header">
-          <img src="assets/images/avatar.jpg" class="avatar-lg mx-auto d-block" alt="">
+          <!--<img src="assets/images/avatar.jpg" class="avatar-lg mx-auto d-block" alt="">-->
+          <img [src]="searchImages(portable.image)" class="avatar-lg mx-auto d-block" alt="">
       </div>
       <div class="row card-body">
         <div class="col-md col-lg pr-3">

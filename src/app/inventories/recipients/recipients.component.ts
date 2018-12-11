@@ -9,6 +9,7 @@ import {AppUser} from '../../models/appuser.model';
 import {RecipientsGroupeService} from '../configuration/recipients-groupe/recipients-groupe.service';
 import {MouvmentServices} from '../../services/mouvment.services';
 import {Camera} from '../../models/manage-stocks/camera.model';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -31,10 +32,10 @@ export class RecipientsComponent implements OnInit {
   mouvements: Array<Mouvment> = new Array();
   modalRef: NgbModalRef;
   motCle: string;
-
+  public recipientFile: any = File;
   // -------------------------------- -----------------------------------------------------------------------------------------
   constructor(private modalService: NgbModal, private recipientsService: RecipientsService,
-              private recipientsGroupeService: RecipientsGroupeService, private mouvmentService: MouvmentServices) {
+              private recipientsGroupeService: RecipientsGroupeService, private mouvmentService: MouvmentServices, public router: Router) {
   }
 
   // --------------------------------------- ----------------------------------------------------------------------------------
@@ -133,6 +134,27 @@ export class RecipientsComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+   onselectFile(event) {
+    const file = <File>event.target.files[0];
+     console.log(file);
+    this.recipientFile = file;
+  }
+  async saveRecipient() {
+    console.log(this.recipientFile);
+    console.log(this.recipient);
+    const formData = new FormData();
+    formData.append('recipient', JSON.stringify(this.recipient));
+    formData.append('file', this.recipientFile);
+    const data = await this.recipientsService.saveUserProfile(formData).toPromise();
+    if (this.recipient.id) {
+      const index: number = this.recipients.indexOf(this.recipient);
+      if (index !== -1) {
+        this.recipients[index] = data;
+      }
+    }
+    this.init();
+    this.modalRef.close();
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;

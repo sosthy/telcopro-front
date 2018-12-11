@@ -46,6 +46,10 @@ export class EmployeeService {
     return this.http.get(TELCOPRO_URL + '/rh/employees/search?mc=' + keyWords, this.auth.getHeaders());
   }
   upload(photo) {
-    return this.http.post(TELCOPRO_URL + '/rh/employees/upload', photo , this.auth.getHeaders());
+    return this.http.post(TELCOPRO_URL + '/rh/employees/upload', photo, this.auth.getHeaders());
+  }
+  saveUserProfile(formData: FormData) {
+    return this.http.post(TELCOPRO_URL + '/rh/employees',
+      formData, this.auth.getHeadersUpload());
   }
 }

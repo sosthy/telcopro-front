@@ -33,7 +33,7 @@ export class EditPhonesComponent implements OnInit {
   listCamera: Array<Camera>;
   editOrCreatePhone = 'Edit';
   mode = 1;
-
+  public phoneFile: any = File;
 
   constructor(public portableServices: PortableServices,
               public productService: ProductServices,
@@ -114,6 +114,11 @@ export class EditPhonesComponent implements OnInit {
         err => {
           console.log(err);
         });
+  }
+  onselectFile(event) {
+    const file = <File>event.target.files[0];
+     console.log(file);
+    this.phoneFile = file;
   }
   savePortable() {
     this.portableServices.savePortable(this.portable)

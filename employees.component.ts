@@ -162,7 +162,7 @@ export class EmployeesComponent implements OnInit {
   }
   async saveInformation() {
     console.log(this.employeeFile);
-    this.employee.workSpace = new WorkSpace(this.employee.workSpace);
+	this.employee.workSpace = this.employee.workSpace as WorkSpace;
     console.log(this.employee);
     const formData = new FormData();
     formData.append('employee', JSON.stringify(this.employee));
