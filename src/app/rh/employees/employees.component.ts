@@ -25,6 +25,7 @@ export class EmployeesComponent implements OnInit {
   closeResult: string;
   modalRef: NgbModalRef;
   modalTitle = 'New Employee';
+  employeeFile: any = File;
   constructor(private modalService: NgbModal,
               public employeeService: EmployeeService,
               public workSpaceService: WorkSpaceService) { }
@@ -85,26 +86,6 @@ export class EmployeesComponent implements OnInit {
           alert('problem');
         });
   }
-
-  saveInformation() {
-    const formData = new FormData();
-    formData.append('user', JSON.stringify(this.employee));
-    formData.append('file', this.photoFile);
-    const index = this.listEmployees.indexOf(this.employee);
-    this.employeeService.saveEmployee(formData)
-      .subscribe(data => {
-        console.log(data);
-        this.employee = data.json();
-        if (index === -1) {
-          this.listEmployees.push(this.employee);
-        }
-      },
-      err => {
-        console.log(err);
-      });
-
-  	}
-
   fileInputChange(event) {
     this.photoFile = event.target.files[0];
     console.log(this.photoFile);

@@ -6,6 +6,7 @@ import {Recipient} from './recipient.model';
 import {WorkSpace} from '../workSpace.model';
 
 export class Mouvment {
+  id: number;
   reference: string;
   date: Date;
   quantity: number;
