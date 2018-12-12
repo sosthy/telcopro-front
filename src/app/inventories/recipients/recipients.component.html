@@ -35,9 +35,9 @@
         </div>
       </div>
       <a href="javascript:;">
-        <img src="assets/images/avatar.jpg" class="avatar-sm rounded-circle" alt="">
+        <img [src]="searchImages(rec.image)" class="avatar-sm rounded-circle" alt="">
       </a>
-      <div class="pl-3 pr-3">
+      <div class="pl-3 pr-3 col-sm-10">
         <p class="ff-headers mb-0 text-uppercase"><strong>{{ rec.designation }}</strong></p>
         <small class="d-block">{{ rec.phone }}</small>
         <small class="d-block">{{ rec.location}}</small>
@@ -69,7 +69,12 @@
 <ng-template ngbModalContainer></ng-template>
 <ng-template #formRecipient let-c="close">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(recipient.image)" class="avatar-md rounded-circle" alt="">
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -127,7 +132,12 @@
 </ng-template>
 <ng-template #detailRecipient let-c="close">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(recipient.image)" class="avatar-md rounded-circle" alt="">
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -135,15 +145,6 @@
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6 text-center">
-            <p></p>
-            Informations Recipient
-          </div>
-          <div class="col-sm-6 text-center">
-            <img src="assets/images/avatar.jpg" class="avatar-md rounded-circle" alt="">
-          </div>
-        </div>
         <div class="form-group row">
           <label for="des-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
           <div class="col-sm-9 col-md-8 col-lg-9">

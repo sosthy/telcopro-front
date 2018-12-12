@@ -4,6 +4,7 @@ import {AccountsService} from '../accounts.service';
 import { AppUser } from '../../models/appuser.model';
 import { Employee } from '../../models/employee.model';
 import { AppRole } from '../../models/approle.model';
+import {ResourceService} from "../../services/resource.service";
 
 
 @Component({
@@ -28,8 +29,11 @@ export class UsersComponent implements OnInit {
   employeeSelected: Array<Employee> = new Array();
   employees: Array<Employee> = new Array();
   modalRef: NgbModalRef;
+  image = [];
+  imageName = [];
   i = 0;
-  constructor(private modalService: NgbModal, private accountsSerice: AccountsService) {}
+  constructor(private modalService: NgbModal,
+              public resourceService: ResourceService, private accountsSerice: AccountsService) {}
 
   ngOnInit(): void {
     this.mode = 1;
@@ -38,6 +42,7 @@ export class UsersComponent implements OnInit {
   }
 
   async init() {
+    this.getImages();
     this.user = new AppUser();
     this.rolesSel = new Array();
     this.roleSelected = new Array();
@@ -180,5 +185,33 @@ export class UsersComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  getImages() {
+    this.image = [];
+    this.imageName = [];
+    this.resourceService.downloads('DIRECTORY_EMPLOYEES_IMAGES')
+      .subscribe(res => {
+        let indiceDelimiteur = 0;
+        res.json().forEach(data => {
+          indiceDelimiteur = data.indexOf('$');
+          if (indiceDelimiteur !== -1) {
+            this.imageName.push(data.substr(0, indiceDelimiteur));
+            this.image.push(data.substr(indiceDelimiteur + 1));
+          }
+        });
+        console.log(this.image);
+        console.log(this.imageName);
+        },
+      err => {
+        console.log(err);
+      });
+  }
+  searchImages(fileName: string) {
+    for (let i = 0; i < this.imageName.length; i++) {
+      if (this.imageName[i] === fileName) {
+        return this.image[i];
+      }
+    }
+    return null;
   }
 }

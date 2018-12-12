@@ -12,6 +12,7 @@ import {RolesComponent} from './roles/roles.component';
 import {MenusComponent} from './menus/menus.component';
 import {AccountsService} from './accounts.service';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ResourceService} from "../services/resource.service";
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     RolesComponent,
     MenusComponent,
   ],
-  providers: [AccountsService]
+  providers: [AccountsService, ResourceService]
 })
 
 export class AccountsModule {}
