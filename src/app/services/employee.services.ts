@@ -2,14 +2,13 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {TELCOPRO_URL} from '../models/config.model';
 import {AuthenticationService} from '../authentication/authentication.service';
-import { AppMenu } from '../models/appmenu.model';
 import 'rxjs/add/operator/timeout';
-import {Employee} from '../models/employee.model';
+import {ResourceService} from './resource.service';
 
 @Injectable()
 export class EmployeeService {
 
-  constructor(private http: Http, private auth: AuthenticationService) { }
+  constructor(private http: Http, private auth: AuthenticationService, public  resourceService: ResourceService) { }
 
   getAllEmployees() {
     return this.http.get(TELCOPRO_URL + '/rh/employees', this.auth.getHeaders());
@@ -51,5 +50,8 @@ export class EmployeeService {
   saveUserProfile(formData: FormData) {
     return this.http.post(TELCOPRO_URL + '/rh/employees',
       formData, this.auth.getHeadersUpload());
+  }
+  getImages() {
+    return this.resourceService.downloads('DIRECTORY_EMPLOYEES_IMAGES');
   }
 }

@@ -3,7 +3,7 @@ import {Memory} from './memory.model';
 import {Camera} from './camera.model';
 import {Cpu} from './cpu.model';
 import {Systemos} from './system-os.model';
-import {GenericCategory} from "./category.model";
+import {GenericCategory} from './category.model';
 
 export class Portable extends Product {
   connection: string;

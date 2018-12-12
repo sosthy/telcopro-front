@@ -13,8 +13,8 @@ import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
 
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {AccountsService} from '../../../accounts/accounts.service';
-import {AppUser} from "../../../models/appuser.model";
-import {EmployeeService} from "../../../services/employee.services";
+import {AppUser} from '../../../models/appuser.model';
+import {EmployeeService} from '../../../services/employee.services';
 
 
 @Component({
@@ -71,7 +71,7 @@ export class NewLivraisonComponent implements OnInit {
     this.transactionService.getAllType().subscribe(resp => {
       this.listMouvmentType = resp;
       this.listMouvmentType.forEach(type => {
-      if(type.name == 'LIVRAISON') {
+      if (type.name === 'LIVRAISON') {
           this.mouvment.mouvmentType = type;
         }
       });
@@ -119,9 +119,9 @@ export class NewLivraisonComponent implements OnInit {
 
   onRemoveMouvmentLine() {
     this.mouvment.mouvmentLines.forEach(item => {
-      if(item.product.id === this.mouvmentLine.product.id) {
+      if (item.product.id === this.mouvmentLine.product.id) {
         const index = this.mouvment.mouvmentLines.indexOf(item);
-        if(index != -1) {
+        if (index !== -1) {
           this.mouvment.mouvmentLines.splice(index, 1);
           this.modalRef.close();
         }
@@ -133,17 +133,17 @@ export class NewLivraisonComponent implements OnInit {
     this.mouvmentLine.quantity = 0;
     this.mouvmentLine.priceTotal = 0;
     // this.totalMouvmentPrice = this.totalMouvmentPrice + this.mouvmentLine.product.priceUnit;
-    if(this.mouvmentLine.id){
+    if (this.mouvmentLine.id) {
       this.mouvment.mouvmentLines.forEach(mLine => {
-        if(mLine.id === this.mouvmentLine.id){
+        if (mLine.id === this.mouvmentLine.id) {
           const index: number = this.mouvment.mouvmentLines.indexOf(mLine);
           if (index !== -1) {
             this.mouvment.mouvmentLines[index] = this.mouvmentLine;
           }
         }
-      })
+      });
     }else {
-      if(!this.mouvment.mouvmentLines){
+      if (!this.mouvment.mouvmentLines) {
         this.mouvment.mouvmentLines = new Array();
       }
       this.mouvmentLine.priceUnit = this.mouvmentLine.product.priceUnit;
@@ -154,7 +154,7 @@ export class NewLivraisonComponent implements OnInit {
     this.modalRef.close();
   }
 
-  onAddMouvmentLineItem(){
+  onAddMouvmentLineItem() {
     // this.mouvmentLine.productsItem.push(this.portableItem);
     this.mouvmentLine.quantity = this.mouvmentLine.productsItem.length;
     this.mouvmentLine.priceTotal = this.mouvmentLine.productsItem.length * this.mouvmentLine.product.priceUnit;
@@ -197,11 +197,15 @@ export class NewLivraisonComponent implements OnInit {
     }
   }
 
-  saveMouvment(){
+  saveMouvment() {
     console.log(this.mouvment);
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
       console.log(resp);
     });
+    this.cancelRegister();
+  }
+  cancelRegister() {
+      this.router.navigate(['inventories/transactions']);
   }
 
   addItems() {

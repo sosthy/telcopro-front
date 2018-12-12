@@ -16,6 +16,7 @@ import {AccountsService} from '../../accounts/accounts.service';
 import {PortableItemComponent} from './items/items.component';
 import {PortableItemServices} from './items/items.services';
 import {EntrepotService} from '../entrepots/entrepots.services';
+import {ResourceService} from "../../services/resource.service";
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import {EntrepotService} from '../entrepots/entrepots.services';
     ],
   declarations: [ProductsComponent, PhonesComponent, NewPhonesComponent, EditPhonesComponent, PortableItemComponent],
   providers: [PortableServices, ProductServices, EntrepotServices, AuthenticationService, AccountsService,
-    PortableItemServices, EntrepotService],
+    PortableItemServices, EntrepotService, ResourceService],
 
 })
 

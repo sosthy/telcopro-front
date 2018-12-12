@@ -153,11 +153,11 @@ export class NewPhonesComponent implements OnInit {
     formData.append('file', this.phoneFile);
     this.productService.saveUserProfile(formData).subscribe(data => {
       this.portable = data.json();
+      this.router.navigate(['inventories/products/phones']);
     },
     err => {
       console.log(err);
     });
-     this.router.navigate(['inventories/products/phones']);
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;

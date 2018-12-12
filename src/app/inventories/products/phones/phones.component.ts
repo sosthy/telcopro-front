@@ -32,6 +32,7 @@ export class PhonesComponent implements OnInit {
     this.portableservices.listAllPortable()
       .subscribe(data => {
         this.listPortables = data.json();
+        console.log(this.listPortables);
       },
         err => {
         console.log(err);

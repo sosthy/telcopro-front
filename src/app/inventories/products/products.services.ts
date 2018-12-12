@@ -6,12 +6,14 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import {TELCOPRO_URL} from '../../models/config.model';
 import {State} from '../../models/manage-stocks/state.model';
 import {MeasureUnit} from '../../models/manage-stocks/measure-unit.model';
-import {GenericCategory} from "../../models/manage-stocks/category.model";
+import {GenericCategory} from '../../models/manage-stocks/category.model';
+import {ResourceService} from '../../services/resource.service';
 
 @Injectable()
 export class ProductServices {
 
-  constructor(public http: Http, public authenticationService: AuthenticationService) {
+  constructor(public http: Http, public authenticationService: AuthenticationService,
+  public  resourceService: ResourceService) {
 
   }
 
@@ -148,7 +150,10 @@ export class ProductServices {
       formData, this.authenticationService.getHeadersUpload());
   }
   getImages() {
-    return this.http.get(TELCOPRO_URL + '/resources/store?directory=DIRECTORY_PORTABLES_IMAGES', this.authenticationService.getHeaders());
+    return this.resourceService.downloads('DIRECTORY_PORTABLES_IMAGES');
+  }
+  getImage(filename: string) {
+    return this.resourceService.download(filename);
   }
 }
 

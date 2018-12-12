@@ -171,11 +171,15 @@ export class NewApprovisionComponent implements OnInit {
     }
   }
 
-  saveMouvment(){
+  saveMouvment() {
     console.log(this.mouvment);
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
       console.log(resp);
     });
+    this.cancelRegister();
+  }
+  cancelRegister() {
+      this.router.navigate(['inventories/transactions']);
   }
 
 }

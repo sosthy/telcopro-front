@@ -7,8 +7,12 @@
   </div>
   <div class="container">
     <div class="card">
+     <!-- <div class="card-header">
+        {{addEditCardHeader}} Phone
+      </div>-->
       <div class="card-header">
-        {{ editOrCreatePhone }} Phone
+        <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
+        <!--<img src="assets/images/avatar.jpg" class="avatar-lg mx-auto d-block" alt="">-->
       </div>
       <div class="row card-body">
         <div class="col-md col-lg pr-3">
@@ -185,7 +189,7 @@
             </div>
             <div class="col-lg-8">
               <select id="phone-color-text-input" name="ph-color" [(ngModel)]="portable.appColor" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let color of listColor" [ngValue]="color">
+                <option *ngFor="let color of listColor" [selected]="portable.appColor.id == color.id">
                   {{ color.name }}
                 </option>
               </select>
