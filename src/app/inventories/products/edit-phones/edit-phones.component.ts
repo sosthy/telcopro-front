@@ -17,7 +17,7 @@ import {AuthenticationService} from '../../../authentication/authentication.serv
 import {WorkSpace} from '../../../models/workspace.model';
 import {AppColor} from '../../../models/manage-stocks/app-color.model';
 import {State} from '../../../models/manage-stocks/state.model';
-import {ResourceService} from "../../../services/resource.service";
+import {ResourceService} from '../../../services/resource.service';
 
 @Component({
   selector: 'app-edit-phones',
@@ -183,6 +183,16 @@ export class EditPhonesComponent implements OnInit {
    }*/
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  searchImage(fileName: string) {
+    this.resourceService.download(fileName)
+      .subscribe(data => {
+          this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
+        },
+        err => {
+          console.log(err);
+        });
+    return '';
   }
   searchImage(fileName: string) {
     this.resourceService.download(fileName)

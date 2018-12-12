@@ -11,7 +11,8 @@ import {ResourceService} from '../../services/resource.service';
 
 @Injectable()
 export class ProductServices {
- constructor(public http: Http, public authenticationService: AuthenticationService, public resourceService: ResourceService) {
+  constructor(public http: Http, public authenticationService: AuthenticationService, public resourceService: ResourceService) {
+
   }
 
   // ==============================listting et sauvegarde des stocks=====================================================
