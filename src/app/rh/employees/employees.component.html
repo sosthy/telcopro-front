@@ -34,10 +34,9 @@
         </div>
       </div>
       <a href="javascript:;">
-        <!--<img src="assets/images/avatar.jpg" class="avatar-sm rounded-circle" alt="">-->
-        <!--<img [src]="searchImages(employe.photo)" class="avatar-lg mx-auto d-block" alt="">-->
+        <img [src]="searchImages(employee.photo)" class="avatar-sm rounded-circle" alt="">
       </a>
-      <div class="pl-3 pr-3">
+      <div class="pl-3 pr-3 col-sm-10">
         <p class="ff-headers mb-0 text-uppercase"><strong>{{employee.name}}</strong></p>
         <small class="d-block">{{employee.surname}} </small>
         <small class="d-block">{{employee.website}} </small>
@@ -51,8 +50,13 @@
 </strong>
 
  <ng-template #formEmployee let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+<div class="modal-header">
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(employee.photo)" class="avatar-md rounded-circle" alt="">
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -137,7 +141,12 @@
 
 <ng-template #DetailsEmployee let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(employee.photo)" class="avatar-md rounded-circle" alt="">
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -145,15 +154,6 @@
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6 text-center">
-            <p></p>
-            Employee Informations
-          </div>
-          <div class="col-sm-6 text-center">
-            <img src="assets/images/avatar.jpg" class="avatar-md rounded-circle" alt="">
-          </div>
-        </div>
         <div class="form-group row">
           <label class="col-sm-3">Name</label>
           <div class="col-sm-9">
