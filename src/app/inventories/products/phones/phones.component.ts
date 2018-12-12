@@ -25,8 +25,8 @@ export class PhonesComponent implements OnInit {
               public router: Router) {
   }
   ngOnInit() {
-    this.showPhones();
     this.getImages();
+    this.showPhones();
   }
   showPhones() {
     this.portableservices.listAllPortable()

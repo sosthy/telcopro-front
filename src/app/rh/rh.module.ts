@@ -8,6 +8,7 @@ import {EmployeeService} from '../services/employee.services';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {WorkSpacesModule} from './work-spaces/work-spaces.module';
 import {WorkSpaceService} from '../services/workSpace.services';
+import {ResourceService} from "../services/resource.service";
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import {WorkSpaceService} from '../services/workSpace.services';
     WorkSpacesModule
   ],
   declarations: [ ],
-  providers: [EmployeeService, WorkSpaceService]
+  providers: [EmployeeService, WorkSpaceService, ResourceService]
 })
 
 export class RhModule {}

@@ -10,6 +10,7 @@ import {RecipientsGroupeService} from '../configuration/recipients-groupe/recipi
 import {MouvmentServices} from '../../services/mouvment.services';
 import {Camera} from '../../models/manage-stocks/camera.model';
 import {Router} from "@angular/router";
+import {ResourceService} from "../../services/resource.service";
 
 
 @Component({
@@ -33,9 +34,12 @@ export class RecipientsComponent implements OnInit {
   modalRef: NgbModalRef;
   motCle: string;
   public recipientFile: any = File;
+  image = [];
+  imageName = [];
   // -------------------------------- -----------------------------------------------------------------------------------------
   constructor(private modalService: NgbModal, private recipientsService: RecipientsService,
-              private recipientsGroupeService: RecipientsGroupeService, private mouvmentService: MouvmentServices, public router: Router) {
+              private recipientsGroupeService: RecipientsGroupeService,
+              public resourceService: ResourceService, private mouvmentService: MouvmentServices, public router: Router) {
   }
 
   // --------------------------------------- ----------------------------------------------------------------------------------
@@ -47,7 +51,7 @@ export class RecipientsComponent implements OnInit {
 
   // ----------------------------------------- -----------------------------------------------------------------------------------
   async init() {
-    // this.recipient = new Recipient();
+    this.getImages();
     this.recipients = await this.recipientsService.getAllRecip().toPromise();
     this.groupes = await this.recipientsGroupeService.getAllGroup().toPromise();
     this.mouvements = await this.mouvmentService.listAllMvt().toPromise();
@@ -158,5 +162,32 @@ export class RecipientsComponent implements OnInit {
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  getImages() {
+    this.image = [];
+    this.imageName = [];
+    this.resourceService.downloads('DIRECTORY_RECIPIENTS_IMAGES')
+      .subscribe(res => {
+        let indiceDelimiteur = 0;
+        res.json().forEach(data => {
+          indiceDelimiteur = data.indexOf('$');
+          if (indiceDelimiteur !== -1) {
+            this.imageName.push(data.substr(0, indiceDelimiteur));
+            this.image.push(data.substr(indiceDelimiteur + 1));
+          }
+        });
+        console.log(this.image);
+        console.log(this.imageName);
+        },
+      err => {
+        console.log(err);
+      });
+  }
+  searchImages(fileName: string) {
+    for (let i = 0; i < this.imageName.length; i++) {
+      if (this.imageName[i] === fileName) {
+        return this.image[i];
+      }
+    }
   }
 }

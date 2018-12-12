@@ -10,6 +10,9 @@
       <div class="card-header">
         {{ editOrCreatePhone }} Phone
       </div>
+      <div class="card-header">
+          <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
+      </div>
       <div class="row card-body">
         <div class="col-md col-lg pr-3">
           <div class="form-group row justify-content-end">

@@ -15,6 +15,7 @@ import {ProductCategoryService} from '../../configuration/product-category/produ
 import {AccountsService} from '../../../accounts/accounts.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {WorkSpace} from '../../../models/workspace.model';
+import {ResourceService} from "../../../services/resource.service";
 
 @Component({
   selector: 'app-edit-phones',
@@ -32,6 +33,7 @@ export class EditPhonesComponent implements OnInit {
   listMemory: Array<Memory>;
   listCamera: Array<Camera>;
   editOrCreatePhone = 'Edit';
+  imageToShow = '';
   mode = 1;
   public phoneFile: any = File;
 
@@ -40,6 +42,7 @@ export class EditPhonesComponent implements OnInit {
               public measureService: MeasureService,
               public accountService: AccountsService,
               public auth: AuthenticationService,
+              public resourceService: ResourceService,
               public productCategoryService: ProductCategoryService,
               public route: ActivatedRoute,
               public router: Router) {
@@ -52,6 +55,7 @@ export class EditPhonesComponent implements OnInit {
         this.editOrCreatePhone = 'Edit';
       }
     });
+    this.searchImage(this.portable.image);
   }
   init() {
     this.accountService.getUser(this.auth.getUserName()).subscribe(resp1 => {
@@ -132,5 +136,15 @@ export class EditPhonesComponent implements OnInit {
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  searchImage(fileName: string) {
+    this.resourceService.download(fileName)
+      .subscribe(data => {
+          this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
+        },
+        err => {
+          console.log(err);
+        });
+    return '';
   }
 }

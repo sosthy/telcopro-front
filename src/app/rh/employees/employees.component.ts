@@ -6,6 +6,7 @@ import {WorkSpaceService} from '../../services/workSpace.services';
 import {PointOfSaleService} from '../../services/pointOfSale.services';
 import {WorkSpace} from '../../models/workSpace.model';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ResourceService} from "../../services/resource.service";
 
 @Component({
   selector: 'app-employees',
@@ -14,8 +15,8 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-boots
 })
 
 export class EmployeesComponent implements OnInit {
-  listEmployees = [];
-  filter = '';
+  listEmployees = Array<Employee>();
+  filter = 'None';
   keyWords = '';
   tableMessage = 'Loading.... Please wait!';
   employee = new Employee(null);
@@ -26,11 +27,15 @@ export class EmployeesComponent implements OnInit {
   modalRef: NgbModalRef;
   modalTitle = 'New Employee';
   employeeFile: any = File;
+  image = [];
+  imageName = [];
   constructor(private modalService: NgbModal,
               public employeeService: EmployeeService,
+              public resourceService: ResourceService,
               public workSpaceService: WorkSpaceService) { }
 
   ngOnInit() {
+    this.getImages();
     this.loadEmployees();
   }
 
@@ -53,7 +58,7 @@ export class EmployeesComponent implements OnInit {
         );
   }
   getWorkSpaces() {
-    this.filter = 'All';
+    this.filter = 'None';
     this.workSpacesView = this.workSpaces;
   }
   getEntrepots() {
@@ -153,5 +158,33 @@ export class EmployeesComponent implements OnInit {
       err => {
         console.log(err);
       });
+  }
+  getImages() {
+    this.image = [];
+    this.imageName = [];
+    this.resourceService.downloads('DIRECTORY_EMPLOYEES_IMAGES')
+      .subscribe(res => {
+        let indiceDelimiteur = 0;
+        res.json().forEach(data => {
+          indiceDelimiteur = data.indexOf('$');
+          if (indiceDelimiteur !== -1) {
+            this.imageName.push(data.substr(0, indiceDelimiteur));
+            this.image.push(data.substr(indiceDelimiteur + 1));
+          }
+        });
+        console.log(this.image);
+        console.log(this.imageName);
+        },
+      err => {
+        console.log(err);
+      });
+  }
+  searchImages(fileName: string) {
+    for (let i = 0; i < this.imageName.length; i++) {
+      if (this.imageName[i] === fileName) {
+        return this.image[i];
+      }
+    }
+    return null;
   }
 }
