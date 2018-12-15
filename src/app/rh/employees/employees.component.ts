@@ -5,7 +5,8 @@ import {EntrepotService} from '../../inventories/entrepots/entrepots.services';
 import {WorkSpaceService} from '../../services/workSpace.services';
 import {PointOfSaleService} from '../../services/pointOfSale.services';
 import {WorkSpace} from '../../models/workSpace.model';
-import {ModalDismissReasons, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {ResourceService} from "../../services/resource.service";
 
 @Component({
   selector: 'app-employees',
@@ -14,19 +15,27 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-boots
 })
 
 export class EmployeesComponent implements OnInit {
-  listEmployees = [];
-  filter = '';
+  listEmployees = Array<Employee>();
+  filter = 'None';
   keyWords = '';
   tableMessage = 'Loading.... Please wait!';
   employee = new Employee(null);
   workSpaces = [ ];
+  workSpacesView = [ ];
   photoFile: File;
   closeResult: string;
   modalRef: NgbModalRef;
   modalTitle = 'New Employee';
-  constructor(private modalService: NgbModal, public employeeService: EmployeeService, public entrepotService: EntrepotService,
-              public workSpaceService: WorkSpaceService, public pointOfSaleService: PointOfSaleService) { }
+  employeeFile: any = File;
+  image = [];
+  imageName = [];
+  constructor(private modalService: NgbModal,
+              public employeeService: EmployeeService,
+              public resourceService: ResourceService,
+              public workSpaceService: WorkSpaceService) { }
+
   ngOnInit() {
+    this.getImages();
     this.loadEmployees();
   }
 
@@ -39,10 +48,6 @@ export class EmployeesComponent implements OnInit {
         err => {
           console.log(err);
         });
-    this.getWorkSpaces();
-  }
-  getWorkSpaces() {
-    this.filter = 'All';
     this.workSpaceService.getWorkSpaces()
     .subscribe(data => {
         this.workSpaces = data.json();
@@ -52,29 +57,17 @@ export class EmployeesComponent implements OnInit {
         }
         );
   }
+  getWorkSpaces() {
+    this.filter = 'None';
+    this.workSpacesView = this.workSpaces;
+  }
   getEntrepots() {
     this.filter = 'Entrepôts';
-    this.employee.workSpace = new WorkSpace(null);
-    this.entrepotService.listAllEntrepots()
-    .subscribe(data => {
-        this.workSpaces = data;
-      },
-        err => {
-        console.log(err);
-        }
-        );
+    this.workSpacesView = this.workSpaces.filter(spacer => spacer.workSpaceType.includes('Entrepot'));
   }
   getSalePoints() {
     this.filter = 'Points of sale';
-    this.employee.workSpace = new WorkSpace(null);
-    this.pointOfSaleService.getPointOfSales()
-    .subscribe(data => {
-        this.workSpaces = data.json();
-      },
-        err => {
-          console.log(err);
-        }
-      );
+    this.workSpacesView = this.workSpaces.filter(spacer => spacer.workSpaceType.includes('Point'));
   }
 
   search() {
@@ -98,22 +91,9 @@ export class EmployeesComponent implements OnInit {
           alert('problem');
         });
   }
-
-  saveInformation() {
-    const index = this.listEmployees.indexOf(this.employee);
-    this.employeeService.saveEmployee(this.employee)
-      .subscribe(data => {
-        this.employee = data.json();
-        if (index === -1) {
-          this.listEmployees.push(this.employee);
-        }
-      },
-      err => {
-        console.log(err);
-      });
-  }
   fileInputChange(event) {
     this.photoFile = event.target.files[0];
+    console.log(this.photoFile);
   }
   open(content, employee?: Employee, mode?: number) {
     this.employee = employee ? employee : new Employee();
@@ -155,5 +135,56 @@ export class EmployeesComponent implements OnInit {
       this.modalTitle = 'New Employee';
       this.open(content, this.employee);
     }
+  }
+  onselectFile(event) {
+    const file = <File>event.target.files[0];
+     console.log(file);
+    this.employeeFile = file;
+  }
+  async saveInformation() {
+    console.log(this.employeeFile);
+    this.employee.workSpace = new WorkSpace(this.employee.workSpace);
+    console.log(this.employee);
+    const formData = new FormData();
+    formData.append('employee', JSON.stringify(this.employee));
+    formData.append('file', this.employeeFile);
+    const index = this.listEmployees.indexOf(this.employee);
+    this.employeeService.saveUserProfile(formData).subscribe(data => {
+      this.employee = data.json();
+        if (index === -1) {
+          this.listEmployees.push(this.employee);
+        }
+      },
+      err => {
+        console.log(err);
+      });
+  }
+  getImages() {
+    this.image = [];
+    this.imageName = [];
+    this.resourceService.downloads('DIRECTORY_EMPLOYEES_IMAGES')
+      .subscribe(res => {
+        let indiceDelimiteur = 0;
+        res.json().forEach(data => {
+          indiceDelimiteur = data.indexOf('$');
+          if (indiceDelimiteur !== -1) {
+            this.imageName.push(data.substr(0, indiceDelimiteur));
+            this.image.push(data.substr(indiceDelimiteur + 1));
+          }
+        });
+        console.log(this.image);
+        console.log(this.imageName);
+        },
+      err => {
+        console.log(err);
+      });
+  }
+  searchImages(fileName: string) {
+    for (let i = 0; i < this.imageName.length; i++) {
+      if (this.imageName[i] === fileName) {
+        return this.image[i];
+      }
+    }
+    return null;
   }
 }

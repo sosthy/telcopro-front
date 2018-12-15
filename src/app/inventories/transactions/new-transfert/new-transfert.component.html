@@ -1,15 +1,17 @@
 <div class="card bg-transparent">
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary" (click)="saveMouvment()">Save</button>
-      <button class="btn btn-primary" (click)="cancelRegister()">Cancel</button>
+      <button class="btn btn-primary" (click)="saveMouvment()" [routerLink]="['/inventories/transactions']" [disabled]="mouvment.priceTotal== 0">
+        Save
+      </button>
+      <button class="btn btn-primary" [routerLink]="['/inventories/transactions']">Cancel</button>
     </div>
   </div>
 </div>
 
 <div class="card">
   <div class="card-header">
-    Transaction Informations
+    Transfert Informations
   </div>
   <div class="card-body">
     <div class="row">
@@ -19,24 +21,16 @@
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="idReference">Reference</label>
-        <input id="idReference" type="text" [(ngModel)]="mouvment.reference" class="form-control">
-      </div>
-      <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
-        <label for="idblabla2">Type</label>
-        <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" id="idblabla2" [(ngModel)]="mouvment.mouvementType">
-          <option value="{{ null }}" selected>Choose...</option>
-          <option value="{{ mvType }}" *ngFor="let mvType of listMouvmentType">{{ mvType.name }}</option>
-        </select>
+        <input id="idReference" type="text" [(ngModel)]="mouvment.reference" disabled class="form-control">
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="ddFormInput">Date</label>
         <input type="date" class="form-control" [(ngModel)]="mouvment.date" id="ddFormInput" >
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
-        <label for="idblabla3">Recipient</label>
-        <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" id="idblabla3">
-          <option value="{{ null }}" selected>Choose...</option>
-          <option value="{{ recip }}" *ngFor="let recip of listRecipient">{{ recip.designation }}</option>
+        <label for="idblabla3">Workspace Receiver Name</label>
+        <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="mouvment.entrepotRecipient" id="idblabla3">
+          <option *ngFor="let workSpace of workSpaces" [ngValue]="workSpace">{{ workSpace.name }}</option>
         </select>
       </div>
     </div>
@@ -48,11 +42,11 @@
     <div class="row w-100">
       <div class="col">
         <span class="mr-3">Transactions Products</span>
-        <button class="btn btn-secondary btn-sm" (click)="open(formMouvLine)">Add</button>
-        <button class="btn btn-danger btn-sm ml-3" (click)="open(formMouvLine)">Clear</button>
+        <button class="btn btn-secondary btn-sm" (click)="open(formAddProduct)">Add</button>
+        <button class="btn btn-danger btn-sm ml-3" (click)="removeMouvment()" [disabled]="mouvment.mouvmentLines.length == 0">Clear All</button>
       </div>
       <div class="col text-right">
-        <strong class="h5">Total : {{totalMouvmentPrice | currency:'XAF':'symbol':'0.0-0':'fr-CM'}}</strong>
+        <strong class="h5">Total : {{mouvment.priceTotal | currency:'XAF':'symbol':'0.0-0':'fr-CM'}}</strong>
       </div>
     </div>
   </div>
@@ -67,10 +61,11 @@
             <th>Price Unit</th>
             <th>Total</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let mouvLine of listMouvmentLine; let i = index">
+        <tr *ngFor="let mouvLine of mouvment.mouvmentLines; let i = index">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ mouvLine.product.designation }}</td>
           <td>{{ mouvLine.quantity }}</td>
@@ -78,10 +73,10 @@
           <td>{{ mouvLine.priceTotal }}</td>
           <td>{{ mouvLine.note }}</td>
           <td>
-            <a href="javascript:;" (click)="open()">edit</a> &nbsp;&nbsp;
-            <a href="javascript:;" (click)="open()">Remove</a> &nbsp;
-            <a href="javascript:;" *ngIf="mouvment.mouvementType.name !== 'APPROVISIONNEMENT'">Add Item</a>
-            <a href="javascript:;" *ngIf="mouvment.mouvementType.name === 'LIVRAISON'">Create Item</a>
+            <button class="btn btn-primary btn-sm bt" (click)="open(formAddItem, mouvLine)">Add Item</button>
+            <!--<button class="btn btn-warning btn-sm bt" (click)="open(formAddProduct, mouvLine)">edit</button>-->
+            <button class="btn btn-danger btn-sm bt" (click)="removeMouvmentLine(mouvLine)">Remove</button>
+            <button class="btn btn-info btn-sm bt" (click)="open(formMouvLineDetails, mouvLine)">Details</button>
           </td>
         </tr>
         </tbody>
@@ -90,7 +85,7 @@
   </div>
 </div>
 
-<ng-template #formNewMouvItem let-c="close">
+<ng-template #formMouvLineDetails let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
@@ -100,32 +95,80 @@
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <div class="form-group row">
-          <label for="prod3-text-input" class="col-form-label">Reference</label>
-          <input type="text" class="form-control" [(ngModel)]="portableItem.reference" id="prod3-text-input">
-        </div>
-        <div class="form-group row">
-          <label for="prod7-text-input" class="col-form-label">Serial</label>
-          <input type="text" class="form-control" [(ngModel)]="portableItem.serial" id="prod7-text-input">
-        </div>
-        <div class="form-group row">
-          <label for="prod4-text-input" class="col-form-label">Code Bar</label>
-          <input type="text" class="form-control" [(ngModel)]="portableItem.codeBar" id="prod4-text-input">
-        </div>
-        <div class="form-group row">
-          <label for="prod6-text-input" class="col-form-label">Code QRC</label>
-          <input type="text" class="form-control" [(ngModel)]="portableItem.codeBar" id="prod6-text-input">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class="thead-default">
+            <tr>
+              <th>#</th>
+              <th>Reference</th>
+              <th>Serial</th>
+              <th>Code Bar</th>
+              <th>QR Code</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let portableItem of mouvmentLine.productsItem; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ portableItem.reference }}</td>
+              <td>{{ portableItem.serial }}</td>
+              <td>{{ portableItem.codeBar }}</td>
+              <td>{{ portableItem.codeQrc }}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="onAddMouvmentLine()">Save changes</button>
   </div>
 </ng-template>
 
-<ng-template #formMouvLine let-c="close">
+<ng-template #formAddItem let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <div class="row form-group">
+          <div class="col">
+            <input type="text" name="term" [(ngModel)]="term" class="form-control" placeholder="Search...">
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col">
+            <select multiple name="listItem" id="itemsList" [(ngModel)]="listItemSel" class="form-control" size="10" [compareWith]="compareFn">
+              <option [ngValue]="item" *ngFor="let item of listPortableItem | filter : term | sortBy: 'serial'">{{item.reference}} - {{item.serial}}</option>
+            </select>
+            <div class="text-right mt-1">
+              <button class="btn btn-secondary btn-sm" [disabled]="listItemSel.length == 0" (click)="addItems()">Push <i class="fa fa-chevron-right"></i></button>
+            </div>
+          </div>
+          <div class="col">
+            <select multiple name="listItemSelected" [(ngModel)]="listItemSelRemoved" class="form-control" id="itemsListSelected" size="10" [compareWith]="compareFn">
+              <option *ngFor="let item of listItemSelRemoved" [ngValue]="item">{{item.reference}} - {{item.serial}}</option>
+            </select>
+            <div class="text-right mt-1">
+              <button class="btn btn-warning btn-sm" [disabled]="listItemSelRemoved.length == 0" (click)="clearSelectedItem()">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeFormItem()">Close</button>
+    <button type="button" class="btn btn-primary" [disabled]="listItemSelRemoved.length == 0" (click)="onAddMouvmentLineItem()">
+      Save changes</button>
+  </div>
+</ng-template>
+
+<ng-template #formAddProduct let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
     <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
@@ -140,8 +183,10 @@
           <label for="prod-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Product</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="mouvmentLine.product" id="prod-text-input">
-              <option value="{{ null }}" selected>Choose...</option>
-              <option [ngValue]="prod" *ngFor="let prod of listProduct">{{ prod.designation }}</option>
+              <!--<option value="{{ null }}" selected>Choose...</option>-->
+              <option *ngFor="let prod of listProduct" [ngValue]="prod">
+                {{ prod.designation }}
+              </option>
             </select>
           </div>
         </div>
@@ -156,7 +201,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="onAddMouvmentLine()">Save changes</button>
+    <button type="button" class="btn btn-primary" [disabled]="mouvmentLine.product.id == null" (click)="onAddMouvmentLine()">Save changes</button>
   </div>
 </ng-template>
 
@@ -186,7 +231,7 @@
           <div class="form-group col">
             <select  size="10" class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="listPortableItemRemovedTemp" id="porItem1-text-input" style="height: 150px">
               <option value="{{ null }}">No Choice</option>
-              <option [ngValue]="prod" *ngFor="let prod of mouvmentLine.listPortableItem">{{ prod.portable.designation }} {{ prod.reference }}</option>
+              <option *ngFor="let prod of mouvmentLine.productsItem" [ngValue]="prod">{{ prod.portable.designation }} {{ prod.reference }}</option>
             </select>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import {AuthenticationService} from '../authentication.service';
 import {User} from '../../models/user.model';
+import {tokenKey} from "@angular/core/src/view";
 
 @Component({
   selector: 'app-signin',
@@ -27,6 +28,7 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.auth.getToken());
     this.textMessage = '... checking, please wait!!!';
     this.auth.onLogin(new User(this.form.value)).subscribe(resp => {
 
@@ -41,7 +43,7 @@ export class SigninComponent implements OnInit {
       }
     },
       err => {
-        console.log(err)
+        console.log(err);
         const  str = '' + err._body;
         if (str.includes('Unauthorized')) {
           this.textMessage = 'your username or your password incorrect!!!';

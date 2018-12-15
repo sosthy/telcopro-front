@@ -6,12 +6,12 @@ import {AuthenticationService} from '../../authentication/authentication.service
 import {TELCOPRO_URL} from '../../models/config.model';
 import {State} from '../../models/manage-stocks/state.model';
 import {MeasureUnit} from '../../models/manage-stocks/measure-unit.model';
-import {GenericCategory} from "../../models/manage-stocks/category.model";
+import {GenericCategory} from '../../models/manage-stocks/category.model';
+import {ResourceService} from '../../services/resource.service';
 
 @Injectable()
 export class ProductServices {
-
-  constructor(public http: Http, public authenticationService: AuthenticationService) {
+  constructor(public http: Http, public authenticationService: AuthenticationService, public resourceService: ResourceService) {
 
   }
 
@@ -140,10 +140,19 @@ export class ProductServices {
     return this.http.get(TELCOPRO_URL + '/stocks/entrepots/emplacements-of-entrepot/' + id, this.authenticationService.getHeaders());
   }
 
-  getAllPortableItemsOfPortable(id){
+  getAllPortableItemsOfPortable(id) {
     return this.http.get(TELCOPRO_URL + '/stocks/portables/items-of-portable/' + id, this.authenticationService.getHeaders());
   }
-
+  saveUserProfile(formData: FormData) {
+    return this.http.post(TELCOPRO_URL + '/stocks/portables',
+      formData, this.authenticationService.getHeadersUpload());
+  }
+  getImages() {
+    return this.resourceService.downloads('DIRECTORY_PORTABLES_IMAGES');
+  }
+  getImage(filename: string) {
+    return this.resourceService.download(filename);
+  }
 }
 
 

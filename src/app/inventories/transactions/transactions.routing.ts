@@ -6,6 +6,7 @@ import {NewTransactionComponent} from "./new-transaction/new-transaction.compone
 import {TransactionComponent} from "./transactions.component";
 import {NewApprovisionComponent} from "./new-approvision/new-approvision.component";
 import {NewLivraisonComponent} from "./new-livraison/new-livraison.component";
+import {NewTransfertComponent} from "./new-transfert/new-transfert.component";
 
 export const TRANSACTIONSROUTES: Routes = [
   {
@@ -35,6 +36,12 @@ export const TRANSACTIONSROUTES: Routes = [
         component: NewLivraisonComponent,
         data : {
           heading: 'New Livraison'
+        }
+      }, {
+        path: 'new-transfert',
+        component: NewTransfertComponent,
+        data : {
+          heading: 'New Transfert'
         }
       }
     ]

@@ -34,9 +34,9 @@
         </div>
       </div>
       <a href="javascript:;">
-        <img src="assets/images/avatar.jpg" class="avatar-sm rounded-circle" alt="">
+        <img [src]="searchImages(employee.photo)" class="avatar-sm rounded-circle" alt="">
       </a>
-      <div class="pl-3 pr-3">
+      <div class="pl-3 pr-3 col-sm-10">
         <p class="ff-headers mb-0 text-uppercase"><strong>{{employee.name}}</strong></p>
         <small class="d-block">{{employee.surname}} </small>
         <small class="d-block">{{employee.website}} </small>
@@ -50,8 +50,13 @@
 </strong>
 
  <ng-template #formEmployee let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+<div class="modal-header">
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(employee.photo)" class="avatar-md rounded-circle" alt="">
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -83,13 +88,13 @@
           <input class="form-control bottom-spacer" type="date" [(ngModel)]="employee.hiringDate" name="hiringDate">
 
           <div class="form-group bottom-spacer">
-            <label class="control-label">WorkSpace Type:</label>
+            <label class="control-label">Sort WorkSpace By: </label>
             <div ngbDropdown placement="top-right" class="d-inline-block">
               <button class="btn btn-outline-primary" id="dropdownMenu3" ngbDropdownToggle>{{filter}}</button>
               <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
                 <button class="dropdown-item" (click)="getEntrepots()">Entrepots</button>
                 <button class="dropdown-item" (click)="getSalePoints()">Points of sale</button>
-                <button class="dropdown-item" (click)="getWorkSpaces()">All</button>
+                <button class="dropdown-item" (click)="getWorkSpaces()">None</button>
               </div>
             </div>
           </div>
@@ -101,7 +106,7 @@
                 <span *ngIf="employee.workSpace.name != ''">{{employee.workSpace.name}}</span>
               </button>
               <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpaces">{{workSpace.name}}</button>
+                <button class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpacesView">{{workSpace.name}}</button>
               </div>
             </div>
           </div>
@@ -122,7 +127,8 @@
             </div>
           </div>
           <label>Photo:   </label>
-          <input type="file" (change)="fileInputChange($event)">
+          <input type="file" class="form-control-file" accept="image/*"  aria-describedby="fileHelp"
+              (change) ="onselectFile($event)"  name="file">
         </div>
       </div>
     </div>
@@ -135,7 +141,12 @@
 
 <ng-template #DetailsEmployee let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{modalTitle}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(employee.photo)" class="avatar-md rounded-circle" alt="">
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -143,15 +154,6 @@
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <div class="row">
-          <div class="col-sm-6 text-center">
-            <p></p>
-            Employee Informations
-          </div>
-          <div class="col-sm-6 text-center">
-            <img src="assets/images/avatar.jpg" class="avatar-md rounded-circle" alt="">
-          </div>
-        </div>
         <div class="form-group row">
           <label class="col-sm-3">Name</label>
           <div class="col-sm-9">

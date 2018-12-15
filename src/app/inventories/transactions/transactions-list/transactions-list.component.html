@@ -2,6 +2,7 @@
   <div>
     <button class="btn btn-primary" (click)="newLivraison()">Livraison</button>
     <button class="btn btn-primary" (click)="makeApprovision()">Approvisionnement</button>
+    <button class="btn btn-primary" (click)="makeTransfert()">Transfert</button>
   </div>
 </div>
 
@@ -63,18 +64,19 @@
           <th>Date</th>
           <th>Quantity</th>
           <th>Price</th>
-          <th>Recipient</th>
+          <th>Receiver</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let mouvment of listMouvment; let i = index">
           <th scope="row">{{i+1}}</th>
           <td class="text-uppercase">{{mouvment.reference}}</td>
-          <td>{{mouvment.mouvmentType.name}}</td>
+          <td>{{mouvment.mouvmentType?.name}}</td>
           <td>{{mouvment.date | date}}</td>
           <td>{{mouvment.quantity}}</td>
           <td>{{mouvment.priceTotal | currency:'XAF':'symbol':'0.0-0':'fr-CM'}}</td>
-          <td>{{mouvment.recipient?.designation}}</td>
+          <td *ngIf="mouvment.recipient != null">{{mouvment.recipient.designation}}</td>
+          <td *ngIf="mouvment.recipient == null">{{mouvment.entrepotRecipient?.name}}</td>
           <td>
             <button class="btn btn-warning btn-sm" (click)="onEditMouvment(mouvment)">edit</button>
             <button class="btn btn-danger btn-sm" (click)="open(deleteMouvment, mouvment)">Remove</button>

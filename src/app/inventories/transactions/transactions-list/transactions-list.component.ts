@@ -71,6 +71,10 @@ export class TransactionsListComponent implements OnInit {
     this.router.navigateByUrl('/inventories/transactions/new-approvision');
   }
 
+  makeTransfert() {
+    this.router.navigateByUrl('/inventories/transactions/new-transfert');
+  }
+
   public beforeChange($event: NgbPanelChangeEvent) {
     if ($event.panelId === '2') {
       $event.preventDefault();

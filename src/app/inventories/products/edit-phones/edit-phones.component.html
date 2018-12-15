@@ -7,8 +7,18 @@
   </div>
   <div class="container">
     <div class="card">
+     <!-- <div class="card-header">
+        {{addEditCardHeader}} Phone
+      </div>-->
       <div class="card-header">
-        {{ editOrCreatePhone }} Phone
+        <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
+        <!--<img src="assets/images/avatar.jpg" class="avatar-lg mx-auto d-block" alt="">-->
+      </div>
+      <div class="card-header">
+          <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
+      </div>
+      <div class="card-header">
+          <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
       </div>
       <div class="row card-body">
         <div class="col-md col-lg pr-3">
@@ -25,6 +35,15 @@
             <div class="col-lg-8">
               <input class="form-control" type="text" [(ngModel)]="portable.designation"
                      name="designation" id="designation-text-input">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3">
+              <label for="exampleInputFile">File input</label>
+            </div>
+            <div class="col-lg-8">
+              <input type="file" class="form-control-file" accept="image/*" id="exampleInputFile" aria-describedby="fileHelp"
+              (change) ="onselectFile($event)"  name="file">
             </div>
           </div>
           <!--<div class="form-group row">
@@ -102,6 +121,18 @@
           </div>
           <div class="form-group row">
             <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="state-text-input">State </label>
+            </div>
+            <div class="col-lg-8">
+              <select id="state-text-input" name="p-categorie" [(ngModel)]="portable.state" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let sta of listState" [selected]="portable.state.id == sta.id">
+                  {{ sta.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
               <label for="price-unit-text-input">Price Unit</label>
             </div>
             <div class="col-lg-8">
@@ -153,6 +184,19 @@
               <select id="phone-category-text-input" name="ph-categorie" [(ngModel)]="portable.portableCategory" class="form-control">
                 <option *ngFor="let portablecatego of listPortableCategory" [selected]="portable.portableCategory.id == portablecatego.id">
                   {{ portablecatego.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-4 text-lg-right pr-3 ">
+              <label for="phone-color-text-input">Phone Color
+              </label>
+            </div>
+            <div class="col-lg-8">
+              <select id="phone-color-text-input" name="ph-color" [(ngModel)]="portable.appColor" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let color of listColor" [selected]="portable.appColor.id == color.id">
+                  {{ color.name }}
                 </option>
               </select>
             </div>
