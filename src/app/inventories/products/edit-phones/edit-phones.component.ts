@@ -46,7 +46,6 @@ export class EditPhonesComponent implements OnInit {
               public measureService: MeasureService,
               public accountService: AccountsService,
               public auth: AuthenticationService,
-              public resourceService: ResourceService,
               public productCategoryService: ProductCategoryService,
               public resourceService: ResourceService,
               public route: ActivatedRoute,
@@ -161,7 +160,7 @@ export class EditPhonesComponent implements OnInit {
     });
   }
 
-  searchImage(fileName: string) {
+  /*searchImage(fileName: string) {
     this.resourceService.download(fileName)
     .subscribe(data => {
       this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
@@ -169,7 +168,7 @@ export class EditPhonesComponent implements OnInit {
      err => {
      console.log(err);
      });
-  }
+  }*/
 
   /*savePortable() {
    this.portableServices.savePortable(this.portable)
@@ -184,6 +183,7 @@ export class EditPhonesComponent implements OnInit {
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
+
   searchImage(fileName: string) {
     this.resourceService.download(fileName)
       .subscribe(data => {
@@ -194,14 +194,5 @@ export class EditPhonesComponent implements OnInit {
         });
     return '';
   }
-  searchImage(fileName: string) {
-    this.resourceService.download(fileName)
-      .subscribe(data => {
-          this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
-        },
-        err => {
-          console.log(err);
-        });
-    return '';
-  }
+
 }

@@ -214,16 +214,11 @@ export class NewLivraisonComponent implements OnInit {
     console.log(this.mouvment);
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
       console.log(resp);
-      this.router.navigateByUrl('/inventories/transactions');
+      this.router.navigate(['inventories/transactions']);
     });
-    this.cancelRegister();
   }
   cancelRegister() {
       this.router.navigate(['inventories/transactions']);
-  }
-
-  cancelRegister() {
-    this.router.navigateByUrl('/inventories/transactions');
   }
 
   addItems() {

@@ -19,6 +19,7 @@ import {PortableItemServices} from "../../products/items/items.services";
 import {EntrepotServices} from "../../../services/entrepot.services";
 import {WorkSpace} from "../../../models/workSpace.model";
 import {WorkSpaceService} from "../../../services/workSpace.services";
+import {GenericEntrepot} from "../../../models/manage-stocks/entrepot.model";
 
 
 @Component({
@@ -172,7 +173,7 @@ export class NewTransfertComponent implements OnInit {
         }
         this.mouvment.quantity += ml.quantity;
     });
-    this.mouvment.entrepotSource = this.mouvment.user.workSpace;
+    this.mouvment.entrepotSource = new GenericEntrepot(this.mouvment.user.workSpace);
     this.mouvment.recipient = null;
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
       console.log(resp.json());

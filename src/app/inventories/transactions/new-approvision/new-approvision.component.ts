@@ -191,10 +191,6 @@ export class NewApprovisionComponent implements OnInit {
       console.log(resp);
       this.router.navigateByUrl('/inventories/transactions');
     });
-    this.cancelRegister();
-  }
-  cancelRegister() {
-      this.router.navigate(['inventories/transactions']);
   }
 
   cancelRegister() {
