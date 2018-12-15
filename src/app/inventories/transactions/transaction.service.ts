@@ -24,6 +24,10 @@ export class TransactionService {
     return this.http.post(TELCOPRO_URL + '/stocks/mouvments', mouvment, this.auth.getHeaders()).map(resp => resp.json());
   }
 
+  deleteMouvment(mouvment: Mouvment){
+    return this.http.delete(TELCOPRO_URL + '/stocks/mouvments/' + mouvment.reference, this.auth.getHeaders()).map(resp => resp.json());
+  }
+
   getAllMouventLine(id){
     return this.http.get(TELCOPRO_URL + '/stocks/mouvments/lines/' + id, this.auth.getHeaders()).map(resp => resp.json());
   }

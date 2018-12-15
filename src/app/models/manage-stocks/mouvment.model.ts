@@ -19,8 +19,8 @@ export class Mouvment {
   constructor(obj?: any) {
     this.reference = obj ? (obj.reference ? obj.reference : null) : null;
     this.date = obj ? (obj.date ? obj.date : new Date()) : new Date();
-    this.quantity = obj ? (obj.quantity ? obj.quantity : null) : null;
-    this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : null) : null;
+    this.quantity = obj ? (obj.quantity ? obj.quantity : 0) : 0;
+    this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : 0) : 0;
     this.entrepotSource = obj ? (obj.entrepotSource ? obj.entrepotSource : null) : null;
     this.entrepotRecipient = obj ? (obj.entrepotRecipient ? obj.entrepotRecipient : null) : null;
     this.mouvmentType = obj ? (obj.mouvmentType ? obj.mouvmentType : null) : null;
