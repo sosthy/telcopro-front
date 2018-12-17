@@ -3,32 +3,29 @@ import {MouvmentLine} from './mouvment-line.model';
 import {MouvmentType} from './mouvment-type.model';
 import {Employee} from '../employee.model';
 import {Recipient} from './recipient.model';
-import {WorkSpace} from '../workSpace.model';
 
 export class Mouvment {
-  id: number;
   reference: string;
   date: Date;
   quantity: number;
   priceTotal: number;
-  entrepotSource: WorkSpace;
-  entrepotRecipient: WorkSpace;
+  entrepotSource: GenericEntrepot;
+  entrepotRecipient: GenericEntrepot;
   mouvmentType: MouvmentType;
   mouvmentLines: Array<MouvmentLine>;
   user: Employee;
   recipient: Recipient;
 
   constructor(obj?: any) {
-    this.id = obj ? (obj.id ? obj.connection : null) : null;
-    this.reference = obj ? (obj.reference ? obj.reference : '') : '';
+    this.reference = obj ? (obj.reference ? obj.reference : null) : null;
     this.date = obj ? (obj.date ? obj.date : new Date()) : new Date();
     this.quantity = obj ? (obj.quantity ? obj.quantity : 0) : 0;
     this.priceTotal = obj ? (obj.priceTotal ? obj.priceTotal : 0) : 0;
-    this.entrepotSource = obj ? (obj.entrepotSource ? obj.entrepotSource : new WorkSpace()) : new WorkSpace();
-    this.entrepotRecipient = obj ? (obj.entrepotRecipient ? obj.entrepotRecipient : new WorkSpace()) : new WorkSpace();
-    this.mouvmentType = obj ? (obj.mouvmentType ? obj.mouvmentType : new MouvmentType()) : new MouvmentType();
-    this.user = obj ? (obj.user ? obj.user : new Employee()) : new Employee();
-    this.recipient = obj ? (obj.recipient ? obj.recipient : new Recipient()) : new Recipient();
-    this.mouvmentLines = obj ? (obj.mouvmentLines ? obj.mouvmentLines : new Array()) : new Array();
+    this.entrepotSource = obj ? (obj.entrepotSource ? obj.entrepotSource : null) : null;
+    this.entrepotRecipient = obj ? (obj.entrepotRecipient ? obj.entrepotRecipient : null) : null;
+    this.mouvmentType = obj ? (obj.mouvmentType ? obj.mouvmentType : null) : null;
+    this.user = obj ? (obj.user ? obj.user : null) : null;
+    this.recipient = obj ? (obj.recipient ? obj.recipient : null) : null;
+    this.mouvmentLines = obj ? (obj.mouvmentLines ? obj.mouvmentLines : null) : null;
   }
 }

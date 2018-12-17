@@ -39,7 +39,6 @@ export class EditPhonesComponent implements OnInit {
   listColor: Array<AppColor>;
   listState: Array<State>;
   public phoneFile: any = File;
-  imageEdit = false;
 
   constructor(public portableServices: PortableServices,
               public productService: ProductServices,

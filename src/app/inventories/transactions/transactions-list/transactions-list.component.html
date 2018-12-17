@@ -78,9 +78,9 @@
           <td *ngIf="mouvment.recipient != null">{{mouvment.recipient.designation}}</td>
           <td *ngIf="mouvment.recipient == null">{{mouvment.entrepotRecipient?.name}}</td>
           <td>
-            <button class="btn btn-warning btn-sm" (click)="open()">edit</button>
-            <button class="btn btn-danger btn-sm" (click)="open()">Remove</button>
-            <button class="btn btn-info btn-sm" (click)="open()">Details</button>
+            <button class="btn btn-warning btn-sm" (click)="onEditMouvment(mouvment)">edit</button>
+            <button class="btn btn-danger btn-sm" (click)="open(deleteMouvment, mouvment)">Remove</button>
+            <!--<button class="btn btn-info btn-sm" (click)="open()">Details</button>-->
           </td>
         </tr>
         </tbody>
@@ -91,3 +91,19 @@
 <strong *ngIf="listMouvment.length == 0">
   {{textMessage}}
 </strong>
+
+<ng-template #deleteMouvment let-c="close">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">Delete Entrepot</h6>
+    <button type="button" class="close" aria-label="Close" (click)="c('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Etes vous sure de vouloir supprimer la transaction <strong>{{mouvment.reference}}</strong> ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="onDeleteMouvment()">Yes</button>
+  </div>
+</ng-template>

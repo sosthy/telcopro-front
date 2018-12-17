@@ -7,7 +7,7 @@ import {RecipientServices} from '../../../services/recipient.services';
 import {MouvmentLine} from '../../../models/manage-stocks/mouvment-line.model';
 import {Product} from '../../../models/manage-stocks/product.model';
 import {ProductServices} from '../../products/products.services';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
 
@@ -43,6 +43,7 @@ export class NewApprovisionComponent implements OnInit {
 
   constructor(public modalService: NgbModal,
               public router: Router,
+              public route: ActivatedRoute,
               private auth: AuthenticationService,
               private accountService: AccountsService,
               public transactionService: TransactionService,
@@ -53,6 +54,19 @@ export class NewApprovisionComponent implements OnInit {
 
   ngOnInit() {
     this.init();
+    this.route.queryParams.subscribe(params => {
+      if (params['reference']) {
+        this.transactionService.getAllMouvment().subscribe(resp => {
+          resp.forEach(item => {
+            if(item.reference == params['reference']){
+              this.mouvment = item;
+              this.mouvment.date = new Date(item.date);
+              console.log(this.mouvment);
+            }
+          })
+        });
+      }
+    });
   }
 
   init() {
@@ -175,11 +189,12 @@ export class NewApprovisionComponent implements OnInit {
     console.log(this.mouvment);
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
       console.log(resp);
+      this.router.navigateByUrl('/inventories/transactions');
     });
-    this.cancelRegister();
   }
+
   cancelRegister() {
-      this.router.navigate(['inventories/transactions']);
+    this.router.navigateByUrl('/inventories/transactions');
   }
 
 }

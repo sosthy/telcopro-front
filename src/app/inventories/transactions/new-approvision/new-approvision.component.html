@@ -23,12 +23,21 @@
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="ddFormInput">Date</label>
-        <input type="date" class="form-control" [(ngModel)]="mouvment.date" id="ddFormInput" >
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" id="ddFormInput"
+                 name="dp" [(ngModel)]="mouvment.date" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"></button>
+          </div>
+        </div>
+        <!--<input type="date" class="form-control" ngbDatepicker #d="ngbDatepicker" [(ngModel)]="mouvment.date" id="ddFormInput" />-->
+        <!--<input type="date" class="form-control" [(ngModel)]="mouvment.date | date" id="ddFormInput" >-->
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="idblabla3">Recipient</label>
         <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="mouvment.recipient" id="idblabla3">
-          <option [ngValue]="recip" *ngFor="let recip of listRecipient">{{ recip.designation }}</option>
+          <option [ngValue]="mouvment.recipient" style="display: none"  [selected]="true">{{mouvment.recipient?.designation}}</option>
+          <option [ngValue]="recip" *ngFor="let recip of listRecipient" >{{ recip.designation }}</option>
         </select>
       </div>
     </div>
