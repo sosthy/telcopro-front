@@ -15,7 +15,7 @@ export const ProductsRoutes = [{
       children: [
         {path: 'phones', component: PhonesComponent, data: {heading: 'Phones Stocks'}},
         {path: 'new-phones', component: NewPhonesComponent, data: {heading: 'New Phones Stock'}},
-        {path: 'edit-phones', component: EditPhonesComponent, data: {heading: 'Edit Phones Stock'}},
+        {path: 'edit-phones/:id', component: EditPhonesComponent, data: {heading: 'Edit Phones Stock'}},
         {path: 'phones/:id', component: PortableItemComponent, data: {heading: 'Items Phones Stock'}}
       ]
     }]

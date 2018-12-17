@@ -4,7 +4,7 @@ import {AccountsService} from '../accounts.service';
 import { AppUser } from '../../models/appuser.model';
 import { Employee } from '../../models/employee.model';
 import { AppRole } from '../../models/approle.model';
-import {ResourceService} from "../../services/resource.service";
+import {ResourceService} from '../../services/resource.service';
 
 
 @Component({
@@ -142,6 +142,7 @@ export class UsersComponent implements OnInit {
           this.user.roles.push(role);
         }
         const index: number = this.roles.indexOf(role);
+        console.log('indice =', index);
         if (index !== -1) {
           this.roles.splice(index, 1);
         }
@@ -162,10 +163,10 @@ export class UsersComponent implements OnInit {
     }
     this.user.password = retVal;
   }
-
   clearSelectedRole() {
     this.rolSelRemoved.forEach(rol => {
-      const index: number = this.roleSelected.indexOf(rol);
+      const index: number = this.user.roles.indexOf(rol);
+      console.log('indice =', index);
       if (index !== -1) {
         this.user.roles.splice(index, 1);
       }
@@ -173,7 +174,6 @@ export class UsersComponent implements OnInit {
       this.rolSelRemoved = null;
     });
   }
-
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }

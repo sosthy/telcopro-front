@@ -14,7 +14,6 @@ import {MeasureService} from '../../configuration/measure/measure.service';
 import {ProductCategoryService} from '../../configuration/product-category/product-category.service';
 import {AccountsService} from '../../../accounts/accounts.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
-import {WorkSpace} from '../../../models/workspace.model';
 import {AppColor} from '../../../models/manage-stocks/app-color.model';
 import {State} from '../../../models/manage-stocks/state.model';
 import {ResourceService} from '../../../services/resource.service';
@@ -40,28 +39,28 @@ export class EditPhonesComponent implements OnInit {
   listColor: Array<AppColor>;
   listState: Array<State>;
   public phoneFile: any = File;
+  imageEdit = false;
 
   constructor(public portableServices: PortableServices,
               public productService: ProductServices,
               public measureService: MeasureService,
               public accountService: AccountsService,
               public auth: AuthenticationService,
-              public resourceService: ResourceService,
               public productCategoryService: ProductCategoryService,
               public resourceService: ResourceService,
               public route: ActivatedRoute,
               public router: Router) {
   }
-
   ngOnInit() {
     this.init();
-    this.route.params.subscribe(params => {
-      if (params['designation']) {
-        this.portable = new Portable(params);
-        this.editOrCreatePhone = 'Edit';
-      }
+    const idPortable = this.route.snapshot.params['id'];
+    this.portableServices.listPortable(idPortable)
+      .subscribe(port => {
+      this.portable = port.json();
+      console.log('Init', this.portable);
+      this.searchImage(this.portable.image);
+      this.editOrCreatePhone = 'Edit';
     });
-    this.searchImage(this.portable.image);
   }
 
   init() {
@@ -160,27 +159,6 @@ export class EditPhonesComponent implements OnInit {
       console.log(err);
     });
   }
-
-  searchImage(fileName: string) {
-    this.resourceService.download(fileName)
-    .subscribe(data => {
-      this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
-     },
-     err => {
-     console.log(err);
-     });
-  }
-
-  /*savePortable() {
-   this.portableServices.savePortable(this.portable)
-   .subscribe(data => {
-   this.portable = data.json();
-   },
-   err => {
-   console.log(err);
-   });
-   this.router.navigate(['inventories/products/phones']);
-   }*/
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
@@ -188,16 +166,7 @@ export class EditPhonesComponent implements OnInit {
     this.resourceService.download(fileName)
       .subscribe(data => {
           this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
-        },
-        err => {
-          console.log(err);
-        });
-    return '';
-  }
-  searchImage(fileName: string) {
-    this.resourceService.download(fileName)
-      .subscribe(data => {
-          this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
+          this.imageEdit = true;
         },
         err => {
           console.log(err);

@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {EmployeeService} from '../../services/employee.services';
 import {Employee} from '../../models/employee.model';
-import {EntrepotService} from '../../inventories/entrepots/entrepots.services';
 import {WorkSpaceService} from '../../services/workSpace.services';
-import {PointOfSaleService} from '../../services/pointOfSale.services';
 import {WorkSpace} from '../../models/workSpace.model';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ResourceService} from "../../services/resource.service";
+import {ResourceService} from '../../services/resource.service';
 
 @Component({
   selector: 'app-employees',
@@ -22,7 +20,6 @@ export class EmployeesComponent implements OnInit {
   employee = new Employee(null);
   workSpaces = [ ];
   workSpacesView = [ ];
-  photoFile: File;
   closeResult: string;
   modalRef: NgbModalRef;
   modalTitle = 'New Employee';
@@ -91,11 +88,7 @@ export class EmployeesComponent implements OnInit {
           alert('problem');
         });
   }
-  fileInputChange(event) {
-    this.photoFile = event.target.files[0];
-    console.log(this.photoFile);
-  }
-  open(content, employee?: Employee, mode?: number) {
+   open(content, employee?: Employee, mode?: number) {
     this.employee = employee ? employee : new Employee();
     if (employee) {
       if (mode === 1) {
@@ -153,11 +146,17 @@ export class EmployeesComponent implements OnInit {
       this.employee = data.json();
         if (index === -1) {
           this.listEmployees.push(this.employee);
+          this.resourceService.download(this.employee.photo).subscribe(res => {
+            this.image.push(res['_body'].substr(res['_body'].indexOf('$') + 1));
+            this.imageName.push(res['_body'].substr(0, res['_body'].indexOf('$')));
+          });
         }
       },
       err => {
         console.log(err);
       });
+    this.getImages();
+    this.modalRef.close();
   }
   getImages() {
     this.image = [];
@@ -179,12 +178,11 @@ export class EmployeesComponent implements OnInit {
         console.log(err);
       });
   }
-  searchImages(fileName: string) {
+   searchImages(fileName: string) {
     for (let i = 0; i < this.imageName.length; i++) {
       if (this.imageName[i] === fileName) {
         return this.image[i];
       }
     }
-    return null;
   }
 }

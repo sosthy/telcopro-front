@@ -93,7 +93,7 @@ export class PhonesComponent implements OnInit {
     }
   }
   onEditPortable(p: Portable) {
-    this.router.navigate(['inventories/products/edit-phones', p]);
+    this.router.navigate(['inventories/products/edit-phones', p.id]);
   }
   onDetailsPhone(phone) {
     this.mode = 2;

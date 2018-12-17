@@ -159,8 +159,7 @@
           <div class="col-sm-9 col-md-8 col-lg-9">
             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
               <div class="input-group-addon"><i class="fa fa-user"></i></div>
-              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input1">
-                <option [ngValue]="user.employee" selected >{{ user.employee.name }} {{ user.employee.surname }}</option>
+              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input1" [compareWith]="compareFn">
                 <option *ngFor="let empItem of employees" [ngValue]="empItem">{{ empItem.name }} {{ empItem.surname }}</option>
               </select>
             </div>

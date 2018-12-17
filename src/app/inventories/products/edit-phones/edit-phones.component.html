@@ -7,18 +7,8 @@
   </div>
   <div class="container">
     <div class="card">
-     <!-- <div class="card-header">
+      <div class="card-header">
         {{addEditCardHeader}} Phone
-      </div>-->
-      <div class="card-header">
-        <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
-        <!--<img src="assets/images/avatar.jpg" class="avatar-lg mx-auto d-block" alt="">-->
-      </div>
-      <div class="card-header">
-          <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
-      </div>
-      <div class="card-header">
-          <img *ngIf="imageToShow != ''" [src]="imageToShow" class="avatar-lg mx-auto d-block" alt="">
       </div>
       <div class="row card-body">
         <div class="col-md col-lg pr-3">
@@ -61,8 +51,8 @@
               <label for="emplacementSelect">Emplacement</label>
             </div>
             <div class="col-lg-8">
-              <select id="emplacementSelect" name="emplacement" [(ngModel)]="portable.emplacement" class="form-control">
-                <option *ngFor="let emplace of listEmplacement" [selected]="portable.emplacement.id == emplace.id">
+              <select id="emplacementSelect" name="emplacement" class="form-control">
+                <option *ngFor="let emplace of listEmplacement" [selected]="portable.emplacement.id == emplace.id"  (click)="portable.emplacement = emplace">
                   {{ emplace.name }}
                 </option>
               </select>
@@ -100,8 +90,8 @@
               <label for="measure-text-input">Measure Unit</label>
             </div>
             <div class="col-lg-8">
-              <select id="measure-text-input" name="measure" [(ngModel)]="portable.measureUnit" class="form-control">
-                <option *ngFor="let measur of listMeasureUnit" [selected]="portable.measureUnit.id == measur.id">
+              <select id="measure-text-input" name="measure" class="form-control">
+                <option *ngFor="let measur of listMeasureUnit" [selected]="portable.measureUnit.id == measur.id" (click)="portable.measureUnit = measur">
                   {{ measur.unity }}
                 </option>
               </select>
@@ -112,8 +102,8 @@
               <label for="p-categorie-text-input">Product Category</label>
             </div>
             <div class="col-lg-8">
-              <select id="p-categorie-text-input" name="p-categorie" [(ngModel)]="portable.productCategory" class="form-control">
-                <option *ngFor="let productcatego of listProductCategory" [selected]="portable.productCategory.id == productcatego.id">
+              <select id="p-categorie-text-input" name="p-categorie" class="form-control">
+                <option *ngFor="let productcatego of listProductCategory" [selected]="portable.productCategory.id == productcatego.id" (click)="portable.productCategory = productcatego">
                   {{ productcatego.name }}
                 </option>
               </select>
@@ -124,7 +114,7 @@
               <label for="state-text-input">State </label>
             </div>
             <div class="col-lg-8">
-              <select id="state-text-input" name="p-categorie" [(ngModel)]="portable.state" class="form-control" [compareWith]="compareFn">
+              <select id="state-text-input" name="p-categorie"  class="form-control">
                 <option *ngFor="let sta of listState" [selected]="portable.state.id == sta.id">
                   {{ sta.name }}
                 </option>
@@ -181,8 +171,8 @@
               <label for="phone-category-text-input">Phone Category</label>
             </div>
             <div class="col-lg-8">
-              <select id="phone-category-text-input" name="ph-categorie" [(ngModel)]="portable.portableCategory" class="form-control">
-                <option *ngFor="let portablecatego of listPortableCategory" [selected]="portable.portableCategory.id == portablecatego.id">
+              <select id="phone-category-text-input" name="ph-categorie" class="form-control">
+                <option *ngFor="let portablecatego of listPortableCategory" [selected]="portable.portableCategory.id == portablecatego.id" (click)="portable.portableCategory = portablecatego">
                   {{ portablecatego.name }}
                 </option>
               </select>
@@ -194,8 +184,8 @@
               </label>
             </div>
             <div class="col-lg-8">
-              <select id="phone-color-text-input" name="ph-color" [(ngModel)]="portable.appColor" class="form-control" [compareWith]="compareFn">
-                <option *ngFor="let color of listColor" [selected]="portable.appColor.id == color.id">
+              <select id="phone-color-text-input" name="ph-color"  class="form-control">
+                <option *ngFor="let color of listColor" [selected]="portable.appColor.id == color.id" (click)="portable.appColor = color">
                   {{ color.name }}
                 </option>
               </select>
@@ -206,8 +196,8 @@
               <label for="os-text-input">System OS</label>
             </div>
             <div class="col-lg-8">
-              <select id="os-text-input" name="ph-os" [(ngModel)]="portable.os" class="form-control">
-                <option *ngFor="let sysos of listSystemOs" [selected]="portable.os.id == sysos.id">
+              <select id="os-text-input" name="ph-os"  class="form-control">
+                <option *ngFor="let sysos of listSystemOs" [selected]="portable.os.id == sysos.id" (click)="portable.os = sysos">
                   {{ sysos.name }}
                 </option>
               </select>
@@ -218,8 +208,8 @@
               <label for="processor-text-input">Processor</label>
             </div>
             <div class="col-lg-8">
-              <select id="processor-text-input" name="processor" [(ngModel)]="portable.cpu" class="form-control">
-                <option *ngFor="let cppu of listCpu" [selected]="portable.cpu.id == cppu.id">{{ cppu.brand }}</option>
+              <select id="processor-text-input" name="processor"  class="form-control">
+                <option *ngFor="let cppu of listCpu" [selected]="portable.cpu.id == cppu.id" (click)="portable.cpu = cppu">{{ cppu.brand }}</option>
               </select>
             </div>
           </div>
@@ -228,8 +218,8 @@
               <label for="memory-text-input">Memory</label>
             </div>
             <div class="col-lg-8">
-              <select id="memory-text-input" name="memory" [(ngModel)]="portable.memory" class="form-control">
-                <option *ngFor="let memory of listMemory" [selected]="portable.memory.id == memory.id">
+              <select id="memory-text-input" name="memory" class="form-control">
+                <option *ngFor="let memory of listMemory" [selected]="portable.memory.id == memory.id" (click)="portable.memory =memory">
                   RAM : {{ memory.rom }} Go, ROM : {{ memory.ram }} Go
                 </option>
               </select>
@@ -240,8 +230,9 @@
               <label for="camera-text-input">Camera</label>
             </div>
             <div class="col-lg-8">
-              <select id="camera-text-input" name="camera" [(ngModel)]="portable.camera" class="form-control">
-                <option *ngFor="let cam of listCamera" [selected]="portable.camera.id == cam.id">
+              <select id="camera-text-input" name="camera" class="form-control">
+              <!--  <option *ngFor="let cam of listCamera" [selected]="portable.camera.id == cam.id" (click)="portable.camera = cam">-->
+                <option *ngFor="let cam of listCamera" [selected]="portable.camera.id == cam.id" (click)="portable.camera = cam">
                   Back : {{ cam.backCamera }} MPixels, Front : {{ cam.frontCamera }} MPixels
                 </option>
               </select>

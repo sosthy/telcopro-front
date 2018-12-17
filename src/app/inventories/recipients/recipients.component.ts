@@ -1,16 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {Recipient} from 'app/models/manage-stocks/recipient.model';
-import {Employee} from '../../models/employee.model';
 import {RecipientGroupe} from '../../models/manage-stocks/recipient-groupe.model';
 import {Mouvment} from '../../models/manage-stocks/mouvment.model';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {RecipientsService} from './recipients.service';
-import {AppUser} from '../../models/appuser.model';
 import {RecipientsGroupeService} from '../configuration/recipients-groupe/recipients-groupe.service';
 import {MouvmentServices} from '../../services/mouvment.services';
-import {Camera} from '../../models/manage-stocks/camera.model';
-import {Router} from "@angular/router";
-import {ResourceService} from "../../services/resource.service";
+import {Router} from '@angular/router';
+import {ResourceService} from '../../services/resource.service';
 
 
 @Component({
@@ -56,19 +53,6 @@ export class RecipientsComponent implements OnInit {
     this.groupes = await this.recipientsGroupeService.getAllGroup().toPromise();
     this.mouvements = await this.mouvmentService.listAllMvt().toPromise();
   }
-  // ----------------------------------- ---------------------------------------------------------------------------------------
-   // ----------------------------- --------------------------------------------------------------------------------------------
-   /*open(content, rec?: Recipient) {
-    this.recipient = rec ? new Recipient(rec) : new Recipient();
-
-    this.modalRef = this.modalService.open(content, {backdrop: 'static'});
-    this.modalRef.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.init();
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }*/
    open(content, rec?: Recipient, mode?: number) {
     this.recipient = rec ? new Recipient(rec) : new Recipient();
     if (rec) {
@@ -126,7 +110,6 @@ export class RecipientsComponent implements OnInit {
       });
       this.init();
     });
-
     this.modalRef.close();
   }
   searchRecipient() {
