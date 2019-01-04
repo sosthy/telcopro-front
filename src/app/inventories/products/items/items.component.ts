@@ -41,6 +41,7 @@ export class PortableItemComponent implements OnInit {
             this.items.forEach( item => {
               item.portable = phone;
             });
+            console.log(this.items);
             this.tableMessage = 'No item found';
          },
            err => {

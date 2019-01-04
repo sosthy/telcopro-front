@@ -1,14 +1,4 @@
 
-<div class="d-flex justify-content-end">
-  <div class="u-search" *ngIf="mode == 1">
-    <form>
-      <div class="form-group">
-        <input type="search" placeholder="Search" class="form-control">
-      </div>
-    </form>
-  </div>
-</div>
-
 <div class="row">
   <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let menu of menus">
     <div class="card card-body card-widget {{ menu.color }} card-inverse">

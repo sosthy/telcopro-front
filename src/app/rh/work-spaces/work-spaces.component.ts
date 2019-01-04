@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {WorkSpaceService} from '../../services/workSpace.services';
 import {WorkSpace} from '../../models/workSpace.model';
-import {ModalDismissReasons, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
 
 @Component({
   selector: 'app-work-spaces',
@@ -18,7 +20,9 @@ export class WorkSpacesComponent implements OnInit {
   closeResult: string;
   modalRef: NgbModalRef;
   modalTitle = 'New Work Space';
-  constructor(private modalService: NgbModal, public workSpaceService: WorkSpaceService) { }
+  form: FormGroup;
+  MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
+  constructor(private fb: FormBuilder, private modalService: NgbModal, public workSpaceService: WorkSpaceService) { }
   ngOnInit() {
     this.loadWorkSpaces();
   }
@@ -71,15 +75,19 @@ export class WorkSpacesComponent implements OnInit {
     if (workSpace) {
       if (mode === 1) {
         this.modalTitle = 'Edit Work Space';
+        this.initForm();
       } else if (mode === 2) {
         this.modalTitle = 'Delete Work Space';
       }  else if (mode === 3) {
         this.modalTitle = 'Detail Work Space';
-      } else {
+      }  else if (mode === 4) {
         this.modalTitle = 'Confirm registration work space';
+      } else {
+        this.modalTitle = 'New Work Space';
       }
     } else {
       this.modalTitle = 'New Work Space';
+      this.initForm();
     }
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
@@ -104,7 +112,26 @@ export class WorkSpacesComponent implements OnInit {
       this.open(content, this.workSpace, 1);
     } else {
       this.modalTitle = 'New Work Space';
-      this.open(content, this.workSpace);
+      this.open(content, this.workSpace, 10);
     }
+  }
+  initForm() {
+    if (!this.form) {
+      this.form = this.fb.group({
+        'name': [null, Validators.required],
+        'localisation': [null, Validators.compose([Validators.required])]
+      });
+    }
+    if (this.modalTitle === 'Edit Work Space') {
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsTouched();
+      }
+    }
+  }
+  arrangeClass(nameInput) {
+    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  }
+  isUnValid(nameInput) {
+    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

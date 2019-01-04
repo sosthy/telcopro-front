@@ -23,3 +23,6 @@
   outline:0;
   background-color: rgb(240,240,240);
 }
+.text-truncate {
+  max-width: 100%;
+}

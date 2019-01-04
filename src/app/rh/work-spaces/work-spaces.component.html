@@ -33,12 +33,24 @@
           </a>
         </div>
       </div>
-      <div class="pl-3 pr-3">
-        <p class="ff-headers mb-0 text-uppercase">
-          <strong>{{workSpace.name}}</strong>
+      <div class="pl-3 pr-3 col-sm-12">
+        <p class="text-uppercase ff-headers mb-0">
+            <strong>
+              <span class="d-inline-block text-truncate">
+                  {{workSpace.name}}
+              </span>
+            </strong>
         </p>
-        <small class="d-block bottom-spacer">{{workSpace.localisation}} </small>
-        <small class="d-block">{{workSpace.workSpaceType}} </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{workSpace.localisation}}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{workSpace.workSpaceType}}
+          </span>
+        </small>
       </div>
     </div>
   </div>
@@ -54,23 +66,38 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <div class="card">
-      <div class="card-body">
-        <div class="form-group">
-          <label class="control-label">Name:</label>
-          <input class="form-control bottom-spacer" type="text" [(ngModel)]="workSpace.name" name="name">
-
-          <label class="control-label">Localisation:</label>
-          <input class="form-control bottom-spacer" type="text" [(ngModel)]="workSpace.localisation" name="localisation">
+  <form [formGroup]="form" (ngSubmit)="c('Close click'); open(DetailsWorkSpace, workSpace, 4)">
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label class="control-label">Name:</label>
+            <input [ngClass]="arrangeClass('name')" class="form-control" [(ngModel)]="workSpace.name" type="text" formControlName="name">
+            <div class="text-danger mt-2" *ngIf="isUnValid('name')">
+              The name of work space is required
+            </div>
+            <div class="text-warning mt-2" *ngIf="workSpace.name.length > MAX_LENGHT_CARD_TEXT">
+              <i class="fa fa-warning"></i> The name may be truncated when displaying.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Localisation:</label>
+            <input [ngClass]="arrangeClass('localisation')" class="form-control" [(ngModel)]="workSpace.localisation" type="text" formControlName="localisation">
+            <div class="text-danger mt-2" *ngIf="isUnValid('localisation')">
+              The localisation of work space is required
+            </div>
+            <div class="text-warning mt-2" *ngIf="workSpace.localisation.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+              <i class="fa fa-warning"></i> The localisation may be truncated when displaying.
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-primary" (click)="c('Close click'); open(DetailsWorkSpace, workSpace, 10)">Submit</button>
-      <button class="btn btn-primary navbar-btn" (click)="c('Close click'); loadWorkSpaces()">Cancel</button>
-  </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn" [ngClass]="form.valid ? 'btn-success' : 'btn-primary'" [disabled]="!form.valid">Submit</button>
+        <button class="btn btn-primary navbar-btn" (click)="c('Close click'); loadWorkSpaces()">Cancel</button>
+    </div>
+  </form>
 </ng-template>
 
 <ng-template #DetailsWorkSpace let-c="close" let-d="dismiss">

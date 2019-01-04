@@ -1,18 +1,18 @@
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-between mb-5">
   <div>
     <button class="btn btn-primary" (click)="open(formRole)">Create Role</button>
   </div>
-  <div class="u-search" *ngIf="mode == 1">
+  <!--<div class="u-search" *ngIf="mode == 1">
     <form>
       <div class="form-group">
         <input type="search" placeholder="Search" class="form-control">
       </div>
     </form>
-  </div>
+  </div>-->
 </div>
 
-<div class="card">
+<div class="card" *ngIf="roles.length != 0">
   <div class="card-header">
     List of roles
   </div>
@@ -43,6 +43,9 @@
     </div>
   </div>
 </div>
+<strong *ngIf="roles.length == 0">
+  {{tableMessage}}
+</strong>
 
 <div class="" *ngIf="mode == 3">
   <p>Edition de contact</p>
@@ -56,11 +59,12 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+    <p>Are you sure you want to delete user
+      <strong>{{ role.roleName }}</strong>?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="onDeleteRole()">Yes</button>
+    <button type="button" class="btn btn-danger" (click)="onDeleteRole()">Yes</button>
   </div>
 </ng-template>
 

@@ -1,7 +1,7 @@
-<div class="d-flex justify-content-between mb-5">
-  <div>
+<div class="d-flex justify-content-end mb-5">
+  <!--<div>
     <button class="btn btn-primary" (click)="open(formItem)">Create Item</button>
-  </div>
+  </div>-->
   <div class="u-search">
     <form>
       <div class="form-group">
@@ -25,6 +25,7 @@
           <th>Serial</th>
           <th>Code QRC</th>
           <th>Code Bar</th>
+          <th>Available</th>
         </tr>
         </thead>
         <tbody>
@@ -33,6 +34,7 @@
           <td class="text-uppercase">{{ ite.serial }}</td>
           <td>{{ ite.codeQrc }}</td>
           <td>{{ ite.codeBar}}</td>
+          <td><input class="form-control" type="checkbox" checked="{{ ite.isAvailable}}" disabled></td>
           <td>
             <a href="javascript:;" (click)="open(formItem, ite)">edit</a> &nbsp;&nbsp;
             <a href="javascript:;" (click)="open(deleteItem, ite)">delete</a>

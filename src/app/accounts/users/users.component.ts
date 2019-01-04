@@ -97,8 +97,9 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  async onSaveUser() {
-    if (this.user.id) {
+  async onSaveUser(form) {
+    console.log(form);
+    /*if (this.user.id) {
       const data = await this.accountsSerice.saveUser(this.user).toPromise();
       const index: number = this.users.indexOf(this.user);
       if (index !== -1) {
@@ -107,7 +108,7 @@ export class UsersComponent implements OnInit {
     } else {
       const data = await this.accountsSerice.saveUser(this.user).toPromise();
     }
-    this.init();
+    this.init();*/
     this.modalRef.close();
   }
 

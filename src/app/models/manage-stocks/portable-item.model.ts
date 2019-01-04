@@ -7,6 +7,7 @@ export class PortableItem {
   codeBar: string;
   serial: string;
   reference: string;
+  isAvailable: boolean;
   portable: Portable;
   mouvmentLine: MouvmentLine;
 
@@ -16,6 +17,7 @@ export class PortableItem {
     this.codeBar = obj ? (obj.codeBar ? obj.codeBar : '') : '';
     this.serial = obj ? (obj.serial ? obj.serial : '') : '';
     this.reference = obj ? (obj.reference ? obj.reference : '') : '';
+    this.isAvailable = obj ? (obj.isAvailable ? obj.isAvailable : null) : null;
     this.portable = obj ? (obj.portable ? obj.portable : new Portable()) : new Portable();
     this.mouvmentLine = obj ? (obj.mouvmentLine ? obj.mouvmentLine : new MouvmentLine()) : new MouvmentLine();
   }

@@ -165,7 +165,6 @@ export class EditPhonesComponent implements OnInit {
     this.resourceService.download(fileName)
       .subscribe(data => {
           this.imageToShow = data['_body'].substr(data['_body'].indexOf('$') + 1);
-          this.imageEdit = true;
         },
         err => {
           console.log(err);

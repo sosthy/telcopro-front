@@ -5,6 +5,8 @@ import {WorkSpaceService} from '../../services/workSpace.services';
 import {WorkSpace} from '../../models/workSpace.model';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ResourceService} from '../../services/resource.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
 
 @Component({
   selector: 'app-employees',
@@ -26,7 +28,10 @@ export class EmployeesComponent implements OnInit {
   employeeFile: any = File;
   image = [];
   imageName = [];
-  constructor(private modalService: NgbModal,
+  form: FormGroup;
+  MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
+  constructor(private fb: FormBuilder,
+              private modalService: NgbModal,
               public employeeService: EmployeeService,
               public resourceService: ResourceService,
               public workSpaceService: WorkSpaceService) { }
@@ -48,6 +53,7 @@ export class EmployeesComponent implements OnInit {
     this.workSpaceService.getWorkSpaces()
     .subscribe(data => {
         this.workSpaces = data.json();
+        this.getWorkSpaces();
       },
         err => {
         console.log(err);
@@ -93,15 +99,19 @@ export class EmployeesComponent implements OnInit {
     if (employee) {
       if (mode === 1) {
         this.modalTitle = 'Edit Employee';
+        this.initForm();
       } else if (mode === 2) {
         this.modalTitle = 'Delete Employee';
       }  else if (mode === 3) {
         this.modalTitle = 'Detail Employee';
+      }  else if (mode === 4) {
+        this.modalTitle = 'Confirm registration Employee';
       } else {
-        this.modalTitle = 'Confirm registration employee';
+        this.modalTitle = 'New Employee';
       }
     } else {
       this.modalTitle = 'New Employee';
+      this.initForm();
     }
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
@@ -184,5 +194,29 @@ export class EmployeesComponent implements OnInit {
         return this.image[i];
       }
     }
+  }
+  initForm() {
+    if (!this.form) {
+      this.form = this.fb.group({
+        'name': [null, Validators.required],
+        'surname': [null, Validators.compose([Validators.required])],
+        'cni': [null, Validators.compose([Validators.required])],
+        'birthday': [null, Validators.compose([Validators.required])],
+        'website': [null, Validators.compose([Validators.required])],
+        'phone': [null, Validators.compose([Validators.required])],
+        'hiringDate': [null, Validators.compose([Validators.required])]
+      });
+    }
+    if (this.modalTitle === 'Edit Employee') {
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsTouched();
+      }
+    }
+  }
+  arrangeClass(nameInput) {
+    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  }
+  isUnValid(nameInput) {
+    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

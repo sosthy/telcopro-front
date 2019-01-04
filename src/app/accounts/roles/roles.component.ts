@@ -28,6 +28,7 @@ export class RolesComponent implements OnInit {
   employeeSelected: Array<Employee> = new Array();
   employees: Array<Employee> = new Array();
   modalRef: NgbModalRef;
+  tableMessage = 'Loading.... Please wait!';
 
   constructor(private modalService: NgbModal, private accountsSerice: AccountsService) {}
 
@@ -46,6 +47,7 @@ export class RolesComponent implements OnInit {
 
     this.roles = await this.accountsSerice.getAllRoles().toPromise();
     this.menus = await this.accountsSerice.getAllMenus().toPromise();
+    this.tableMessage = 'No role found';
   }
 
   open(content, role?: AppRole) {
@@ -80,19 +82,6 @@ export class RolesComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
-  }
-
-  onCreateUser(): void {
-    this.addEditCardHeader = 'Create Role';
-    this.mode = 4;
-  }
-
-  onListUser(): void {
-    this.mode = 1;
-  }
-
-  onDetailsUser(id: number): void {
-    this.mode = 2;
   }
 
   async onSaveRole() {
@@ -137,10 +126,6 @@ export class RolesComponent implements OnInit {
         }
       }
     });
-  }
-
-  onRoleChanged(role: string) {
-
   }
 
   clearSelectedMenu() {

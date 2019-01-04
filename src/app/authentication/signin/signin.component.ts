@@ -28,7 +28,6 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.auth.getToken());
     this.textMessage = '... checking, please wait!!!';
     this.auth.onLogin(new User(this.form.value)).subscribe(resp => {
 
