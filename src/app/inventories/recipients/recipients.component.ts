@@ -8,6 +8,8 @@ import {RecipientsGroupeService} from '../configuration/recipients-groupe/recipi
 import {MouvmentServices} from '../../services/mouvment.services';
 import {Router} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
 
 
 @Component({
@@ -33,8 +35,11 @@ export class RecipientsComponent implements OnInit {
   public recipientFile: any = File;
   image = [];
   imageName = [];
+  form: FormGroup;
+  MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
   // -------------------------------- -----------------------------------------------------------------------------------------
-  constructor(private modalService: NgbModal, private recipientsService: RecipientsService,
+  constructor(private fb: FormBuilder,
+              private modalService: NgbModal, private recipientsService: RecipientsService,
               private recipientsGroupeService: RecipientsGroupeService,
               public resourceService: ResourceService, private mouvmentService: MouvmentServices, public router: Router) {
   }
@@ -58,13 +63,15 @@ export class RecipientsComponent implements OnInit {
     if (rec) {
       if (mode === 1) {
         this.addEditCardHeader = 'Edit ' + rec.groupe.name;
+        this.initForm();
       } else if (mode === 2) {
         this.addEditCardHeader = 'Delete ' + rec.groupe.name;
       } else {
         this.addEditCardHeader = 'Detail ' + rec.groupe.name;
       }
     } else {
-      this.addEditCardHeader = 'Create Fournisseur/Client';
+      this.addEditCardHeader = 'Add Fournisseur/Client';
+        this.initForm();
     }
 
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
@@ -128,8 +135,7 @@ export class RecipientsComponent implements OnInit {
     this.recipientFile = file;
   }
   async saveRecipient() {
-    console.log(this.recipientFile);
-    console.log(this.recipient);
+    this.recipient.groupe = this.form.controls['selectedGroup'].value;
     const formData = new FormData();
     formData.append('recipient', JSON.stringify(this.recipient));
     formData.append('file', this.recipientFile);
@@ -172,5 +178,27 @@ export class RecipientsComponent implements OnInit {
         return this.image[i];
       }
     }
+  }
+  initForm() {
+    if (!this.form || this.addEditCardHeader.includes('Add')) {
+      this.form = this.fb.group({
+        'recipientDesignation': [null, Validators.required],
+        'recipientWeb': [null, Validators.compose([Validators.required])],
+        'recipientPhone': [null, Validators.compose([Validators.required])],
+        'selectedGroup': [null, Validators.compose([Validators.required])],
+        'recipientLocation': [null, Validators.compose([Validators.required])]
+      });
+    }
+    if (this.addEditCardHeader.includes('Edit')) {
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsTouched();
+      }
+    }
+  }
+  arrangeClass(nameInput) {
+    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  }
+  isUnValid(nameInput) {
+    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

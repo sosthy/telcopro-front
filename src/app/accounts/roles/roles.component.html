@@ -1,7 +1,7 @@
 
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formRole)">Create Role</button>
+    <button class="btn btn-primary" (click)="open(formRole)">Add Role</button>
   </div>
   <!--<div class="u-search" *ngIf="mode == 1">
     <form>
@@ -25,6 +25,7 @@
             <th>Role Name</th>
             <th>Menu(s)</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -34,8 +35,8 @@
             <td><span class="badge badge-success mr-1" *ngFor="let rolemenu of role.menus">{{ rolemenu.name }}</span></td>
             <td>{{ role.description }}</td>
             <td>
-              <a href="javascript:;" (click)="open(formRole, role)">edit</a> &nbsp;&nbsp;
-              <a href="javascript:;" (click)="open(deleteRole, role)">delete</a>
+              <button class="btn btn-warning table-btn-width" (click)="open(formRole, role)">Edit</button> &nbsp;&nbsp;
+              <button class="btn btn-danger table-btn-width" (click)="open(deleteRole, role)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -47,10 +48,6 @@
   {{tableMessage}}
 </strong>
 
-<div class="" *ngIf="mode == 3">
-  <p>Edition de contact</p>
-</div>
-
 <ng-template #deleteRole let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">Delete Role</h6>
@@ -59,12 +56,12 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete user
+    <p>Are you sure you want to delete role
       <strong>{{ role.roleName }}</strong>?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteRole()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
@@ -76,14 +73,27 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <form [formGroup]="form" (ngSubmit)="onSaveRole()">
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <p>Enter Role Informations for User</p>
+        <p>Enter Role Informations</p>
         <div class="form-group row">
           <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">RoleName</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="role.roleName" id="role-text-input" name="roleName">
+            <input [ngClass]="arrangeClass('roleName')" class="form-control" type="text" [(ngModel)]="role.roleName" id="role-text-input" formControlName="roleName">
+            <div class="text-danger mt-2 small" *ngIf="isUnValid('roleName')">
+              Name is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Description</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <textarea [ngClass]="arrangeClass('roleDescription')" class="form-control" type="text" [(ngModel)]="role.description" id="desc-text-input" formControlName="roleDescription"></textarea>
+            <div class="text-danger mt-2 small" *ngIf="isUnValid('roleDescription')">
+              Description is required.
+            </div>
           </div>
         </div>
         <div class="form-group row">
@@ -91,38 +101,33 @@
           <div class="col-sm-9 col-md-8 col-lg-9">
             <div class="row">
               <div class="col">
-                <select id="exampleSelect2" multiple name="menus" [(ngModel)]="menusSel" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="menuItem" *ngFor="let menuItem of menus">{{ menuItem.name }}</option>
+                <select id="exampleSelect2" multiple name="menus" [(ngModel)]="menusSel" class="form-control" [ngModelOptions]="{standalone: true}" [compareWith]="compareFn">
+                  <option *ngFor="let menuItem of menus" [ngValue]="menuItem">{{ menuItem.name }}</option>
                 </select>
                 <div class="text-right mt-1">
-                  <button class="btn btn-secondary btn-sm" (click)="addMenu()">Push <i class="fa fa-chevron-right"></i></button>
+                  <button type="button" class="btn btn-secondary btn-sm" (click)="addMenu()">Push <i class="fa fa-chevron-right"></i></button>
                 </div>
               </div>
               <div class="col">
-                <select multiple name="menusSel" [(ngModel)]="menusRemoved" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="m" *ngFor="let m of role.menus">{{ m.name }}</option>
+                <select multiple name="menusSel" class="form-control" [(ngModel)]="menusRemoved" [ngModelOptions]="{standalone: true}" [compareWith]="compareFn">
+                  <option *ngFor="let m of role.menus" [ngValue]="m">{{ m.name }}</option>
                 </select>
                 <!-- <span *ngFor="let r of roleSelected" class="badge badge-success rounded">{{r}} &nbsp; </span> -->
                 <div class="text-right mt-1">
-                  <button class="btn btn-warning btn-sm" (click)="clearSelectedMenu()">Remove</button>
+                  <button type="button" class="btn btn-warning btn-sm" (click)="clearSelectedMenu()">Remove</button>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Description</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <textarea class="form-control" type="text" [(ngModel)]="role.description" id="desc-text-input"></textarea>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="onSaveRole()">Save changes</button>
   </div>
+  </form>
 </ng-template>
 
 

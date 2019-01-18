@@ -30,12 +30,11 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     this.textMessage = '... checking, please wait!!!';
     this.auth.onLogin(new User(this.form.value)).subscribe(resp => {
-
+      console.log(resp);
+      console.log(resp.ok);
       const token = resp.headers.get('Authorization');
       this.auth.setToken(token);
       this.auth.setUser(this.form.value);
-        console.log(resp);
-        console.log(resp.ok);
 
       if (resp.ok === true) {
         this.router.navigateByUrl('dashboard');

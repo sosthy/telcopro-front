@@ -30,8 +30,12 @@
           <th scope="row">{{ i + 1 }}</th>
           <td class="text-uppercase">{{ mes.unity }}</td>
           <td>
-            <a href="javascript:;" (click)="open(formMeasure, mes)">edit</a>
-            <a href="javascript:;" (click)="open(deleteMeasure, mes)">delete</a>
+            <button class="btn btn-warning table-btn-width" (click)="open(formMeasure, mes)">
+              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
+            </button>
+            <button class="btn btn-danger table-btn-width" (click)="open(deleteMeasure, mes)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Delete
+            </button>
           </td>
         </tr>
         </tbody>

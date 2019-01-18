@@ -1,10 +1,13 @@
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formState)">Create State</button>
+    <button class="btn btn-primary" (click)="open(formState)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add State
+    </button>
   </div>
   <div class="u-search">
     <form>
-      <div class="form-group">
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="stateSearch">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchState()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
@@ -23,6 +26,7 @@
         <tr>
           <th>#</th>
           <th>Name</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -30,8 +34,12 @@
           <th scope="row">{{ i + 1 }}</th>
           <td class="text-uppercase">{{ sta.name }}</td>
           <td>
-            <a href="javascript:;" (click)="open(formState, sta)">edit</a> &nbsp;&nbsp;
-            <a href="javascript:;" (click)="open(deleteState, sta)">delete</a>
+            <button class="btn btn-warning table-btn-width" (click)="open(formState, sta)">
+              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
+            </button>&nbsp;&nbsp;
+            <button class="btn btn-danger table-btn-width" (click)="open(deleteState, sta)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Delete
+            </button>
           </td>
         </tr>
         </tbody>
@@ -55,15 +63,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+    <p>Are you sure you want to delete state <strong>{{state.name}}</strong></p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteState()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
-<ng-template ngbModalContainer></ng-template>
 <ng-template #formState let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
@@ -85,7 +92,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
     <button type="button" class="btn btn-primary" (click)="onSaveCamera()">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
   </div>
 </ng-template>

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formRecipient)">Create Fournisseur/Client</button>
+    <button class="btn btn-primary" (click)="open(formRecipient)">Add Fournisseur/Client</button>
   </div>
   <div class="u-search">
     <form>
@@ -37,11 +37,29 @@
       <a href="javascript:;">
         <img [src]="searchImages(rec.image)" class="avatar-sm rounded-circle" alt="">
       </a>
-      <div class="pl-3 pr-3 col-sm-10">
-        <p class="ff-headers mb-0 text-uppercase"><strong>{{ rec.designation }}</strong></p>
-        <small class="d-block">{{ rec.phone }}</small>
-        <small class="d-block">{{ rec.location}}</small>
-        <small class="d-block">{{ rec.groupe?.name}} </small>
+      <div class="pl-3 pr-3 col-sm-12">
+        <p class="ff-headers mb-0 text-uppercase">
+          <strong>
+            <span class="d-inline-block text-truncate">
+              {{ rec.designation }}
+            </span>
+          </strong>
+        </p>
+        <small class="d-block">
+            <span class="d-inline-block text-truncate">
+              {{ rec.phone }}
+            </span>
+        </small>
+        <small class="d-block">
+            <span class="d-inline-block text-truncate">
+              {{ rec.location}}
+            </span>
+        </small>
+        <small class="d-block">
+            <span class="d-inline-block text-truncate">
+              {{ rec.groupe?.name}}
+            </span>
+        </small>
       </div>
     </div>
   </div>
@@ -58,11 +76,11 @@
     </button>
   </div>
   <div class="modal-body" id="deleteRecip">
-    <p>Are you sure you want to delete </p>
+    <p class="text-capitalize">Are you sure you want to delete {{recipient.groupe.name}} <strong>{{recipient.name}}</strong> ? </p>
   </div>
   <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onDeleteRecipient()">Yes</button>
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="onDeleteRecipient()">OK</button>
   </div>
 </ng-template>
 
@@ -79,56 +97,91 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <div class="card">
-      <div class="card-body">
-        <p>Enter Role Informations for Recipient</p>
-        <div class="form-group row">
-          <label for="des-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="recipient.designation" id="des-text-input" name="recipientDesignation">
+  <form [formGroup]="form" (ngSubmit)="saveRecipient()">
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <p>Enter Role Informations for Recipient</p>
+          <div class="form-group row">
+            <label for="designation" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('recipientDesignation')" class="form-control" type="text" [(ngModel)]="recipient.designation" id="designation"
+                     formControlName="recipientDesignation">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('recipientDesignation')">
+                Designation field is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="recipient.designation.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation designation.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website/Email</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="txt" [(ngModel)]="recipient.website" id="web-text-input" name="recipientWeb">
+          <div class="form-group row">
+            <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website/Email</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('recipientWeb')" class="form-control" type="txt" [(ngModel)]="recipient.website" id="web-text-input"
+                     formControlName="recipientWeb">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('recipientWeb')">
+                Website/Email field is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="recipient.website.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation Website/Email.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="phone-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="recipient.phone" id="phone-text-input" name="recipientPhone">
+          <div class="form-group row">
+            <label for="phone-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('recipientPhone')" class="form-control" type="text" [(ngModel)]="recipient.phone" id="phone-text-input"
+                     formControlName="recipientPhone">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('recipientPhone')">
+                Phone field is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="recipient.phone.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation phone.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="loc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="txt" [(ngModel)]="recipient.location" id="loc-text-input" name="recipientLocation">
+          <div class="form-group row">
+            <label for="loc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('recipientLocation')" class="form-control" type="txt" [(ngModel)]="recipient.location" id="loc-text-input"
+                     formControlName="recipientLocation">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('recipientLocation')">
+                Location field is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="recipient.location.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation location.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="exampleInputFile" class="col-sm-3 col-md-4 col-lg-3 col-form-label">photo</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input type="file" class="form-control-file" accept="image/*" id="exampleInputFile" aria-describedby="fileHelp"
-              (change) ="onselectFile($event)"  name="file">
+          <div class="form-group row">
+            <label for="group-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Groupe</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <select [ngClass]="arrangeClass('selectedGroup')" formControlName="selectedGroup" id="group-text-input" class="form-control"
+                      [compareWith]="compareFn">
+                <option *ngFor="let grp of groupes" [ngValue]="grp">{{ grp.name }}</option>
+              </select>
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('selectedGroup')">
+                Groupe field is required
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="group-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Groupe</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <select id="group-text-input" name="selectedGroup" [(ngModel)]="recipient.groupe" class="form-control" [compareWith]="compareFn">
-                <option [ngValue]="grp" *ngFor="let grp of groupes">{{ grp.name }}</option>
-            </select>
+          <div class="form-group row">
+            <label for="exampleInputFile" class="col-sm-3 col-md-4 col-lg-3 col-form-label">photo</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input type="file" class="form-control-file" accept="image/*" id="exampleInputFile"
+                     aria-describedby="fileHelp"
+                     (change)="onselectFile($event)" name="file">
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="saveRecipient()">Save changes</button>
-  </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" [disabled]="!form.valid">Save changes</button>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+  </form>
 </ng-template>
 <ng-template #detailRecipient let-c="close">
   <div class="modal-header">
@@ -146,39 +199,39 @@
     <div class="card">
       <div class="card-body">
         <div class="form-group row">
-          <label for="des-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
+          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Designation</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <label for="loc-text-input"><strong>{{recipient.designation}}</strong></label>
+            <label><strong>{{recipient.designation}}</strong></label>
           </div>
         </div>
         <div class="form-group row">
-          <label for="web-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website/Email</label>
+          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website/Email</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <label for="loc-text-input"><strong>{{recipient.website}}</strong></label>
+            <label><strong>{{recipient.website}}</strong></label>
           </div>
         </div>
         <div class="form-group row">
-          <label for="phone-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone</label>
+          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <label for="loc-text-input"><strong>{{recipient.phone}}</strong></label>
+            <label><strong>{{recipient.phone}}</strong></label>
           </div>
         </div>
         <div class="form-group row">
-          <label for="loc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location</label>
+          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <label for="loc-text-input"><strong>{{recipient.location}}</strong></label>
+            <label><strong>{{recipient.location}}</strong></label>
           </div>
         </div>
         <div class="form-group row">
-          <label for="group-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Groupe</label>
+          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Groupe</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <label for="group-text-input"><strong>{{recipient.groupe.name}}</strong></label>
+            <label><strong>{{recipient.groupe.name}}</strong></label>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">OK</button>
+    <button type="button" class="btn btn-primary" (click)="c('Close click')">OK</button>
   </div>
 </ng-template>

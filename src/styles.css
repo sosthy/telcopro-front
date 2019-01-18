@@ -26,3 +26,12 @@
 .text-truncate {
   max-width: 100%;
 }
+.table-btn-width {
+  width: 75px;
+  margin-top: 2px;
+}
+.bg-search {
+  background-color: #304ffe !important;
+  color: white !important;
+  border-color: #304ffe !important;
+}

@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Http} from '@angular/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GenericEntrepot} from '../../../models/manage-stocks/entrepot.model';
 import {Emplacement} from '../../../models/manage-stocks/emplacement.model';
 import {EntrepotService} from '../entrepots.services';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAX_LENGHT_CARD_TEXT} from '../../../models/config.model';
 
 @Component({
   selector: 'app-list-emplacement',
@@ -22,12 +24,14 @@ export class EmplacementListComponent implements OnInit {
   motCle: string;
   listEmplacement: Array<Emplacement> = new Array();
   tableMessage = 'Loading.... Please wait!';
+  form: FormGroup;
+  MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
 
-  constructor(public route: ActivatedRoute, private modalService: NgbModal, private entrepotService: EntrepotService) { }
-
+  constructor(private fb: FormBuilder, public route: ActivatedRoute, private modalService: NgbModal, private entrepotService: EntrepotService,
+              private router: Router) {}
   ngOnInit() {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Emplacement';
+    this.addEditCardHeader = 'Add Emplacement';
     this.init();
   }
 
@@ -38,6 +42,10 @@ export class EmplacementListComponent implements OnInit {
         this.entrepot = new GenericEntrepot(params);
         this.entrepotService.listAllEmplacement(this.entrepot.id).subscribe(resp => {
           this.listEmplacement = resp;
+          this.tableMessage = 'Not emplacement found.';
+        },
+          (err) => {
+          this.router.navigateByUrl('error/404');
         });
       }
     });
@@ -46,6 +54,12 @@ export class EmplacementListComponent implements OnInit {
   // ---------------------------------------------------- ---------------------------------------------------------------------
   open(content, emp?: Emplacement) {
     this.emplacement = emp ? new Emplacement(emp) : new Emplacement();
+    if (this.emplacement.id) {
+      this.addEditCardHeader = 'Edit Emplacement';
+    } else  {
+      this.addEditCardHeader = 'Add Emplacement';
+    }
+    this.initForm();
 
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
@@ -112,5 +126,23 @@ export class EmplacementListComponent implements OnInit {
         err => {
           console.log(err);
         });
+  }
+  initForm() {
+    if (!this.form || this.addEditCardHeader === 'Add Emplacement') {
+      this.form = this.fb.group({
+        'name': [null, Validators.compose([Validators.required])]
+      });
+    }
+    if (this.addEditCardHeader === 'Edit Emplacement') {
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsTouched();
+      }
+    }
+  }
+  arrangeClass(nameInput) {
+    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  }
+  isUnValid(nameInput) {
+    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

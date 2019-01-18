@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {AccountsRoutes} from './accounts.routing';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RolesComponent} from './roles/roles.component';
 import {MenusComponent} from './menus/menus.component';
 import {AccountsService} from './accounts.service';
@@ -21,6 +21,7 @@ import {ResourceService} from "../services/resource.service";
     RouterModule.forChild(AccountsRoutes),
     CommonModule,
     NgxChartsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   declarations: [

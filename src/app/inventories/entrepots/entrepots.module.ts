@@ -3,7 +3,7 @@
 import {NgModule} from "@angular/core";
 import {EntrepotListComponent} from "./list-entrepots/list-entrepots.component";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {EntrepotRoutes} from "./entrepots.routing";
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
@@ -16,7 +16,8 @@ import {EmplacementListComponent} from "./list-emplacements/list-emplacements.co
     CommonModule,
     RouterModule.forChild(EntrepotRoutes),
     FormsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   declarations: [
     EntrepotComponent,

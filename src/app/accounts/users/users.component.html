@@ -1,7 +1,7 @@
 
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formUser)">Create User</button>
+    <button class="btn btn-primary" (click)="open(formUser)">Add User</button>
   </div>
   <div class="u-search">
     <form>
@@ -39,11 +39,37 @@
         <img [src]="searchImages(usr.employee.photo)" class="avatar-sm rounded-circle" alt="">
       </a>
       <div class="pl-3 pr-3 col-sm-10">
-        <p class="ff-headers mb-0 text-uppercase"><strong>{{ usr.username }}</strong></p>
-        <small class="d-block">{{ usr.employee.name }}</small>
-        <small class="d-block">{{ usr.employee.surname }}</small>
-        <small class="d-block">{{ usr.employee.phone }}</small>
-        <small class="d-block">{{ usr.email }} </small>
+        <p class="ff-headers mb-0 text-uppercase"><strong>
+            <span class="d-inline-block text-truncate">
+              {{usr.username}}
+            </span>
+          </strong>
+        </p>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{ usr.employee.name }}  {{ usr.employee.surname }}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{ usr.employee.phone }}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{ usr.email }}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{ usr.employee.poste }}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{ usr.employee.workSpace.name }}
+          </span>
+        </small>
       </div>
     </div>
   </div>
@@ -66,8 +92,8 @@
     </p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteUser()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
@@ -126,7 +152,6 @@
   </div>
 </ng-template>
 
-<ng-template ngbModalContainer></ng-template>
 <ng-template #formUser let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
@@ -134,59 +159,88 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <div class="card">
-      <div class="card-body">
-        <p>Enter User Informations to Sign in.</p>
-        <div class="form-group row">
-          <label for="example-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Username</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="user.username" name="username" id="example-text-input">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Password</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <button class="btn btn-primary" (click)="generatePassword()">Generate</button> &nbsp;
-            <strong>{{ user.password }}</strong>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="email-input1" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="email" [(ngModel)]="user.email" name="email" id="email-input1">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="employee-input1" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Employee</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-              <div class="input-group-addon"><i class="fa fa-user"></i></div>
-              <select type="list" name="employee" [(ngModel)]="user.employee" class="form-control" id="employee-input1" [compareWith]="compareFn">
-                <option *ngFor="let empItem of employees" [ngValue]="empItem">{{ empItem.name }} {{ empItem.surname }}</option>
-              </select>
+  <form [formGroup]="form" (ngSubmit)="onSaveUser()">
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <p>Enter User Informations to Sign in.</p>
+          <div class="form-group row">
+            <label for="example-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Username</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('username')" class="form-control" type="text" [(ngModel)]="user.username" formControlName="username"
+                     id="example-text-input">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('username')">
+                Username is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="user.username.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation username.
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="exampleSelect22" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Roles</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <div class="row">
-              <div class="col">
-                <select id="exampleSelect22" multiple name="roles" [(ngModel)]="rolesSel" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="roleItem" *ngFor="let roleItem of roles">{{roleItem.roleName}}</option>
-                </select>
-                <div class="text-right mt-1">
-                  <button class="btn btn-secondary btn-sm" (click)="addRole()">Push <i class="fa fa-chevron-right"></i></button>
+          <div class="form-group row">
+            <label class="col-sm-3 col-md-4 col-lg-3 col-form-label">Password</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <div class="row">
+                <div class="col-4 col-sm-4">
+                  <button type="button" class="btn btn-primary" (click)="generatePassword()">Generate</button> &nbsp;
+                </div>
+                <div class="col-8 col-sm-8">
+                  <input class="form-control" type="text" [(ngModel)]="user.password" formControlName="password" id="password">
+
                 </div>
               </div>
-              <div class="col">
-                <select multiple name="rolesSel" [(ngModel)]="rolSelRemoved" class="form-control" [compareWith]="compareFn">
-                  <option [ngValue]="r" *ngFor="let r of user.roles">{{ r.roleName }}</option>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email-input1" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('email')" class="form-control" type="email" [(ngModel)]="user.email" formControlName="email" id="email-input1">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('email')">
+                email is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="user.email.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation email.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="employee-input1" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Employee</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                <select [ngClass]="arrangeClass('employee')" formControlName="employee" class="form-control" id="employee-input1" [compareWith]="compareFn">
+                  <option *ngFor="let empItem of employees" [ngValue]="empItem">
+                      {{ empItem.name }} {{ empItem.surname}}
+                  </option>
                 </select>
-                <!-- <span *ngFor="let r of roleSelected" class="badge badge-success rounded">{{r}} &nbsp; </span> -->
-                <div class="text-right mt-1">
-                  <button class="btn btn-warning btn-sm" (click)="clearSelectedRole()">Remove</button>
+              </div>
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('employee')">
+                employee is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="exampleSelect22" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Roles</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <div class="row">
+                <div class="col">
+                  <select id="exampleSelect22" multiple name="roles" [(ngModel)]="rolesSel" [ngModelOptions]="{standalone: true}" class="form-control"
+                          [compareWith]="compareFn" required>
+                    <option *ngFor="let roleItem of roles" title="{{roleItem.description}}" [ngValue]="roleItem">{{roleItem.roleName}}</option>
+                  </select>
+                  <div class="text-right mt-1">
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="addRole()">Push <i
+                      class="fa fa-chevron-right"></i></button>
+                  </div>
+                </div>
+                <div class="col">
+                  <select multiple name="rolesSel" [(ngModel)]="rolSelRemoved" class="form-control" [ngModelOptions]="{standalone: true}" [compareWith]="compareFn">
+                    <option *ngFor="let r of user.roles" [ngValue]="r">{{ r.roleName }}</option>
+                  </select>
+                  <!-- <span *ngFor="let r of roleSelected" class="badge badge-success rounded">{{r}} &nbsp; </span> -->
+                  <div class="text-right mt-1">
+                    <button type="button" class="btn btn-warning btn-sm" (click)="clearSelectedRole()">Remove</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -194,11 +248,11 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="onSaveUser()">Save changes</button>
-  </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+  </form>
 </ng-template>
 
 

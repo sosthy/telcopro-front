@@ -63,6 +63,7 @@ export class WorkSpacesComponent implements OnInit {
       .subscribe(data => {
         this.workSpace = data.json();
         if (index === -1) {
+          this.workSpace.workSpaceType = 'Work Space';
           this.listWorkSpaces.push(this.workSpace);
         }
       },
@@ -116,7 +117,7 @@ export class WorkSpacesComponent implements OnInit {
     }
   }
   initForm() {
-    if (!this.form) {
+    if (!this.form || this.modalTitle === 'Add Work Space') {
       this.form = this.fb.group({
         'name': [null, Validators.required],
         'localisation': [null, Validators.compose([Validators.required])]

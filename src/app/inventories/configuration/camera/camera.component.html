@@ -1,10 +1,13 @@
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formCamera)">Create Camera</button>
+    <button class="btn btn-primary" (click)="open(formCamera)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add Camera
+    </button>
   </div>
   <div class="u-search">
     <form>
-      <div class="form-group">
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" [(ngModel)] ="motCle" class="form-control" name="cameraSearch">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchCamera()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
@@ -24,6 +27,7 @@
           <th>#</th>
           <th>front Camera</th>
           <th>back Camera</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -32,8 +36,12 @@
           <td class="text-uppercase">{{ cam.frontCamera }}</td>
           <td>{{ cam.backCamera }}</td>
           <td>
-            <a href="javascript:;" (click)="open(formCamera, cam)">edit</a> &nbsp;&nbsp;
-            <a href="javascript:;" (click)="open(deleteCamera, cam)">delete</a>
+            <button class="btn btn-warning table-btn-width" (click)="open(formCamera, cam)">
+              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
+            </button> &nbsp
+            <button  class="btn btn-danger table-btn-width" (click)="open(deleteCamera, cam)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Delete
+            </button>
           </td>
         </tr>
         </tbody>
@@ -45,11 +53,6 @@
     {{tableMessage}}
  </strong>
 
-
-<div class="" *ngIf="mode == 3">
-  <p>Edit Camera</p>
-</div>
-
 <ng-template #deleteCamera let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">Delete Camera</h6>
@@ -58,15 +61,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+    <p>Are you sure you want to delete Camera <strong>(Back : {{ camera.backCamera }} Mpx, Front : {{ camera.frontCamera }} Mpx)</strong></p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteCamera()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
-<ng-template ngbModalContainer></ng-template>
 <ng-template #formCamera let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>

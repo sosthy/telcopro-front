@@ -1,10 +1,13 @@
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formMemory)">Create Camera</button>
+    <button class="btn btn-primary" (click)="open(formMemory)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add Camera
+    </button>
   </div>
   <div class="u-search">
     <form>
-      <div class="form-group">
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="memorySearch">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchMemory()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
@@ -25,6 +28,7 @@
           <th>Ram</th>
           <th>Rom</th>
           <th>Brand</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -34,8 +38,12 @@
           <td>{{ mem.rom }}</td>
           <td>{{ mem.brand}}</td>
           <td>
-            <a href="javascript:;" (click)="open(formMemory, mem)">edit</a> &nbsp;&nbsp;
-            <a href="javascript:;" (click)="open(deleteMemory, mem)">delete</a>
+            <button class="btn btn-warning table-btn-width" (click)="open(formMemory, mem)">
+              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
+            </button> &nbsp;&nbsp;
+            <button class="btn btn-danger table-btn-width" (click)="open(deleteMemory, mem)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Delete
+            </button>
           </td>
         </tr>
         </tbody>
@@ -59,11 +67,11 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+    <p>Are you sure you want to delete memory <strong> {{ memory.brand }} (RAM : {{ memory.ram }} GB, ROM : {{ memory.rom }} GB)</strong></p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteMemory()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
@@ -101,7 +109,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
     <button type="button" class="btn btn-primary" (click)="onSaveMemory()">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
   </div>
 </ng-template>

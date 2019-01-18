@@ -6,7 +6,8 @@ const STOCKSMENUITEMS = [
     state: 'dashboard-stocks',
     name: 'HOME',
     type: 'link',
-    icon: ' fa fa-tachometer'
+    icon: ' fa fa-tachometer',
+    children: []
   },
   {
     state: 'products',
@@ -25,18 +26,21 @@ const STOCKSMENUITEMS = [
     name: 'ENTREPOTS',
     type: 'link',
     icon: ' fa fa-map-o',
+    children: []
   },
   {
     state: 'transactions',
     name: 'TRANSACTIONS',
     type: 'link',
     icon: ' fa fa-map-o',
+    children: []
   },
   {
     state: 'recipients',
     name: 'RECIPIENTS',
     type: 'link',
     icon: ' fa fa-users',
+    children: []
   },
   {
     state: 'configuration',
@@ -116,6 +120,11 @@ export class StocksMenuItems {
   }
 
   getAllStocksMenu(): Menu[] {
+    STOCKSMENUITEMS.forEach(items => {
+      items.children.sort((p1, p2) => {
+          return p1.name > p2.name ? 1 : -1 ;
+      });
+    })
     return STOCKSMENUITEMS;
   }
 

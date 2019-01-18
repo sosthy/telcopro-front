@@ -4,6 +4,7 @@ import {AccountsService} from '../accounts.service';
 import {AppRole} from '../../models/approle.model';
 import {Employee} from '../../models/employee.model';
 import { AppMenu } from '../../models/appmenu.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -17,7 +18,6 @@ export class RolesComponent implements OnInit {
   closeResult: string;
   mode: number;
   addEditCardHeader: string;
-  password: string;
   menusSel: Array<AppMenu> = new Array();
   menuSelected: Array<AppMenu> = new Array();
   menusRemoved: Array<AppMenu> = new Array();
@@ -29,13 +29,12 @@ export class RolesComponent implements OnInit {
   employees: Array<Employee> = new Array();
   modalRef: NgbModalRef;
   tableMessage = 'Loading.... Please wait!';
+  form: FormGroup;
 
-  constructor(private modalService: NgbModal, private accountsSerice: AccountsService) {}
+  constructor(private fb: FormBuilder, private modalService: NgbModal, private accountsSerice: AccountsService) {}
 
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Role';
-    this.password = '********';
     this.init();
   }
 
@@ -65,6 +64,7 @@ export class RolesComponent implements OnInit {
       });
     }
 
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -119,6 +119,7 @@ export class RolesComponent implements OnInit {
       if (menu) {
         if (this.menus.find(m => m === menu)) {
           this.role.menus.push(menu);
+          this.menusRemoved.push(menu);
         }
         const index: number = this.menus.indexOf(menu);
         if (index !== -1) {
@@ -135,11 +136,35 @@ export class RolesComponent implements OnInit {
         this.role.menus.splice(index, 1);
       }
       this.menus.push(menu);
-      this.menusRemoved = null;
+      this.menusRemoved = new Array();
     });
   }
 
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  initForm() {
+    if (!this.form || !this.role.id) {
+      this.addEditCardHeader = 'Add Role';
+      this.form = this.fb.group({
+        'roleName': [null, Validators.required],
+        'roleDescription': [null, Validators.compose([Validators.required])]
+      });
+    }
+    if (this.role.id) {
+      this.addEditCardHeader = 'Edit Role';
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsTouched();
+      }
+    }
+  }
+  arrangeClass(nameInput) {
+    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  }
+  isUnValid(nameInput) {
+    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
+  }
+  formUnValid() {
+    return (!this.form.valid) ? true : (this.menusRemoved.length === 0) ? true : false;
   }
 }

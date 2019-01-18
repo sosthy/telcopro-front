@@ -37,10 +37,38 @@
         <img [src]="searchImages(employee.photo)" class="avatar-sm rounded-circle" alt="">
       </a>
       <div class="pl-3 pr-3 col-sm-10">
-        <p class="ff-headers mb-0 text-uppercase"><strong>{{employee.name}}</strong></p>
-        <small class="d-block">{{employee.surname}} </small>
-        <small class="d-block">{{employee.website}} </small>
-        <small class="d-block">{{employee.phone}}</small>
+        <p class="ff-headers mb-0 text-uppercase">
+          <strong>
+            <span class="d-inline-block text-truncate">
+              {{employee.name}}
+            </span>
+          </strong>
+        </p>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{employee.surname}}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{employee.poste}}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{employee.workSpace.name}}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{employee.website}}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{employee.phone}}
+          </span>
+        </small>
       </div>
     </div>
   </div>
@@ -64,119 +92,148 @@
   <form [formGroup]="form" (ngSubmit)="c('Close click'); open(DetailsEmployee, employee, 4)">
    <div class="modal-body">
       <div class="card">
-        <div class="card-body">
-          <div class="form-group">
-            <label class="control-label">Name:</label>
-            <input [ngClass]="arrangeClass('name')" class="form-control" type="text" [(ngModel)]="employee.name" formControlName="name">
-            <div class="text-danger mt-2" *ngIf="isUnValid('name')">
-              The name of employee is required
+        <div class="card-body row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Name:</label>
+              <input [ngClass]="arrangeClass('name')" class="form-control" type="text" [(ngModel)]="employee.name" formControlName="name">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('name')">
+                name of employee is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="employee.name.length > MAX_LENGHT_CARD_TEXT">
+                <i class="fa fa-warning"></i> risk of truncation name.
+              </div>
             </div>
-            <div class="text-warning mt-2" *ngIf="employee.name.length > MAX_LENGHT_CARD_TEXT">
-              <i class="fa fa-warning"></i> The name may be truncated when displaying.
+            <div class="form-group">
+              <label class="control-label">Surname:</label>
+              <input [ngClass]="arrangeClass('surname')" class="form-control" type="text" [(ngModel)]="employee.surname" formControlName="surname">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('surname')">
+                surname of employee is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="employee.surname.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation surname.
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Surname:</label>
-            <input [ngClass]="arrangeClass('surname')" class="form-control" type="text" [(ngModel)]="employee.surname" formControlName="surname">
-            <div class="text-danger mt-2" *ngIf="isUnValid('surname')">
-              The surname of employee is required
+            <div class="form-group">
+              <label class="control-label">cni:</label>
+              <input [ngClass]="arrangeClass('cni')" class="form-control" type="text" [(ngModel)]="employee.cni" formControlName="cni">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('cni')">
+                cni of employee is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="employee.cni.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation cni.
+              </div>
             </div>
-            <div class="text-warning mt-2" *ngIf="employee.surname.length > MAX_LENGHT_CARD_TEXT">
-              <i class="fa fa-warning"></i> The surname may be truncated when displaying.
+            <div class="form-group">
+              <label class="control-label">Birthday:</label>
+              <input [ngClass]="arrangeClass('birthday')" class="form-control" type="date" [(ngModel)]="employee.birthday" formControlName="birthday">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('birthday')">
+                birthday of employee is required
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">cni:</label>
-            <input [ngClass]="arrangeClass('cni')" class="form-control" type="text" [(ngModel)]="employee.cni" formControlName="cni">
-            <div class="text-danger mt-2" *ngIf="isUnValid('cni')">
-              The cni of employee is required
+            <span class="bottom-spacer"></span>
+            <div class="form-group">
+              <div class="row col-lg-12">
+                <label class="control-label left-spacer"> Sex: </label>
+              </div>
+              <div class="row col-lg-12">
+                <div class="form-check mr-2">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" (click)="employee.sex = 'M'" [checked]="employee.sex == 'M'">
+                    Male
+                  </label>
+                </div>
+                <div class="form-check">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" (click)="employee.sex = 'F'" [checked]="employee.sex == 'F'">
+                    Female
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="text-warning mt-2" *ngIf="employee.cni.length > MAX_LENGHT_CARD_TEXT">
-              <i class="fa fa-warning"></i> The cni may be truncated when displaying.
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Birthday:</label>
-            <input [ngClass]="arrangeClass('birthday')" class="form-control" type="date" [(ngModel)]="employee.birthday" formControlName="birthday">
-            <div class="text-danger mt-2" *ngIf="isUnValid('birthday')">
-              The birthday of employee is required
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Email:</label>
-            <input [ngClass]="arrangeClass('website')" class="form-control" type="email" [(ngModel)]="employee.website" formControlName="website">
-            <div class="text-danger mt-2" *ngIf="isUnValid('website')">
-              The website of employee is required
-            </div>
-            <div class="text-warning mt-2" *ngIf="employee.website.length > MAX_LENGHT_CARD_TEXT">
-              <i class="fa fa-warning"></i> The website may be truncated when displaying.
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Phone:</label>
-            <input [ngClass]="arrangeClass('phone')" class="form-control" type="text" [(ngModel)]="employee.phone" formControlName="phone">
-            <div class="text-danger mt-2" *ngIf="isUnValid('phone')">
-              The phone of employee is required
-            </div>
-            <div class="text-warning mt-2" *ngIf="employee.phone.length > MAX_LENGHT_CARD_TEXT">
-              <i class="fa fa-warning"></i> The phone may be truncated when displaying.
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">Hiring Date:</label>
-            <input [ngClass]="arrangeClass('hiringDate')" class="form-control" type="date" [(ngModel)]="employee.hiringDate" formControlName="hiringDate">
-            <div class="text-danger mt-2" *ngIf="isUnValid('hiringDate')">
-              The hiring date of employee is required
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label">Sort WorkSpace By: </label>
-            <div ngbDropdown placement="top-right" class="d-inline-block">
-              <button type="button" class="btn btn-outline-primary" id="dropdownMenu3" ngbDropdownToggle>{{filter}}</button>
-              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
-                <button type="button" class="dropdown-item" (click)="getEntrepots()">Entrepots</button>
-                <button type="button" class="dropdown-item" (click)="getSalePoints()">Points of sale</button>
-                <button type="button" class="dropdown-item" (click)="getWorkSpaces()">None</button>
+            <div class="form-group">
+              <label class="control-label">Phone:</label>
+              <input [ngClass]="arrangeClass('phone')" class="form-control" type="text" [(ngModel)]="employee.phone" formControlName="phone">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('phone')">
+                phone of employee is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="employee.phone.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation phone.
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label class="control-label">WorkSpace Name:</label>
-            <div ngbDropdown placement="top-right" class="d-inline-block">
-              <button type="button" class="btn btn-outline-primary" id="dropdownMenu2" ngbDropdownToggle>
-                <span *ngIf="employee.workSpace.name == ''">Choose workspace here</span>
-                <span *ngIf="employee.workSpace.name != ''">{{employee.workSpace.name}}</span>
-              </button>
-              <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                <button type="button" class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpacesView">{{workSpace.name}}</button>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Email:</label>
+              <input [ngClass]="arrangeClass('website')" class="form-control" type="email" [(ngModel)]="employee.website" formControlName="website">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('website')">
+                website of employee is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="employee.website.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation website.
               </div>
             </div>
-          </div>
-          <span class="bottom-spacer"></span>
-          <div class="row">
-            <label class="control-label left-spacer"> Sex: </label>
-            <div class="form-check col-sm-2">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" (click)="employee.sex = 'M'" [checked]="employee.sex == 'M'">
-                Male
-              </label>
+            <div class="form-group">
+              <label class="control-label">Poste:</label>
+              <input [ngClass]="arrangeClass('poste')" class="form-control" type="text" [(ngModel)]="employee.poste" formControlName="poste">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('poste')">
+                poste of employee is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="employee.poste.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> risk of truncation poste.
+              </div>
             </div>
-            <div class="form-check col-sm-2">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" (click)="employee.sex = 'F'" [checked]="employee.sex == 'F'">
-                Female
-              </label>
+            <div class="form-group">
+              <label class="control-label">Hiring Date:</label>
+              <input [ngClass]="arrangeClass('hiringDate')" class="form-control" type="date" [(ngModel)]="employee.hiringDate" formControlName="hiringDate">
+              <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('hiringDate')">
+                hiring date of employee is required
+              </div>
             </div>
+            <div class="form-group">
+              <div class="row col-lg-12">
+                <label class="control-label">Sort WorkSpace By: </label>
+              </div>
+              <div class="row col-lg-12">
+                <div ngbDropdown placement="top-right" class="d-inline-block btn-block">
+                  <button type="button" class="btn btn-outline-primary" id="dropdownMenu3" ngbDropdownToggle>{{filter}}</button>
+                  <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
+                    <button type="button" class="dropdown-item" (click)="getEntrepots()">Entrepots</button>
+                    <button type="button" class="dropdown-item" (click)="getSalePoints()">Points of sale</button>
+                    <button type="button" class="dropdown-item" (click)="getWorkSpaces()">None</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row col-lg-12">
+                <label class="control-label">WorkSpace Name:</label>
+              </div>
+              <div class="row col-lg-12">
+                <div ngbDropdown placement="top-right" class="d-inline-block">
+                  <button type="button" class="btn" [ngClass]="!this.form.controls['workSpace'].valid ? 'btn-outline-danger' : 'btn-outline-success'"  id="dropdownMenu2" ngbDropdownToggle>
+                    <span *ngIf="employee.workSpace.name == ''">Choose workspace here</span>
+                    <span *ngIf="employee.workSpace.name != ''">{{employee.workSpace.name}}</span>
+                  </button>
+                  <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                    <button type="button" class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpacesView">{{workSpace.name}}</button>
+                  </div>
+                </div>
+                <input type="text" [(ngModel)]="employee.workSpace.name" formControlName="workSpace" hidden>
+                <div class="text-danger mt-2 small text-capitalize" *ngIf="isUnValid('workSpace')">
+                  work Space of employee is required
+              </div>
+              </div>
+            </div>
+            <label>Photo:   </label>
+            <input type="file" class="form-control-file" accept="image/*"  aria-describedby="fileHelp"
+                (change) ="onselectFile($event)">
           </div>
-          <label>Photo:   </label>
-          <input type="file" class="form-control-file" accept="image/*"  aria-describedby="fileHelp"
-              (change) ="onselectFile($event)">
         </div>
       </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn" [ngClass]="form.valid ? 'btn-success' : 'btn-primary'" [disabled]="!form.valid">Submit</button>
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
         <button class="btn btn-primary navbar-btn" (click)="c('Close click'); loadEmployees()">Cancel</button>
     </div>
   </form>
@@ -210,6 +267,18 @@
           </div>
         </div>
         <div class="form-group row">
+          <label class="col-sm-3">CNI</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label><strong>{{employee.cni}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3">Birthday</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label><strong>{{employee.birthday}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
           <label class="col-sm-3">Sex</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <label><strong>{{employee.sex}}</strong></label>
@@ -234,6 +303,12 @@
           </div>
         </div>
         <div class="form-group row">
+          <label class="col-sm-3">Poste</label>
+          <div class="col-sm-9 col-md-8 col-lg-9">
+            <label><strong>{{employee.poste}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
           <label class="col-sm-3">Hiring date</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <label><strong>{{employee.hiringDate}}</strong></label>
@@ -243,18 +318,6 @@
           <label class="col-sm-3">Seniority</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
             <label><strong>{{ employee.seniority }}</strong></label>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3">CNI</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <label><strong>{{employee.cni}}</strong></label>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-sm-3">Birthday</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <label><strong>{{employee.birthday}}</strong></label>
           </div>
         </div>
       </div>

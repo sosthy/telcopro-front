@@ -6,7 +6,7 @@
       <strong [ngStyle]="{'color':colorText}">{{textMessage}}</strong>
     </div>
     <div class="row pt-sm-5">
-      <div class="col-md-3" *ngFor="let menu of menus">
+      <div class="col-md-4" *ngFor="let menu of menus">
         <a (click)="loading(menu)" >
           <div class="card card-body card-widget {{ menu.color }} card-inverse">
             <div class="mr-auto">

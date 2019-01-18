@@ -3,6 +3,8 @@ import {GenericEntrepot} from '../../../models/manage-stocks/entrepot.model';
 import {EntrepotService} from '../entrepots.services';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAX_LENGHT_CARD_TEXT} from '../../../models/config.model';
 
 
 @Component({
@@ -15,11 +17,14 @@ export class EntrepotListComponent implements OnInit {
   listEntrepot: Array<GenericEntrepot> = [];
   tableMessage = 'Loading.... Please wait!';
   entrepot: GenericEntrepot = new GenericEntrepot();
-  addEditCardHeader = 'Create Entrepot';
+  addEditCardHeader = 'Add Entrepot';
   closeResult: string;
   modalRef: NgbModalRef;
   motcle = '';
-  constructor(private entrepotService: EntrepotService,
+  form: FormGroup;
+  MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
+  constructor(private fb: FormBuilder,
+              private entrepotService: EntrepotService,
               private modalService: NgbModal,
               private router: Router) { }
 
@@ -39,7 +44,12 @@ export class EntrepotListComponent implements OnInit {
 
   open(content, entrepot?: GenericEntrepot) {
     this.entrepot = entrepot ? new GenericEntrepot(entrepot) : new GenericEntrepot();
-
+    if (this.entrepot.id) {
+      this.addEditCardHeader = 'Edit Entrepot';
+    } else  {
+      this.addEditCardHeader = 'Add Entrepot';
+    }
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -96,5 +106,25 @@ export class EntrepotListComponent implements OnInit {
         console.log(err);
         }
         );
+  }
+  initForm() {
+    if (!this.form || this.addEditCardHeader === 'Add Entrepot') {
+      this.form = this.fb.group({
+        'entrepotName': [null, Validators.required],
+        'location': [null, Validators.required],
+        'volsecur': [null, Validators.compose([Validators.required, Validators.min(1)])]
+      });
+    }
+    if (this.addEditCardHeader === 'Edit Entrepot') {
+      for (const i in this.form.controls) {
+        this.form.controls[i].markAsTouched();
+      }
+    }
+  }
+  arrangeClass(nameInput) {
+    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  }
+  isUnValid(nameInput) {
+    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

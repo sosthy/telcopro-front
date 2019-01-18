@@ -19,7 +19,7 @@ export class EmployeesComponent implements OnInit {
   filter = 'None';
   keyWords = '';
   tableMessage = 'Loading.... Please wait!';
-  employee = new Employee(null);
+  employee = new Employee();
   workSpaces = [ ];
   workSpacesView = [ ];
   closeResult: string;
@@ -196,7 +196,7 @@ export class EmployeesComponent implements OnInit {
     }
   }
   initForm() {
-    if (!this.form) {
+    if (!this.form || this.modalTitle === 'New Employee') {
       this.form = this.fb.group({
         'name': [null, Validators.required],
         'surname': [null, Validators.compose([Validators.required])],
@@ -204,7 +204,9 @@ export class EmployeesComponent implements OnInit {
         'birthday': [null, Validators.compose([Validators.required])],
         'website': [null, Validators.compose([Validators.required])],
         'phone': [null, Validators.compose([Validators.required])],
-        'hiringDate': [null, Validators.compose([Validators.required])]
+        'poste': [null, Validators.compose([Validators.required])],
+        'hiringDate': [null, Validators.compose([Validators.required])],
+        'workSpace': [null, Validators.compose([Validators.required])]
       });
     }
     if (this.modalTitle === 'Edit Employee') {
