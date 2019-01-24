@@ -4,7 +4,8 @@
   </div>-->
   <div class="u-search">
     <form>
-      <div class="form-group">
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="itemSearch">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchItem()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
@@ -26,6 +27,7 @@
           <th>Code QRC</th>
           <th>Code Bar</th>
           <th>Available</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -36,8 +38,12 @@
           <td>{{ ite.codeBar}}</td>
           <td><input class="form-control" type="checkbox" checked="{{ ite.isAvailable}}" disabled></td>
           <td>
-            <a href="javascript:;" (click)="open(formItem, ite)">edit</a> &nbsp;&nbsp;
-            <a href="javascript:;" (click)="open(deleteItem, ite)">delete</a>
+            <button class="btn btn-warning table-btn-width" (click)="open(formItem, ite)">
+              <i class="fa fa-edit fa-lg mr-1"></i>Edit
+            </button>&nbsp;
+            <button class="btn btn-danger table-btn-width" (click)="open(deleteItem, ite)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Delete
+            </button>
           </td>
         </tr>
         </tbody>
@@ -57,15 +63,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete that item?</p>
+    <p>Are you sure you want to delete item with serial <strong>{{item.serial}}</strong>?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteItem()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
-<ng-template ngbModalContainer></ng-template>
 <ng-template #formItem let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
@@ -73,6 +78,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <form [formGroup]="form" (ngSubmit)="onSaveItem()">
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
@@ -80,27 +86,37 @@
         <div class="form-group row">
           <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">SERIAL: </label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="item.serial" id="role-text-input" name="serialItem">
+            <input [ngClass]="arrangeClass('serialItem')" class="form-control" type="text" [(ngModel)]="item.serial" id="role-text-input" formControlName="serialItem">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('serialItem')">
+                Serial is required.
+              </div>
           </div>
         </div>
         <div class="form-group row">
           <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">CODE QRC: </label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="item.codeQrc" id="desc-text-input" name="codeQrcItem">
+            <input [ngClass]="arrangeClass('codeQrcItem')" class="form-control" type="text" [(ngModel)]="item.codeQrc" id="desc-text-input" formControlName="codeQrcItem">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('codeQrcItem')">
+                Code QR is required.
+              </div>
           </div>
         </div>
         <div class="form-group row">
           <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">CODE BAR: </label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="item.codeBar" id="bra-text-input" name="codeBarItem">
+            <input [ngClass]="arrangeClass('codeBarItem')" class="form-control" type="text" [(ngModel)]="item.codeBar" id="bra-text-input" formControlName="codeBarItem">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('codeBarItem')">
+                Code bar field is required.
+              </div>
           </div>
         </div>
-        <strong [ngStyle] = "{'color': 'red'}">{{message}}</strong>
+        <strong class="text-danger">{{message}}</strong>
       </div>
     </div>
   </div>
   <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" [disabled]="message != ''" (click)="onSaveItem()">Save changes</button>
   </div>
+  </form>
 </ng-template>

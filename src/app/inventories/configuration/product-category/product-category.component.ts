@@ -3,29 +3,26 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {GenericCategory} from '../../../models/manage-stocks/category.model';
 import {ProductCategoryService} from './product-category.service';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-product-category',
   templateUrl: './product-category.component.html',
   styleUrls: ['./product-category.component.scss']
 })
-export class ProductCategoryComponent implements OnInit {
-
-
+export class ProductCategoryComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
-  mode: number;
   addEditCardHeader: string;
   categories: Array<GenericCategory> = new Array();
   tableMessage = 'Loading.... Please wait!';
   category: GenericCategory = new GenericCategory();
   modalRef: NgbModalRef;
   motCle: string;
-  constructor(private modalService: NgbModal, private productCategoryService: ProductCategoryService) {}
+  constructor(private modalService: NgbModal, private productCategoryService: ProductCategoryService) { super(); }
 
   ngOnInit(): void {
-    this.mode = 1;
-    this.addEditCardHeader = 'Create Role';
+    this.addEditCardHeader = 'Add Product Category';
     this.init();
   }
 
@@ -36,7 +33,7 @@ export class ProductCategoryComponent implements OnInit {
 
   open(content, cat?: GenericCategory) {
     this.category = cat ? new GenericCategory(cat) : new GenericCategory();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -95,6 +92,18 @@ export class ProductCategoryComponent implements OnInit {
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('name', 'description');
+    }
+    if (!this.category.id) {
+      this.addEditCardHeader = 'Add Product Category';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Product Category';
+      super.markFormControlsAsTouched();
+    }
   }
 }
 

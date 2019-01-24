@@ -6,13 +6,14 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-boots
 import {AppColor} from '../../../models/manage-stocks/app-color.model';
 import {CameraService} from '../camera/camera.service';
 import {ColorService} from './color.service';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-color',
   templateUrl: './color.component.html',
   styleUrls: ['./color.component.scss']
 })
-export class ColorComponent implements OnInit {
+export class ColorComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
   mode: number;
@@ -22,10 +23,10 @@ export class ColorComponent implements OnInit {
   color: AppColor = new AppColor();
   modalRef: NgbModalRef;
   motCle: string;
-  constructor(private modalService: NgbModal, private colorService: ColorService) {}
+  constructor(private modalService: NgbModal, private colorService: ColorService) { super(); }
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Color';
+    this.addEditCardHeader = 'Add Color';
     this.init();
   }
   // -----------------------------------------------------------------  -------------------------------------------------------
@@ -36,7 +37,7 @@ export class ColorComponent implements OnInit {
   // ------------------------------------------------------------------ ------------------------------------------------------
    open(content, col?: AppColor) {
     this.color = col ? new AppColor(col) : new AppColor();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -92,5 +93,17 @@ export class ColorComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('colorName');
+    }
+    if (!this.color.id) {
+      this.addEditCardHeader = 'Add Color';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Color';
+      super.markFormControlsAsTouched();
+    }
   }
 }

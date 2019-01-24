@@ -16,13 +16,14 @@ import {AccountsService} from '../../../accounts/accounts.service';
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {AppColor} from '../../../models/manage-stocks/app-color.model';
 import {State} from '../../../models/manage-stocks/state.model';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-new-phones',
   templateUrl: './new-phones.component.html',
   styleUrls: ['./new-phones.component.scss']
 })
-export class NewPhonesComponent implements OnInit {
+export class NewPhonesComponent extends FormController implements OnInit {
   portable: Portable = new Portable(null);
   listEmplacement: Array<Emplacement>;
   listMeasureUnit: Array<MeasureUnit>;
@@ -46,11 +47,11 @@ export class NewPhonesComponent implements OnInit {
               public accountService: AccountsService,
               public auth: AuthenticationService,
               public productCategoryService: ProductCategoryService,
-              public router: Router) {
-  }
+              public router: Router) { super(); }
 
 
   ngOnInit() {
+    this.initForm();
     this.init();
   }
 
@@ -130,16 +131,6 @@ export class NewPhonesComponent implements OnInit {
         console.log(err);
       });
   }
-  /*savePortable() {
-    this.portableServices.savePortable(this.portable)
-      .subscribe(data => {
-          this.portable = data.json();
-        },
-        err => {
-          console.log(err);
-        });
-    this.router.navigate(['inventories/products/phones']);
-  }*/
   onselectFile(event) {
     const file = <File>event.target.files[0];
      console.log(file);
@@ -161,5 +152,14 @@ export class NewPhonesComponent implements OnInit {
   }
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  initForm() {
+    super.defaultForm('designation', 'emplacement'
+      , 'volume', 'stk-alert', 'stk-min', 'measure', 'p-categorie', 'state'
+      , 'price-unit', 'price-semi-whole', 'price-whole', 'notes', 'ph-categorie'
+      , 'ph-color', 'ph-os', 'processor', 'memory', 'camera', 'dimension', 'battery'
+      , 'connection', 'iprating', 'sim', 'weight');
+    super.addNumberValidatorsToFormControl(1, 'volume', 'stk-alert', 'stk-min'
+      , 'price-unit', 'price-semi-whole', 'price-whole', 'dimension', 'weight');
   }
 }

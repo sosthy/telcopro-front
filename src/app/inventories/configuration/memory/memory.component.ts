@@ -4,6 +4,8 @@ import {Component, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Memory} from '../../../models/manage-stocks/memory.model';
 import {MemoryService} from './memory.service';
+import {FormController} from '../../../services/form-controller.services';
+import {Validators} from '@angular/forms';
 
 
 @Component({
@@ -11,20 +13,18 @@ import {MemoryService} from './memory.service';
   templateUrl: './memory.component.html',
   styleUrls: ['./memory.component.scss']
 })
-export class MemoryComponent implements OnInit {
+export class MemoryComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
-  mode: number;
   addEditCardHeader: string;
   memories: Array<Memory> = new Array();
   tableMessage = 'Loading.... Please wait!';
   memory: Memory = new Memory();
   modalRef: NgbModalRef;
   motCle: String;
-   constructor(private modalService: NgbModal, private memoryService: MemoryService) {}
+   constructor(private modalService: NgbModal, private memoryService: MemoryService) { super(); }
    ngOnInit(): void {
-    this.mode = 1;
-    this.addEditCardHeader = 'Create Memory';
+    this.addEditCardHeader = 'Add Memory';
     this.init();
   }
   // ------------------------------------------ ------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ export class MemoryComponent implements OnInit {
   // ---------------------------------------- -----------------------------------------------------------------------------------
   open(content, mem?: Memory) {
     this.memory = mem ? new Memory(mem) : new Memory();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -91,5 +91,19 @@ export class MemoryComponent implements OnInit {
          err => {
          console.log(err);
          });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.newFormControl('ramMemory', Validators.compose([Validators.required, Validators.min(0)]));
+      super.newFormControl('romMemory', Validators.compose([Validators.required, Validators.min(0)]));
+      super.defaultForm('brandMemory');
+    }
+    if (!this.memory.id) {
+      this.addEditCardHeader = 'Add Memory';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Memory';
+      super.markFormControlsAsTouched();
+    }
   }
 }

@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {ConfigurationRoutes} from './configuration.routing';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {CameraComponent} from './camera/camera.component';
 import {ColorComponent} from './color/color.component';
@@ -36,6 +36,7 @@ import {ProductServices} from "../products/products.services";
     CommonModule,
     RouterModule.forChild(ConfigurationRoutes),
     FormsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   declarations: [

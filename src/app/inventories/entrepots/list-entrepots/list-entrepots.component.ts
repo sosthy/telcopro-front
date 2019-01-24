@@ -5,6 +5,7 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-boots
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAX_LENGHT_CARD_TEXT} from '../../../models/config.model';
+import {FormController} from '../../../services/form-controller.services';
 
 
 @Component({
@@ -12,7 +13,7 @@ import {MAX_LENGHT_CARD_TEXT} from '../../../models/config.model';
   templateUrl: './list-entrepots.component.html',
   styleUrls: ['./list-entrepots.component.scss']
 })
-export class EntrepotListComponent implements OnInit {
+export class EntrepotListComponent extends  FormController implements OnInit {
 
   listEntrepot: Array<GenericEntrepot> = [];
   tableMessage = 'Loading.... Please wait!';
@@ -21,15 +22,14 @@ export class EntrepotListComponent implements OnInit {
   closeResult: string;
   modalRef: NgbModalRef;
   motcle = '';
-  form: FormGroup;
   MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
   constructor(private fb: FormBuilder,
               private entrepotService: EntrepotService,
               private modalService: NgbModal,
-              private router: Router) { }
+              private router: Router) { super(); }
 
   ngOnInit() {
-    this.addEditCardHeader = 'Create Entrepot';
+    this.addEditCardHeader = 'Add Entrepot';
     this.init();
   }
 
@@ -108,23 +108,24 @@ export class EntrepotListComponent implements OnInit {
         );
   }
   initForm() {
-    if (!this.form || this.addEditCardHeader === 'Add Entrepot') {
-      this.form = this.fb.group({
-        'entrepotName': [null, Validators.required],
-        'location': [null, Validators.required],
-        'volsecur': [null, Validators.compose([Validators.required, Validators.min(1)])]
-      });
+    if (!super.formInit()) {
+      super.defaultForm('entrepotName', 'location');
+      super.newFormControl('volsecur', Validators.compose([Validators.required, Validators.min(1)]));
     }
-    if (this.addEditCardHeader === 'Edit Entrepot') {
-      for (const i in this.form.controls) {
-        this.form.controls[i].markAsTouched();
-      }
+    if (!this.entrepot.id) {
+      this.addEditCardHeader = 'Add Entrepot';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Entrepot';
+      super.markFormControlsAsTouched();
     }
   }
-  arrangeClass(nameInput) {
-    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
+  occupationVisibility(entrepot: GenericEntrepot) {
+    return (entrepot.volume === entrepot.volumeSecurity) ? 'border border-danger' :
+              ((entrepot.volume > entrepot.volumeSecurity / 2) ? 'border border-warning' : 'border border-success');
   }
-  isUnValid(nameInput) {
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
+  occupationMessage(entrepot: GenericEntrepot) {
+    return (entrepot.volume === entrepot.volumeSecurity) ? 'Full.' :
+              ((entrepot.volume > entrepot.volumeSecurity / 2) ? 'Busy more than half.' : 'Busy less than half.');
   }
 }

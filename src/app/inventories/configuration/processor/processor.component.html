@@ -37,8 +37,8 @@
           <td>{{ pro.frequency }}</td>
           <td>
             <button class="btn btn-warning table-btn-width" (click)="open(formProcessor, pro)">
-              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
-            </button> &nbsp;&nbsp;
+              <i class="fa fa-edit fa-lg mr-1"></i>Edit
+            </button>
             <button class="btn btn-danger table-btn-width" (click)="open(deleteProcessor, pro)">
               <i class="fa fa-trash fa-lg mr-1"></i>Delete
             </button>
@@ -76,6 +76,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <form [formGroup]="form" (ngSubmit)="onSaveProcessor()">
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
@@ -83,20 +84,27 @@
         <div class="form-group row">
           <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">BRAND: </label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="processor.brand" id="role-text-input" name="processorBrand">
+            <input [ngClass]="arrangeClass('processorBrand')" class="form-control" type="text" [(ngModel)]="processor.brand" id="role-text-input" formControlName="processorBrand">
+            <div class="text-danger mt-2 small" *ngIf="isUnValid('processorBrand')">
+                Brand field is required.
+              </div>
           </div>
         </div>
         <div class="form-group row">
           <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Frequency: </label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="number" [(ngModel)]="processor.frequency" id="desc-text-input" name="processorFrequency">
+            <input [ngClass]="arrangeClass('processorFrequency')" class="form-control" type="number" [(ngModel)]="processor.frequency" id="desc-text-input" formControlName="processorFrequency">
+            <div class="text-danger mt-2 small" *ngIf="isUnValid('processorFrequency')">
+                Frequency field is required and must be greater than or equal to 0.
+              </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveProcessor()">Save changes</button>
+    <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
   </div>
+  </form>
 </ng-template>

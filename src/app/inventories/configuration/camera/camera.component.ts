@@ -1,10 +1,10 @@
 
-
-
 import {Component, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Camera} from '../../../models/manage-stocks/camera.model';
 import {CameraService} from './camera.service';
+import {FormController} from '../../../services/form-controller.services';
+import {Validators} from '@angular/forms';
 
 
 @Component({
@@ -12,7 +12,7 @@ import {CameraService} from './camera.service';
   templateUrl: './camera.component.html',
   styleUrls: ['./camera.component.scss']
 })
-export class CameraComponent implements OnInit {
+export class CameraComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
   mode: number;
@@ -23,10 +23,10 @@ export class CameraComponent implements OnInit {
   camera: Camera = new Camera();
   modalRef: NgbModalRef;
   motCle: string;
-  constructor(private modalService: NgbModal, private cameraService: CameraService) {}
+
+  constructor(private modalService: NgbModal, private cameraService: CameraService) { super(); }
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Camera';
     this.init();
   }
   // -------------------------------------- ------------------------------------------------------------------------------------
@@ -38,6 +38,7 @@ export class CameraComponent implements OnInit {
    open(content, cam?: Camera) {
     this.camera = cam ? new Camera(cam) : new Camera();
 
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -93,5 +94,18 @@ export class CameraComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.newFormControl('cameraFront', Validators.compose([Validators.required, Validators.min(0)]));
+      super.newFormControl('cameraBack', Validators.compose([Validators.required, Validators.min(0)]));
+    }
+    if (!this.camera.id) {
+      this.addEditCardHeader = 'Add Camera';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Camera';
+      super.markFormControlsAsTouched();
+    }
   }
 }

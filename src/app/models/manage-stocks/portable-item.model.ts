@@ -12,7 +12,7 @@ export class PortableItem {
   mouvmentLine: MouvmentLine;
 
   constructor(obj?: any) {
-    this.id = obj ? (obj.id ? obj.connection : null) : null;
+    this.id = obj ? (obj.id ? obj.id : null) : null;
     this.codeQrc = obj ? (obj.codeQrc ? obj.codeQrc : '') : '';
     this.codeBar = obj ? (obj.codeBar ? obj.codeBar : '') : '';
     this.serial = obj ? (obj.serial ? obj.serial : '') : '';

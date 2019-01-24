@@ -8,8 +8,8 @@ import {RecipientsGroupeService} from '../configuration/recipients-groupe/recipi
 import {MouvmentServices} from '../../services/mouvment.services';
 import {Router} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
+import {FormController} from '../../services/form-controller.services';
 
 
 @Component({
@@ -18,14 +18,13 @@ import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
   styleUrls: ['./recipients.component.scss']
 })
 
-export class RecipientsComponent implements OnInit {
+export class RecipientsComponent extends FormController implements OnInit {
   recipient: Recipient = new Recipient();
   recipients: Array<Recipient> = new Array();
   public data: any[];
   closeResult: string;
-  mode: number;
   addEditCardHeader: string;
-  groupe: RecipientGroupe;
+  groupe: RecipientGroupe = new RecipientGroupe();
   groupes: Array<RecipientGroupe> = new Array();
   tableMessage = 'Loading.... Please wait!';
   mouvement: Mouvment;
@@ -35,19 +34,15 @@ export class RecipientsComponent implements OnInit {
   public recipientFile: any = File;
   image = [];
   imageName = [];
-  form: FormGroup;
   MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
   // -------------------------------- -----------------------------------------------------------------------------------------
-  constructor(private fb: FormBuilder,
-              private modalService: NgbModal, private recipientsService: RecipientsService,
+  constructor(private modalService: NgbModal, private recipientsService: RecipientsService,
               private recipientsGroupeService: RecipientsGroupeService,
-              public resourceService: ResourceService, private mouvmentService: MouvmentServices, public router: Router) {
-  }
+              public resourceService: ResourceService, private mouvmentService: MouvmentServices, public router: Router) { super(); }
 
   // --------------------------------------- ----------------------------------------------------------------------------------
   ngOnInit(): void {
-    this.mode = 1;
-    this.addEditCardHeader = 'Create Recipient';
+    this.addEditCardHeader = 'Add Recipient';
     this.init();
   }
 
@@ -180,25 +175,14 @@ export class RecipientsComponent implements OnInit {
     }
   }
   initForm() {
-    if (!this.form || this.addEditCardHeader.includes('Add')) {
-      this.form = this.fb.group({
-        'recipientDesignation': [null, Validators.required],
-        'recipientWeb': [null, Validators.compose([Validators.required])],
-        'recipientPhone': [null, Validators.compose([Validators.required])],
-        'selectedGroup': [null, Validators.compose([Validators.required])],
-        'recipientLocation': [null, Validators.compose([Validators.required])]
-      });
+    if (!super.formInit()) {
+      super.defaultForm('recipientDesignation', 'recipientWeb', 'recipientPhone', 'selectedGroup', 'recipientLocation');
+    } else if (this.addEditCardHeader.includes('Add')) {
+      super.resetForm();
     }
     if (this.addEditCardHeader.includes('Edit')) {
-      for (const i in this.form.controls) {
-        this.form.controls[i].markAsTouched();
-      }
+      this.form.controls['selectedGroup'].setValue(this.recipient.groupe);
+      super.markFormControlsAsTouched();
     }
-  }
-  arrangeClass(nameInput) {
-    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
-  }
-  isUnValid(nameInput) {
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

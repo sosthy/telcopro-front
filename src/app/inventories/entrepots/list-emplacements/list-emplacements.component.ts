@@ -5,32 +5,29 @@ import {GenericEntrepot} from '../../../models/manage-stocks/entrepot.model';
 import {Emplacement} from '../../../models/manage-stocks/emplacement.model';
 import {EntrepotService} from '../entrepots.services';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAX_LENGHT_CARD_TEXT} from '../../../models/config.model';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-list-emplacement',
   templateUrl: './list-emplacements.component.html',
   styleUrls: ['./list-emplacements.component.scss']
 })
-export class EmplacementListComponent implements OnInit {
+export class EmplacementListComponent extends FormController implements OnInit {
 
   entrepot: GenericEntrepot;
   closeResult: string;
-  mode: number;
   addEditCardHeader: string;
   emplacement: Emplacement = new Emplacement();
   modalRef: NgbModalRef;
   motCle: string;
   listEmplacement: Array<Emplacement> = new Array();
   tableMessage = 'Loading.... Please wait!';
-  form: FormGroup;
   MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
 
-  constructor(private fb: FormBuilder, public route: ActivatedRoute, private modalService: NgbModal, private entrepotService: EntrepotService,
-              private router: Router) {}
+  constructor(public route: ActivatedRoute, private modalService: NgbModal, private entrepotService: EntrepotService,
+              private router: Router) { super(); }
   ngOnInit() {
-    this.mode = 1;
     this.addEditCardHeader = 'Add Emplacement';
     this.init();
   }
@@ -128,21 +125,15 @@ export class EmplacementListComponent implements OnInit {
         });
   }
   initForm() {
-    if (!this.form || this.addEditCardHeader === 'Add Emplacement') {
-      this.form = this.fb.group({
-        'name': [null, Validators.compose([Validators.required])]
-      });
+    if (!super.formInit()) {
+      super.defaultForm('name');
     }
-    if (this.addEditCardHeader === 'Edit Emplacement') {
-      for (const i in this.form.controls) {
-        this.form.controls[i].markAsTouched();
-      }
+    if (!this.emplacement.id) {
+      this.addEditCardHeader = 'Add Emplacement';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Emplacement';
+      super.markFormControlsAsTouched();
     }
-  }
-  arrangeClass(nameInput) {
-    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
-  }
-  isUnValid(nameInput) {
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

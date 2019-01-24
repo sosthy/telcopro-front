@@ -8,6 +8,7 @@ import {PortableItemServices} from './items.services';
 import {PortableServices} from '../../../services/portable.services';
 import {EntrepotService} from '../../entrepots/entrepots.services';
 import {Portable} from '../../../models/manage-stocks/portable.model';
+import {FormController} from '../../../services/form-controller.services';
 
 
 @Component({
@@ -15,7 +16,7 @@ import {Portable} from '../../../models/manage-stocks/portable.model';
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
 })
-export class PortableItemComponent implements OnInit {
+export class PortableItemComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
   mode: number;
@@ -29,7 +30,7 @@ export class PortableItemComponent implements OnInit {
   constructor(private modalService: NgbModal, private portableService: PortableServices,
               private portableItemService: PortableItemServices,
               private entrepotService: EntrepotService,
-              public route: ActivatedRoute) {}
+              public route: ActivatedRoute) { super(); }
   ngOnInit() {
     const idPortable = this.route.snapshot.params['id'];
     this.portableService.listPortable(idPortable)
@@ -51,15 +52,17 @@ export class PortableItemComponent implements OnInit {
        err => {
        console.log(err);
        });
-    this.addEditCardHeader = 'Create Item';
+    this.addEditCardHeader = 'Add Item';
   }
   // ---------------------------------------- -----------------------------------------------------------------------------------
   open(content, item?: PortableItem) {
+    this.item = item ? new PortableItem(item) : new PortableItem();
     if (item) {
-      this.item = item;
       this.message = '';
+      this.initForm();
+      this.addEditCardHeader = 'Edit Item';
     } else {
-      this.clearItem(this.item);
+      this.addEditCardHeader = 'Add Item';
       this.entrepotService.addPossible(this.item.portable.emplacement.entrepot.id , this.item.portable)
       .subscribe(rep => {
         if (rep.json()) {
@@ -96,10 +99,11 @@ export class PortableItemComponent implements OnInit {
   }
   // --------------------------------------- -----------------------------------------------------------------------------------
    onSaveItem() {
-    const index = this.items.indexOf(this.item);
     this.portableItemService.savePortableItem(this.item).subscribe(data => {
-      if (index !== -1) {
-        this.items[index] = data.json();
+      if (this.item.id) {
+        this.items[
+            this.items.findIndex((item) => item.id === this.item.id)
+          ] = data.json();
       } else {
         this.items.push(data.json());
         this.item.portable.emplacement.entrepot.volume = this.item.portable.emplacement.entrepot.volume + this.item.portable.volume;
@@ -138,10 +142,14 @@ export class PortableItemComponent implements OnInit {
          console.log(err);
          });
   }
-  clearItem(item: PortableItem) {
-    item.serial = '';
-    item.codeBar = '';
-    item.codeQrc = '';
-    item.reference = '';
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('serialItem', 'codeQrcItem', 'codeBarItem');
+    } else if (!this.item.id) {
+      super.resetForm();
+    }
+    if (this.item.id) {
+      super.markFormControlsAsTouched();
+    }
   }
 }

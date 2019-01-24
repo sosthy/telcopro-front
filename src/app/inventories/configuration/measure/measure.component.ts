@@ -5,13 +5,14 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-boots
 import {MeasureUnit} from '../../../models/manage-stocks/measure-unit.model';
 import {MeasureService} from './measure.service';
 import {Camera} from '../../../models/manage-stocks/camera.model';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-measure',
   templateUrl: './measure.component.html',
   styleUrls: ['./measure.component.scss']
 })
-export class MeasureComponent implements OnInit {
+export class MeasureComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
   mode: number;
@@ -21,10 +22,10 @@ export class MeasureComponent implements OnInit {
   measure: MeasureUnit = new MeasureUnit();
   modalRef: NgbModalRef;
   motCle: string;
-  constructor(private modalService: NgbModal, private measureService: MeasureService) {}
+  constructor(private modalService: NgbModal, private measureService: MeasureService) { super(); }
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Measure';
+    this.addEditCardHeader = 'Add Measure';
     this.init();
   }
   // -------------------------------------- ------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ export class MeasureComponent implements OnInit {
   // ----------------------------- --------------------------------------------------------------------------------------------
    open(content, mes?: MeasureUnit) {
     this.measure = mes ? new MeasureUnit(mes) : new MeasureUnit();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -91,5 +92,17 @@ export class MeasureComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('measureunit');
+    }
+    if (!this.measure.id) {
+      this.addEditCardHeader = 'Add Measure';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Measure';
+      super.markFormControlsAsTouched();
+    }
   }
 }

@@ -4,16 +4,16 @@ import {Component, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {Systemos} from '../../../models/manage-stocks/system-os.model';
 import {SystemosService} from './systemos.service';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-systemos',
   templateUrl: './systemos.component.html',
   styleUrls: ['./systemos.component.scss']
 })
-export class SystemosComponent implements OnInit {
+export class SystemosComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
-  mode: number;
   addEditCardHeader: string;
   systemos: Array<Systemos> = new Array();
   tableMessage = 'Loading.... Please wait!';
@@ -21,12 +21,10 @@ export class SystemosComponent implements OnInit {
   modalRef: NgbModalRef;
   motCle: string;
 
-  constructor(private modalService: NgbModal, private systemosService: SystemosService) {
-  }
+  constructor(private modalService: NgbModal, private systemosService: SystemosService) { super(); }
 
   ngOnInit(): void {
-    this.mode = 1;
-    this.addEditCardHeader = 'Create Systemos';
+    this.addEditCardHeader = 'Add System Os';
     this.init();
   }
 
@@ -39,7 +37,7 @@ export class SystemosComponent implements OnInit {
   // ---------------------------------------------------- ---------------------------------------------------------------------
   open(content, sys?: Systemos) {
     this.systemo = sys ? new Systemos(sys) : new Systemos();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -99,5 +97,17 @@ export class SystemosComponent implements OnInit {
         err => {
           console.log(err);
         });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('osName', 'osVersion');
+    }
+    if (!this.systemo.id) {
+      this.addEditCardHeader = 'Add System Os';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit System Os';
+      super.markFormControlsAsTouched();
+    }
   }
 }

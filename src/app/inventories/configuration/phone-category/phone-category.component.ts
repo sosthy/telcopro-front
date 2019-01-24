@@ -4,13 +4,14 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {GenericCategory} from '../../../models/manage-stocks/category.model';
 import {PhoneCategoryService} from './phone-category.service';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-phone-category',
   templateUrl: './phone-category.component.html',
   styleUrls: ['./phone-category.component.scss']
 })
-export class PhoneCategoryComponent implements OnInit {
+export class PhoneCategoryComponent extends FormController implements OnInit {
 
 
   public data: any[];
@@ -22,7 +23,7 @@ export class PhoneCategoryComponent implements OnInit {
   category: GenericCategory = new GenericCategory();
   modalRef: NgbModalRef;
   motCle: string;
-  constructor(private modalService: NgbModal, private phoneCategoryService: PhoneCategoryService) {}
+  constructor(private modalService: NgbModal, private phoneCategoryService: PhoneCategoryService) { super(); }
 
   ngOnInit(): void {
     this.mode = 1;
@@ -37,7 +38,7 @@ export class PhoneCategoryComponent implements OnInit {
 
   open(content, cat?: GenericCategory) {
     this.category = cat ? new GenericCategory(cat) : new GenericCategory();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -110,6 +111,18 @@ export class PhoneCategoryComponent implements OnInit {
 
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('name', 'description');
+    }
+    if (!this.category.id) {
+      this.addEditCardHeader = 'Add Phone Category';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Phone Category';
+      super.markFormControlsAsTouched();
+    }
   }
 }
 

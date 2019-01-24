@@ -9,7 +9,8 @@
       <div class="form-group input-group">
         <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="searchSystemos">
-         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchSystemO()" style="display:none"><span class="fa fa-search"></span></button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchSystemO()"
+                style="display:none"><span class="fa fa-search"></span></button>
       </div>
     </form>
   </div>
@@ -37,8 +38,8 @@
           <td>{{ sys.version }}</td>
           <td>
             <button class="btn btn-warning table-btn-width" (click)="open(formSystemOs, sys)">
-              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
-            </button> &nbsp;&nbsp;
+              <i class="fa fa-edit fa-lg mr-1"></i>Edit
+            </button>
             <button class="btn btn-danger table-btn-width" (click)="open(deleteSystemOs, sys)">
               <i class="fa fa-trash fa-lg mr-1"></i>Delete
             </button>
@@ -52,10 +53,6 @@
 <strong *ngIf="systemos.length == 0">
   {{tableMessage}}
 </strong>
-
-<div class="" *ngIf="mode == 3">
-  <p>Edit System Os</p>
-</div>
 
 <ng-template #deleteSystemOs let-c="close">
   <div class="modal-header">
@@ -80,27 +77,37 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <div class="card">
-      <div class="card-body">
-        <p>Enter Role Informations for System Os</p>
-        <div class="form-group row">
-          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Name</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="systemo.name" id="role-text-input" name="osName">
+  <form [formGroup]="form" (ngSubmit)="onSaveSystemOs()">
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <p>Enter System Os Informations</p>
+          <div class="form-group row">
+            <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Name:</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('osName')" class="form-control" type="text" [(ngModel)]="systemo.name"
+                     id="role-text-input" formControlName="osName">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('osName')">
+                Name field is required.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Version</label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="systemo.version" id="desc-text-input" name="osVersion">
+          <div class="form-group row">
+            <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Version:</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('osVersion')" class="form-control" type="text"
+                     [(ngModel)]="systemo.version" id="desc-text-input" formControlName="osVersion">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('osVersion')">
+                Version field is required.
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveSystemOs()">Save changes</button>
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-  </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+  </form>
 </ng-template>

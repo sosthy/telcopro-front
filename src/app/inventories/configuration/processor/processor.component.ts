@@ -4,13 +4,15 @@ import {Component, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ProcessorService} from './processor.service';
 import {Cpu} from '../../../models/manage-stocks/cpu.model';
+import {FormController} from '../../../services/form-controller.services';
+import {Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-processor',
   templateUrl: './processor.component.html',
   styleUrls: ['./processor.component.scss']
 })
-export class ProcessorComponent implements OnInit {
+export class ProcessorComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
   mode: number;
@@ -20,10 +22,10 @@ export class ProcessorComponent implements OnInit {
   processor: Cpu = new Cpu();
   modalRef: NgbModalRef;
   motCle: string;
-  constructor(private modalService: NgbModal, private processorService: ProcessorService) {}
+  constructor(private modalService: NgbModal, private processorService: ProcessorService) { super(); }
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create Processor';
+    this.addEditCardHeader = 'Add Processor';
     this.init();
   }
    // -------------------------------------- ------------------------------------------------------------------------------------
@@ -34,7 +36,7 @@ export class ProcessorComponent implements OnInit {
   // ----------------------------- --------------------------------------------------------------------------------------------
    open(content, pro?: Cpu) {
     this.processor = pro ? new Cpu(pro) : new Cpu();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -90,5 +92,18 @@ export class ProcessorComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.newFormControl('processorFrequency', Validators.compose([Validators.required, Validators.min(0)]));
+      super.defaultForm('processorBrand');
+    }
+    if (!this.processor.id) {
+      this.addEditCardHeader = 'Add Processor';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Processor';
+      super.markFormControlsAsTouched();
+    }
   }
 }

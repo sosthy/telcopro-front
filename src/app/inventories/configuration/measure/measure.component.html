@@ -1,10 +1,13 @@
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formMeasure)">Create Measure</button>
+    <button class="btn btn-primary" (click)="open(formMeasure)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add Measure
+    </button>
   </div>
   <div class="u-search">
     <form>
-      <div class="form-group">
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="searchMeasure">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchMeasure()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
@@ -23,6 +26,7 @@
         <tr>
           <th>#</th>
           <th>Unity</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -31,7 +35,7 @@
           <td class="text-uppercase">{{ mes.unity }}</td>
           <td>
             <button class="btn btn-warning table-btn-width" (click)="open(formMeasure, mes)">
-              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
+              <i class="fa fa-edit fa-lg mr-1"></i>Edit
             </button>
             <button class="btn btn-danger table-btn-width" (click)="open(deleteMeasure, mes)">
               <i class="fa fa-trash fa-lg mr-1"></i>Delete
@@ -47,10 +51,6 @@
     {{tableMessage}}
  </strong>
 
-<div class="" *ngIf="mode == 3">
-  <p>Edit Measure</p>
-</div>
-
 <ng-template #deleteMeasure let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">Delete Measure</h6>
@@ -59,15 +59,14 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>One fine body&hellip;</p>
+    <p>Are you sure you want to delete measure unit <strong>{{measure.unity}}</strong>?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
     <button type="button" class="btn btn-danger" (click)="onDeleteMeasure()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
   </div>
 </ng-template>
 
-<ng-template ngbModalContainer></ng-template>
 <ng-template #formMeasure let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
@@ -75,21 +74,26 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+  <form [formGroup]="form" (ngSubmit)="onSaveMeasure()">
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <p>Enter Role Informations for Measure</p>
+        <p>Enter Measure Informations</p>
         <div class="form-group row">
           <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Unity</label>
           <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="measure.unity" id="role-text-input" name="measureunit">
+            <input [ngClass]="arrangeClass('measureunit')" class="form-control" type="text" [(ngModel)]="measure.unity" id="role-text-input" formControlName="measureunit">
+            <div class="text-danger mt-2 small" *ngIf="isUnValid('measureunit')">
+              Unity field is required.
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
     <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="onSaveMeasure()">Save changes</button>
   </div>
+  </form>
 </ng-template>

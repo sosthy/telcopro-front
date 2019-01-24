@@ -1,178 +1,606 @@
-<div *ngIf="mode == 1" >
-  <div class="d-flex justify-content-between mb-5">
-    <div>
-      <button class="btn btn-primary" [routerLink]="['/inventories/products/new-phones']">Create Phone Stock</button>
-    </div>
-    <div class="u-search">
-      <form>
-        <div class="form-group">
-          <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motcle" name="search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()"
-                  style="display:none"><span class="fa fa-search"></span></button>
-        </div>
-      </form>
-    </div>
+<div class="d-flex justify-content-between mb-5">
+  <div>
+    <button class="btn btn-primary" (click)="open(formPortable)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add Phone Stock
+    </button>
   </div>
-
-  <div class="row" *ngIf="listPortables.length != 0">
-    <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let phone of listPortables">
-      <a class="card card-body card-widget bg-white card-inverse" (click)="routeToItem(phone)">
-        <a href="javascript:;" class="d-block mb-4 h-100">
-          <!--<img [src]="searchImages(phone.image)" class="avatar-md rounded" alt="">-->
-          <img [src]="searchImages(phone.image)" class="avatar-md rounded" alt="">
-        </a>
-        <div class="pl-3 pr-3">
-          <p class="ff-headers mb-0 text-uppercase mb-2"><strong>{{ phone.designation }}</strong></p>
-          <small class="d-block">Price : <strong>{{ phone.priceUnit }} FCFA</strong></small>
-          <small class="d-block">Quantity : {{ phone.quantity }} {{ phone.measureUnit.unity }}</small>
-          <small class="d-block">{{ phone.emplacement.entrepot.workSpaceType }} : {{ phone.emplacement.entrepot.name }}</small>
-        </div>
-      </a>
-      <div ngbDropdown placement="bottom-right">
-          <button class="imenu imenu-right" id="downMenu" href="javascript:;" ngbDropdownToggle>
-            <i class="fa fa-ellipsis-v"></i>
-          </button>
-          <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="downMenu">
-            <a class="dropdown-item" href="javascript:;" (click)="onEditPortable(phone)">
-              <i class="icon icon-basic-settings mr-3"></i>
-              <span>Edit</span>
-            </a>
-            <a class="dropdown-item" href="javascript:;" (click)="onDeletePhone(phone)">
-              <i class="icon icon-basic-postcard mr-3"></i>
-              <span>Delete</span>
-            </a>
-            <a class="dropdown-item" href="javascript:;" (click)="onDetailsPhone(phone)">
-            <i class="icon icon-basic-message-multiple mr-3"></i>
-              <span>Details</span>
-            </a>
-            <a class="dropdown-item" href="javascript:;">
-              <i class="icon icon-basic-message-multiple mr-3"></i>
-              <span>Approvisionner</span>
-            </a>
-          </div>
-        </div>
-    </div>
+  <div class="u-search">
+    <form>
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
+        <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motcle" name="search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="search()"
+                style="display:none"><span class="fa fa-search"></span></button>
+      </div>
+    </form>
   </div>
-      <strong *ngIf="listPortables.length == 0">
-        {{tableMessage}}
-    </strong>
 </div>
 
-<div *ngIf="mode == 2" >
-  <div class="d-flex justify-content-between mb-5">
-    <div>
-      <button class="btn btn-primary" (click)="mode = 1">OK</button>
+<div class="row" *ngIf="listPortables.length != 0">
+  <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let phone of listPortables">
+    <a [ngClass]="occupationVisibility(phone)" [title]="occupationMessage(phone)" class="card card-body card-widget bg-white card-inverse" (click)="routeToItem(phone)">
+      <a href="javascript:;" class="d-block mb-4 h-100">
+        <img [src]="searchImages(phone.image)" class="avatar-md rounded" alt="">
+      </a>
+      <div class="pl-3 pr-3 col-sm-10">
+        <p class="ff-headers mb-0 text-uppercase mb-2">
+          <strong>
+            <span class="d-inline-block text-truncate">
+              {{ phone.designation }}
+            </span>
+          </strong></p>
+        <small class="d-block">
+            <span class="d-inline-block text-truncate">
+              Price : <strong>{{ phone.priceUnit }} FCFA</strong>
+            </span>
+        </small>
+        <small class="d-block">
+            <span class="d-inline-block text-truncate">
+              Quantity : {{ phone.quantity }} {{ phone.measureUnit.unity }}
+            </span>
+        </small>
+        <small class="d-block">
+            <span class="d-inline-block text-truncate">
+              {{ phone.emplacement.entrepot.workSpaceType }} : {{ phone.emplacement.entrepot.name}}
+            </span>
+        </small>
+      </div>
+    </a>
+    <div ngbDropdown placement="bottom-right">
+      <button class="imenu imenu-right" id="downMenu" href="javascript:;" ngbDropdownToggle>
+        <i class="fa fa-ellipsis-v"></i>
+      </button>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="downMenu">
+        <a class="dropdown-item" href="javascript:;" (click)="open(formPortable, phone, 1)">
+          <i class="fa fa-edit fa-lg mr-3"></i>
+          <span>Edit</span>
+        </a>
+        <a class="dropdown-item" href="javascript:;" (click)="open(deletePortable, phone, 2)">
+          <i class="fa fa-trash fa-lg mr-3"></i>
+          <span>Delete</span>
+        </a>
+        <a class="dropdown-item" href="javascript:;" (click)="open(detailPortable, phone, 3)">
+          <i class="fa fa-info-circle fa-lg mr-3"></i>
+          <span>Details</span>
+        </a>
+        <a class="dropdown-item" href="javascript:;" [routerLink]="['/inventories/transactions/new-approvision']">
+          <i class="fa fa-truck fa-lg mr-3"></i>
+          <span>Approvisionner</span>
+        </a>
+      </div>
     </div>
   </div>
-  <div class="container">
+</div>
+<strong *ngIf="listPortables.length == 0">
+  {{tableMessage}}
+</strong>
+
+<ng-template #deletePortable let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title text-uppercase">{{ addEditCardHeader }}</h6>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" id="deleteRecip">
+    <p>Are you sure you want to delete phone stock <strong>{{portable.designation}}</strong> ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onDeletePhone()">Yes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Cancel</button>
+  </div>
+</ng-template>
+
+<ng-template #formPortable let-c="close">
+  <div class="modal-header">
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(portable.image)" class="avatar-md rounded-circle" alt="">
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="savePortable()">
+  <div class="modal-body">
     <div class="card">
-      <div class="card-header">
-        Details Phone
-      </div>
-      <div class="card-header">
-        <img [src]="searchImages(portable.image)" class="avatar-lg mx-auto d-block" alt="">
-      </div>
       <div class="row card-body">
-        <div class="col-md col-lg pr-3">
+        <div class="col-md-6 col-lg-6">
           <div class="form-group row justify-content-end">
-            <div class="col-lg-8 pr-3 h6">
-              <strong>Product Informations</strong>
+            <div class="col-lg-12 text-center h6">
+              <strong>Product Infos</strong>
             </div>
           </div>
           <br/>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3">
-              <label>Designation</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right">
+              <label class="text-left w-85" for="designation-text-input">Designation: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.designation}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Emplacement</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.emplacement.name}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Volume</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.volume}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('designation')" class="form-control" type="text" [(ngModel)]="portable.designation"
+                     formControlName="designation" id="designation-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('designation')">
+                Designation field is required.
+              </div>
+              <div class="text-warning mt-2" *ngIf="portable.designation.length > MAX_LENGHT_CARD_TEXT">
+                <i class="fa fa-warning"></i> Designation may be truncated when displaying.
+              </div>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Stock Alert</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="emplacementSelect">Emplacement: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.stockAlert}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Stock minimum</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.stockMinim}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Measure Unit</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.measureUnit.unity}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('emplacement')"  id="emplacementSelect" formControlName="emplacement" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let emplace of listEmplacement" [ngValue]="emplace">
+                  {{ emplace.name }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('emplacement')">
+                Emplacement field is required.
+              </div>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Product Category</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="volume-text-input">Volume: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.productCategory.name}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>State </label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.state.name}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Price Unit</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.priceUnit}} FCFA</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('volume')" class="form-control" type="number" [(ngModel)]="portable.volume" formControlName="volume"
+                     id="volume-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('volume', 'required')">
+                Volume field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('volume', 'min')">
+                Volume value must be greater than 0.
+              </div>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Price Semi-Wholesaler</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="stk-alert-text-input">Stock Alert: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.priceUnitSemiWholesaler}} FCFA</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('stk-alert')" class="form-control" type="number" [(ngModel)]="portable.stockAlert" formControlName="stk-alert"
+                     id="stk-alert-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('stk-alert', 'required')">
+                Stock Alert field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('stk-alert', 'min')">
+                Stock Alert value must be greater than 0.
+              </div>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Price Wholesaler</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="stk-min-text-input">Stock minimum: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.priceUnitWholesaler}} FCFA</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('stk-min')" class="form-control" type="number" [(ngModel)]="portable.stockMinim" formControlName="stk-min"
+                     id="stk-min-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('stk-min', 'required')">
+                Stock minimum field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('stk-min', 'min')">
+                Stock minimum value must be greater than 0.
+              </div>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Notes</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="measure-text-input">Measure Unit: </label>
             </div>
-            <div class="col-lg-8">
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('measure')"  id="measure-text-input" formControlName="measure" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let measur of listMeasureUnit" [ngValue]="measur">
+                  {{ measur.unity }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('measure')">
+                Measure Unit field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="p-categorie-text-input">Product Category: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('p-categorie')"  id="p-categorie-text-input" formControlName="p-categorie" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let productcatego of listProductCategory" [ngValue]="productcatego">
+                  {{ productcatego.name }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('p-categorie')">
+                Product Category field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="state-text-input">State: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('state')"  id="state-text-input" formControlName="state" [(ngModel)]="portable.state" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let sta of listState" [ngValue]="sta">
+                  {{ sta.name }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('state')">
+                State field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="price-unit-text-input">Price Unit: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('price-unit')" class="form-control" type="number" [(ngModel)]="portable.priceUnit" formControlName="price-unit"
+                     id="price-unit-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('price-unit', 'required')">
+                Price unit field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('price-unit', 'min')">
+                Price unit value must be greater than 0.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="price-semi-whole-text-input">P.U Semi-Retailer: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('price-semi-whole')" class="form-control" type="number" [(ngModel)]="portable.priceUnitSemiWholesaler" formControlName="price-semi-whole"
+                     id="price-semi-whole-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('price-semi-whole', 'required')">
+                P.U semi-retailer field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('price-semi-whole', 'min')">
+                P.U semi-retailer value must be greater than 0.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="price-whole-text-input">P.U Retailer: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('price-whole')" class="form-control" type="number" [(ngModel)]="portable.priceUnitWholesaler" formControlName="price-whole"
+                     id="price-whole-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('price-whole', 'required')">
+                Price Retailer field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('price-whole', 'min')">
+                Price Retailer value must be greater than 0.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="notes-text-input">Notes: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <textarea [ngClass]="arrangeClass('notes')" class="form-control" type="text" [(ngModel)]="portable.note" formControlName="notes"
+                        id="notes-text-input" rows="4"></textarea>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('notes')">
+                Notes field is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-6">
+          <div class="form-group row justify-content-end">
+            <div class="col-lg-6 h6">
+              <strong>Phone Details</strong>
+            </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="phone-category-text-input">Phone Category: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('ph-categorie')"  id="phone-category-text-input" formControlName="ph-categorie" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let portablecatego of listPortableCategory" [ngValue]="portablecatego">
+                  {{ portablecatego.name }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('ph-categorie')">
+                Phone Category field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="phone-color-text-input">Phone Color: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('ph-color')"  id="phone-color-text-input" formControlName="ph-color" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let color of listColor" [ngValue]="color">
+                  {{ color.name }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('ph-color')">
+                Color field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="os-text-input">System OS: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('ph-os')"  id="os-text-input" formControlName="ph-os" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let sysos of listSystemOs" [ngValue]="sysos">
+                  {{ sysos.name }}
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('ph-os')">
+                System OS field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="processor-text-input">Processor: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('processor')"  id="processor-text-input" formControlName="processor" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let cppu of listCpu" [ngValue]="cppu">{{ cppu.brand }}</option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('processor')">
+                Processor field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="memory-text-input">Memory: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('memory')"  id="memory-text-input" formControlName="memory" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let memory of listMemory" [ngValue]="memory">
+                  RAM : {{ memory.rom }} Go, ROM : {{ memory.ram }} Go
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('memory')">
+                Memory field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="camera-text-input">Camera: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <select [ngClass]="arrangeClass('camera')"  id="camera-text-input" formControlName="camera" class="form-control" [compareWith]="compareFn">
+                <option *ngFor="let cam of listCamera" [ngValue]="cam">
+                  Back : {{ cam.backCamera }} MPixels, Front : {{ cam.frontCamera }} MPixels
+                </option>
+              </select>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('camera')">
+                Camera field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="dimension-text-input">Dimension: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('dimension')" class="form-control" type="number" [(ngModel)]="portable.dimension" formControlName="dimension"
+                     id="dimension-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('dimension', 'required')">
+                Dimension field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('dimension', 'min')">
+                Dimension value must be greater than 0.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="battery-text-input">Battery: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('battery')" class="form-control" type="text" [(ngModel)]="portable.battery" formControlName="battery"
+                     id="battery-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('battery')">
+                Battery field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="connection-text-input">Connection: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('connection')" class="form-control" type="text" [(ngModel)]="portable.connection" formControlName="connection"
+                     id="connection-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('connection')">
+                Connection field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="iprating-text-input">IP Rating: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('iprating')" class="form-control" type="text" [(ngModel)]="portable.ipRating" formControlName="iprating"
+                     id="iprating-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('iprating')">
+                IP Rating field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="sim-text-input">SIM: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('sim')" class="form-control" type="text" [(ngModel)]="portable.sim" formControlName="sim"
+                     id="sim-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('sim')">
+                Sim field is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label class="text-left w-85" for="weight-text-input">Weight: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input [ngClass]="arrangeClass('weight')" class="form-control" type="number" [(ngModel)]="portable.weight" formControlName="weight"
+                     id="weight-text-input">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('weight', 'required')">
+                Weight field is required.
+              </div>
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('weight', 'min')">
+                Weight value must be greater than 0.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right">
+              <label class="text-left w-85" for="exampleInputFile">Image: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <input type="file" class="form-control-file" accept="image/*" id="exampleInputFile" aria-describedby="fileHelp"
+              (change) ="onselectFile($event)"  name="file">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+  </div>
+</form>
+</ng-template>
+
+<ng-template #detailPortable let-c="close">
+  <div class="modal-header">
+    <div class="col-sm-6 text-center">
+      <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
+    </div>
+    <div class="col-sm-4 text-center">
+      <img [src]="searchImages(portable.image)" class="avatar-md rounded-circle" alt="">
+    </div>
+    <button type="button" class="close" aria-label="Close" (click)="c('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="row card-body">
+        <div class="col-md-6 col-lg-6">
+          <div class="form-group row justify-content-end">
+            <div class="col-lg-12 text-center h6">
+              <strong><u>Product Informations</u></strong>
+            </div>
+          </div>
+          <br/>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right">
+              <label>Designation: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.designation}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Emplacement: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.emplacement.name}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Volume: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.volume}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Stock Alert: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.stockAlert}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Stock minimum: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.stockMinim}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Measure Unit: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.measureUnit.unity}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Product Category: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.productCategory.name}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>State: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.state.name}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Price Unit: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.priceUnit}} FCFA</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Price Semi-Retailer: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.priceUnitSemiWholesaler}} FCFA</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Price Retailer: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.priceUnitWholesaler}} FCFA</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Notes: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
                 <textarea class="form-control" type="text" rows="4">
                   {{portable.note}}
                 </textarea>
@@ -180,113 +608,117 @@
           </div>
         </div>
 
-        <div class="col-md col-lg pr-3">
+        <div class="col-md-6 col-lg-6">
           <div class="form-group row justify-content-end">
-            <div class="col-lg-8 pr-3 h6">
-              <strong>Phone Details</strong>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7 h6">
+              <strong><u>Phone Details</u></strong>
             </div>
           </div>
           <br/>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Phone Category</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Phone Category: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.portableCategory.name}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Phone Color</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.appColor.name}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.portableCategory.name}}</strong>: </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>System OS</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Phone Color: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.os.name}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Processor</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.cpu.brand}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.appColor.name}}</strong>: </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Memory</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>System OS: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>RAM : {{ portable.memory.rom }} Go, ROM : {{ portable.memory.ram }} Go</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.os.name}}</strong>: </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Camera</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Processor: </label>
             </div>
-            <div class="col-lg-8">
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.cpu.brand}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Memory: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>RAM : {{ portable.memory.rom }} Go, ROM : {{ portable.memory.ram }} Go</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Camera: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
               <label>
-                <strong>Back : {{ portable.camera.backCamera }} MPixels, Front : {{ portable.camera.frontCamera }} MPixels</strong>
-              </label>
+                <strong>Back : {{ portable.camera.backCamera }} MPixels, Front : {{ portable.camera.frontCamera }}
+                  MPixels</strong>
+                : </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Dimension</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Dimension: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.dimension}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Battery</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.battery}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.dimension}}</strong>: </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Connection</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Battery: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.connection}}</strong></label>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>IP Rating</label>
-            </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.ipRating}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.battery}}</strong>: </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>SIM</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Connection: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.sim}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.connection}}</strong>: </label>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-lg-4 text-lg-right pr-3 ">
-              <label>Weight</label>
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>IP Rating: </label>
             </div>
-            <div class="col-lg-8">
-              <label><strong>{{portable.weight}}</strong></label>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.ipRating}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>SIM: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.sim}}</strong>: </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-4 col-sm-3 col-md-12 col-lg-5 text-lg-right ">
+              <label>Weight: </label>
+            </div>
+            <div class="col-8 col-sm-9 col-md-12 col-lg-7">
+              <label><strong>{{portable.weight}}</strong>: </label>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="c('Close click')">OK</button>
+  </div>
+</ng-template>

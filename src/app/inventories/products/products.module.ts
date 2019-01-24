@@ -6,7 +6,7 @@ import {PortableServices} from '../../services/portable.services';
 import {ProductsComponent} from './products.component';
 import {PhonesComponent} from './phones/phones.component';
 import {NewPhonesComponent} from './new-phones/new-phones.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ProductServices} from './products.services';
 import {EntrepotServices} from '../../services/entrepot.services';
@@ -23,6 +23,7 @@ import {ResourceService} from '../../services/resource.service';
     [CommonModule,
       RouterModule.forChild(ProductsRoutes),
       FormsModule,
+      ReactiveFormsModule,
       NgbModule
     ],
   declarations: [ProductsComponent, PhonesComponent, NewPhonesComponent, EditPhonesComponent, PortableItemComponent],

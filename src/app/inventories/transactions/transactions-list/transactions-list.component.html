@@ -65,6 +65,7 @@
           <th>Quantity</th>
           <th>Price</th>
           <th>Receiver</th>
+          <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -78,8 +79,12 @@
           <td *ngIf="mouvment.recipient != null">{{mouvment.recipient.designation}}</td>
           <td *ngIf="mouvment.recipient == null">{{mouvment.entrepotRecipient?.name}}</td>
           <td>
-            <button class="btn btn-warning btn-sm" (click)="onEditMouvment(mouvment)">edit</button>
-            <button class="btn btn-danger btn-sm" (click)="open(deleteMouvment, mouvment)">Remove</button>
+            <button class="btn btn-warning table-btn-width" (click)="onEditMouvment(mouvment)">
+              <i class="fa fa-edit fa-lg mr-1"></i>Edit
+            </button>
+            <button class="btn btn-danger table-btn-width" (click)="open(deleteMouvment, mouvment)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Delete
+            </button>
             <!--<button class="btn btn-info btn-sm" (click)="open()">Details</button>-->
           </td>
         </tr>

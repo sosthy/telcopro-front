@@ -9,7 +9,8 @@
       <div class="form-group input-group">
         <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)]="motCle" name="memorySearch">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchMemory()" style="display:none"><span class="fa fa-search"></span></button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchMemory()"
+                style="display:none"><span class="fa fa-search"></span></button>
       </div>
     </form>
   </div>
@@ -39,8 +40,8 @@
           <td>{{ mem.brand}}</td>
           <td>
             <button class="btn btn-warning table-btn-width" (click)="open(formMemory, mem)">
-              <i class="fa fa-pencil fa-lg mr-1"></i>Edit
-            </button> &nbsp;&nbsp;
+              <i class="fa fa-edit fa-lg mr-1"></i>Edit
+            </button>
             <button class="btn btn-danger table-btn-width" (click)="open(deleteMemory, mem)">
               <i class="fa fa-trash fa-lg mr-1"></i>Delete
             </button>
@@ -52,12 +53,8 @@
   </div>
 </div>
 <strong *ngIf="memories.length == 0">
-    {{tableMessage}}
- </strong>
-
-<div class="" *ngIf="mode == 3">
-  <p>Edit Memory</p>
-</div>
+  {{tableMessage}}
+</strong>
 
 <ng-template #deleteMemory let-c="close">
   <div class="modal-header">
@@ -67,7 +64,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>Are you sure you want to delete memory <strong> {{ memory.brand }} (RAM : {{ memory.ram }} GB, ROM : {{ memory.rom }} GB)</strong></p>
+    <p>Are you sure you want to delete memory <strong> {{ memory.brand }} (RAM : {{ memory.ram }} GB, ROM : {{
+      memory.rom }} GB)</strong></p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-danger" (click)="onDeleteMemory()">Yes</button>
@@ -75,7 +73,6 @@
   </div>
 </ng-template>
 
-<ng-template ngbModalContainer></ng-template>
 <ng-template #formMemory let-c="close">
   <div class="modal-header">
     <h6 class="modal-title text-uppercase">{{addEditCardHeader}}</h6>
@@ -83,33 +80,47 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <div class="card">
-      <div class="card-body">
-        <p>Enter Role Informations for Memory</p>
-        <div class="form-group row">
-          <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">RAM: </label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="number" [(ngModel)]="memory.ram" id="role-text-input" name="ramMemory">
+  <form [formGroup]="form" (ngSubmit)="onSaveMemory()">
+    <div class="modal-body">
+      <div class="card">
+        <div class="card-body">
+          <p>Enter Memory Informations</p>
+          <div class="form-group row">
+            <label for="role-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">RAM: </label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('ramMemory')" class="form-control" type="number" [(ngModel)]="memory.ram"
+                     id="role-text-input" formControlName="ramMemory">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('ramMemory')">
+                RAM is required and must be greater than or equal to 0.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">ROM: </label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="number" [(ngModel)]="memory.rom" id="desc-text-input" name="romMemory">
+          <div class="form-group row">
+            <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">ROM: </label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('romMemory')" class="form-control" type="number" [(ngModel)]="memory.rom"
+                     id="desc-text-input" formControlName="romMemory">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('romMemory')">
+                ROM is required and must be greater than or equal to 0.
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">BRAND: </label>
-          <div class="col-sm-9 col-md-8 col-lg-9">
-            <input class="form-control" type="text" [(ngModel)]="memory.brand" id="bra-text-input" name="brandMemory">
+          <div class="form-group row">
+            <label for="desc-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">BRAND: </label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('brandMemory')" class="form-control" type="text" [(ngModel)]="memory.brand"
+                     id="bra-text-input" formControlName="brandMemory">
+              <div class="text-danger mt-2 small" *ngIf="isUnValid('brandMemory')">
+                Brand field is required.
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveMemory()">Save changes</button>
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
-  </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-success" [disabled]="formUnValid()">Save changes</button>
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+  </form>
 </ng-template>

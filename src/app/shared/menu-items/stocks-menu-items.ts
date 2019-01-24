@@ -25,14 +25,14 @@ const STOCKSMENUITEMS = [
     state: 'entrepots',
     name: 'ENTREPOTS',
     type: 'link',
-    icon: ' fa fa-map-o',
+    icon: ' fa fa-university',
     children: []
   },
   {
     state: 'transactions',
     name: 'TRANSACTIONS',
     type: 'link',
-    icon: ' fa fa-map-o',
+    icon: ' fa fa-handshake-o fa-lg', // fa-map-o
     children: []
   },
   {
@@ -46,7 +46,7 @@ const STOCKSMENUITEMS = [
     state: 'configuration',
     name: 'CONFIGURATION',
     type: 'sub',
-    icon: ' fa fa-cubes',
+    icon: ' fa fa-cogs',
     children: [
       {
         state: 'phones-category',

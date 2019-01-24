@@ -4,16 +4,16 @@ import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-boots
 import {CameraService} from '../camera/camera.service';
 import {RecipientsGroupeService} from './recipients-groupe.service';
 import {RecipientGroupe} from '../../../models/manage-stocks/recipient-groupe.model';
+import {FormController} from '../../../services/form-controller.services';
 
 @Component({
   selector: 'app-recipients-groupe',
   templateUrl: './recipients-groupe.component.html',
   styleUrls: ['./recipients-groupe.component.scss']
 })
-export class RecipientsGroupeComponent implements OnInit {
+export class RecipientsGroupeComponent extends FormController implements OnInit {
   public data: any[];
   closeResult: string;
-  mode: number;
   addEditCardHeader: string;
   groupes: Array<RecipientGroupe> = new Array();
   tableMessage = 'Loading.... Please wait!';
@@ -21,10 +21,9 @@ export class RecipientsGroupeComponent implements OnInit {
   modalRef: NgbModalRef;
   motCle: string;
   // -------------------------------------------  -----------------------------------------------------------------------------
-  constructor(private modalService: NgbModal, private recipientsGroupeService: RecipientsGroupeService) {}
+  constructor(private modalService: NgbModal, private recipientsGroupeService: RecipientsGroupeService) { super(); }
   ngOnInit(): void {
-    this.mode = 1;
-    this.addEditCardHeader = 'Create Group';
+    this.addEditCardHeader = 'Add Group Recipient';
     this.init();
   }
   // -------------------------------------- ----------------------------------------------------------------------------------
@@ -35,7 +34,7 @@ export class RecipientsGroupeComponent implements OnInit {
   // ----------------------------- --------------------------------------------------------------------------------------------
    open(content, gro?: RecipientGroupe) {
     this.groupe = gro ? new RecipientGroupe(gro) : new RecipientGroupe();
-
+    this.initForm();
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
     this.modalRef.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -92,5 +91,17 @@ export class RecipientsGroupeComponent implements OnInit {
         err => {
         console.log(err);
         });
+  }
+  initForm() {
+    if (!super.formInit()) {
+      super.defaultForm('name');
+    }
+    if (!this.groupe.id) {
+      this.addEditCardHeader = 'Add Group Recipient';
+      super.resetForm();
+    } else {
+      this.addEditCardHeader = 'Edit Group Recipient';
+      super.markFormControlsAsTouched();
+    }
   }
 }
