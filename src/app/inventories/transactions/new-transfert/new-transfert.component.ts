@@ -13,13 +13,10 @@ import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
 
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {AccountsService} from '../../../accounts/accounts.service';
-import {AppUser} from "../../../models/appuser.model";
-import {EmployeeService} from "../../../services/employee.services";
-import {PortableItemServices} from "../../products/items/items.services";
-import {EntrepotServices} from "../../../services/entrepot.services";
-import {WorkSpace} from "../../../models/workSpace.model";
-import {WorkSpaceService} from "../../../services/workSpace.services";
-import {GenericEntrepot} from "../../../models/manage-stocks/entrepot.model";
+import {AppUser} from '../../../models/appuser.model';
+import {WorkSpace} from '../../../models/workSpace.model';
+import {WorkSpaceService} from '../../../services/workSpace.services';
+import {GenericEntrepot} from '../../../models/manage-stocks/entrepot.model';
 
 
 @Component({
@@ -49,7 +46,7 @@ export class NewTransfertComponent implements OnInit {
 
   listItemSel: Array<PortableItem> = new Array();
   listItemSelRemoved: Array<PortableItem> = new Array();
-
+  dropdownSettings = {};
 
   constructor(public modalService: NgbModal,
               public router: Router,
@@ -63,6 +60,15 @@ export class NewTransfertComponent implements OnInit {
 
   ngOnInit() {
     this.init();
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'serial',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
   }
 
   init() {
@@ -176,7 +182,7 @@ export class NewTransfertComponent implements OnInit {
     this.mouvment.entrepotSource = new GenericEntrepot(this.mouvment.user.workSpace);
     this.mouvment.recipient = null;
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
-      console.log(resp.json());
+      this.router.navigateByUrl('/inventories/transactions');
     });
   }
 
@@ -237,5 +243,12 @@ export class NewTransfertComponent implements OnInit {
           return p1.designation > p2.designation ? 1 : -1 ;
         });
       }
+  }
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+
+  onSelectAll(items: any) {
+    console.log(items);
   }
 }

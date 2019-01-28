@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {WorkSpaceService} from '../../services/workSpace.services';
 import {WorkSpace} from '../../models/workSpace.model';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
+import {FormController} from '../../services/form-controller.services';
 
 @Component({
   selector: 'app-work-spaces',
@@ -11,7 +11,7 @@ import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
   styleUrls: ['./work-spaces.component.scss']
 })
 
-export class WorkSpacesComponent implements OnInit {
+export class WorkSpacesComponent extends FormController implements OnInit {
   listWorkSpaces = [];
   keyWords = '';
   pageToLoad = 'listing page'; // listing page, add page, edit page, details page, confirm edit page, confirm add page
@@ -19,10 +19,9 @@ export class WorkSpacesComponent implements OnInit {
   workSpace: any;
   closeResult: string;
   modalRef: NgbModalRef;
-  modalTitle = 'New Work Space';
-  form: FormGroup;
+  modalTitle = 'Add Work Space';
   MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
-  constructor(private fb: FormBuilder, private modalService: NgbModal, public workSpaceService: WorkSpaceService) { }
+  constructor(private modalService: NgbModal, public workSpaceService: WorkSpaceService) { super(); }
   ngOnInit() {
     this.loadWorkSpaces();
   }
@@ -84,10 +83,10 @@ export class WorkSpacesComponent implements OnInit {
       }  else if (mode === 4) {
         this.modalTitle = 'Confirm registration work space';
       } else {
-        this.modalTitle = 'New Work Space';
+        this.modalTitle = 'Add Work Space';
       }
     } else {
-      this.modalTitle = 'New Work Space';
+      this.modalTitle = 'Add Work Space';
       this.initForm();
     }
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
@@ -117,22 +116,13 @@ export class WorkSpacesComponent implements OnInit {
     }
   }
   initForm() {
-    if (!this.form || this.modalTitle === 'Add Work Space') {
-      this.form = this.fb.group({
-        'name': [null, Validators.required],
-        'localisation': [null, Validators.compose([Validators.required])]
-      });
+    if (!super.formInit()) {
+      super.defaultForm('name', 'localisation');
+    } else if (this.modalTitle === 'Add Work Space') {
+      super.resetForm();
     }
     if (this.modalTitle === 'Edit Work Space') {
-      for (const i in this.form.controls) {
-        this.form.controls[i].markAsTouched();
-      }
+      super.markFormControlsAsTouched();
     }
-  }
-  arrangeClass(nameInput) {
-    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
-  }
-  isUnValid(nameInput) {
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

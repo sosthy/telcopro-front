@@ -1,7 +1,9 @@
 
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formRole)">Add Role</button>
+    <button class="btn btn-primary" (click)="open(formRole)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add Role
+    </button>
   </div>
   <!--<div class="u-search" *ngIf="mode == 1">
     <form>
@@ -35,8 +37,12 @@
             <td><span class="badge badge-success mr-1" *ngFor="let rolemenu of role.menus">{{ rolemenu.name }}</span></td>
             <td>{{ role.description }}</td>
             <td>
-              <button class="btn btn-warning table-btn-width" (click)="open(formRole, role)">Edit</button> &nbsp;&nbsp;
-              <button class="btn btn-danger table-btn-width" (click)="open(deleteRole, role)">Delete</button>
+              <button class="btn btn-warning table-btn-width" (click)="open(formRole, role)">
+                <i class="fa fa-edit fa-lg mr-1"></i>Edit
+              </button>
+              <button class="btn btn-danger table-btn-width" (click)="open(deleteRole, role)">
+                <i class="fa fa-trash fa-lg mr-1"></i>Delete
+              </button>
             </td>
           </tr>
         </tbody>

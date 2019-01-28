@@ -26,6 +26,6 @@ export class Mouvment {
     this.mouvmentType = obj ? (obj.mouvmentType ? obj.mouvmentType : null) : null;
     this.user = obj ? (obj.user ? obj.user : null) : null;
     this.recipient = obj ? (obj.recipient ? obj.recipient : null) : null;
-    this.mouvmentLines = obj ? (obj.mouvmentLines ? obj.mouvmentLines : null) : null;
+    this.mouvmentLines = obj ? (obj.mouvmentLines ? obj.mouvmentLines : new Array()) : new Array();
   }
 }

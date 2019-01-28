@@ -7,6 +7,7 @@ import { AppRole } from '../../models/approle.model';
 import {ResourceService} from '../../services/resource.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
+import {FormController} from '../../services/form-controller.services';
 
 
 @Component({
@@ -14,7 +15,7 @@ import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent extends FormController implements OnInit {
 
   user: AppUser = new AppUser();
   users: Array<AppUser> = new Array();
@@ -38,11 +39,11 @@ export class UsersComponent implements OnInit {
   MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
   constructor(private fb: FormBuilder,
               private modalService: NgbModal,
-              public resourceService: ResourceService, private accountsSerice: AccountsService) {}
+              public resourceService: ResourceService, private accountsSerice: AccountsService) { super(); }
 
   ngOnInit(): void {
     this.mode = 1;
-    this.addEditCardHeader = 'Create User';
+    this.addEditCardHeader = 'Add User';
     this.init();
   }
 
@@ -81,7 +82,7 @@ export class UsersComponent implements OnInit {
         });
       });
     } else {
-      this.addEditCardHeader = 'New User';
+      this.addEditCardHeader = 'Add User';
       this.initForm();
     }
 
@@ -105,7 +106,7 @@ export class UsersComponent implements OnInit {
   }
 
   async onSaveUser(form) {
-    this.user.employee = this.form.controls['employee'].value;
+    this.user.employee = super.getValueFormControl('employee');
     if (this.user.id) {
       const data = await this.accountsSerice.saveUser(this.user).toPromise();
       const index: number = this.users.indexOf(this.user);
@@ -219,29 +220,19 @@ export class UsersComponent implements OnInit {
     return null;
   }
   initForm() {
-    if (!this.form || this.addEditCardHeader === 'New User') {
-      this.form = this.fb.group({
-        'username': [null, Validators.required],
-        'email': [null, Validators.compose([Validators.required, Validators.email])],
-        'password': [null, Validators.compose([Validators.required])],
-        'employee':  [null, Validators.compose([Validators.required])]
-      });
+    if (!super.formInit()) {
+      super.defaultForm('username', 'password', 'employee');
+      super.newFormControl('email', Validators.email);
+    } else if (this.addEditCardHeader === 'Add User') {
+      super.resetForm();
     }
     if (this.addEditCardHeader === 'Edit User') {
-      for (const i in this.form.controls) {
-        this.form.controls[i].markAsTouched();
-      }
-      this.form.controls['employee'].setValue(this.user.employee);
+      super.markFormControlsAsTouched();
+      super.setValueFormControl('employee', this.user.employee);
     }
     this.form.controls['password'].disable();
   }
-  arrangeClass(nameInput) {
-    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
-  }
-  isUnValid(nameInput) {
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
-  }
   formUnValid() {
-    return (!this.form.valid) ? true : (this.user.roles.length === 0) ? true : false;
+    return super.formUnValid() ? true : (this.user.roles.length === 0) ? true : false;
   }
 }

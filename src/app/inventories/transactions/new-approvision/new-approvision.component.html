@@ -1,7 +1,7 @@
 <div class="card bg-transparent">
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary" (click)="saveMouvment()">Save</button>
+      <button class="btn btn-primary" (click)="saveMouvment()" [disabled]="mouvment.priceTotal== 0">Save</button>
       <button class="btn btn-primary" (click)="cancelRegister()">Cancel</button>
     </div>
   </div>
@@ -46,8 +46,12 @@
     <div class="row w-100">
       <div class="col">
         <span class="mr-3">Transactions Products</span>
-        <button class="btn btn-secondary btn-sm" (click)="open(formAddProduct)">Add</button>
-        <button class="btn btn-danger btn-sm ml-3" (click)="open(formRemove)">Clear</button>
+        <button class="btn btn-secondary btn-sm" (click)="open(formAddProduct)">
+          <i class="fa fa-plus fa-lg mr-1"></i>Add
+        </button>
+        <button class="btn btn-danger btn-sm ml-3" (click)="open(formRemove)" [disabled]="mouvment.mouvmentLines?.length == 0">
+          <i class="fa fa-trash fa-lg mr-1"></i>Clear All
+        </button>
       </div>
       <div class="col text-right">
         <strong class="h5">Total : {{mouvment.priceTotal | currency:'XAF':'symbol':'0.0-0':'fr-CM'}}</strong>
@@ -65,6 +69,7 @@
             <th>Price Unit</th>
             <th>Total</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -76,10 +81,16 @@
           <td>{{ mouvLine.priceTotal }}</td>
           <td>{{ mouvLine.note }}</td>
           <td>
-            <button class="btn btn-primary btn-sm" (click)="open(formAddItem, mouvLine)">Add Item</button>
+            <button class="btn btn-primary btn-sm mt-1" (click)="open(formAddItem, mouvLine)">
+              <i class="fa fa-plus fa-lg mr-1"></i>Add Item
+            </button>
             <!--<button class="btn btn-warning btn-sm" (click)="open(formAddProduct, mouvLine)">edit</button>-->
-            <button class="btn btn-danger btn-sm" (click)="open(formRemove, mouvLine)">Remove</button>
-            <button class="btn btn-info btn-sm" (click)="open(formMouvLineDetails, mouvLine)">Details</button>
+            <button class="btn btn-danger btn-sm mt-1" (click)="open(formRemove, mouvLine)">
+              <i class="fa fa-trash fa-lg mr-1"></i>Remove
+            </button>
+            <button class="btn btn-info btn-sm mt-1" (click)="open(formMouvLineDetails, mouvLine)">
+              <i class="fa fa-info-circle fa-lg mr-1"></i>Details
+            </button>
           </td>
         </tr>
         </tbody>
@@ -181,8 +192,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
     <button type="button" class="btn btn-primary" (click)="onAddMouvmentLineItem()">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
   </div>
 </ng-template>
 
@@ -216,8 +227,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
     <button type="button" class="btn btn-primary" (click)="onAddMouvmentLine()">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
   </div>
 </ng-template>
 
@@ -255,7 +266,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
     <button type="button" class="btn btn-primary" (click)="onAddMouvmentLine()">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
   </div>
 </ng-template>

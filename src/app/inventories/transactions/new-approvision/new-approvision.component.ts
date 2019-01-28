@@ -13,8 +13,8 @@ import {PortableItem} from '../../../models/manage-stocks/portable-item.model';
 
 import {AuthenticationService} from '../../../authentication/authentication.service';
 import {AccountsService} from '../../../accounts/accounts.service';
-import {AppUser} from "../../../models/appuser.model";
-import {EmployeeService} from "../../../services/employee.services";
+import {AppUser} from '../../../models/appuser.model';
+import {EmployeeService} from '../../../services/employee.services';
 
 
 @Component({
@@ -58,12 +58,12 @@ export class NewApprovisionComponent implements OnInit {
       if (params['reference']) {
         this.transactionService.getAllMouvment().subscribe(resp => {
           resp.forEach(item => {
-            if(item.reference == params['reference']){
+            if (item.reference === params['reference']) {
               this.mouvment = item;
               this.mouvment.date = new Date(item.date);
               console.log(this.mouvment);
             }
-          })
+          });
         });
       }
     });
@@ -78,7 +78,7 @@ export class NewApprovisionComponent implements OnInit {
     this.transactionService.getAllType().subscribe(resp => {
       this.listMouvmentType = resp;
       this.listMouvmentType.forEach(type => {
-        if(type.name == 'APPROVISIONNEMENT') {
+        if (type.name === 'APPROVISIONNEMENT') {
           this.mouvment.mouvmentType = type;
         }
       });
@@ -98,17 +98,17 @@ export class NewApprovisionComponent implements OnInit {
     this.mouvmentLine.quantity = 0;
     this.mouvmentLine.priceTotal = 0;
     // this.totalMouvmentPrice = this.totalMouvmentPrice + this.mouvmentLine.product.priceUnit;
-    if(this.mouvmentLine.id){
+    if (this.mouvmentLine.id) {
       this.mouvment.mouvmentLines.forEach(mLine => {
-        if(mLine.id === this.mouvmentLine.id){
+        if (mLine.id === this.mouvmentLine.id) {
           const index: number = this.mouvment.mouvmentLines.indexOf(mLine);
           if (index !== -1) {
             this.mouvment.mouvmentLines[index] = this.mouvmentLine;
           }
         }
-      })
+      });
     }else {
-      if(!this.mouvment.mouvmentLines){
+      if (!this.mouvment.mouvmentLines) {
         this.mouvment.mouvmentLines = new Array();
       }
       this.mouvmentLine.priceUnit = this.mouvmentLine.product.priceUnit;
@@ -119,7 +119,7 @@ export class NewApprovisionComponent implements OnInit {
     this.modalRef.close();
   }
 
-  onAddMouvmentLineItem(){
+  onAddMouvmentLineItem() {
     this.mouvmentLine.productsItem.push(this.portableItem);
     this.mouvmentLine.quantity = this.mouvmentLine.productsItem.length;
     this.mouvmentLine.priceTotal = this.mouvmentLine.productsItem.length * this.mouvmentLine.product.priceUnit;
@@ -132,9 +132,9 @@ export class NewApprovisionComponent implements OnInit {
 
   onRemoveMouvmentLine() {
     this.mouvment.mouvmentLines.forEach(item => {
-      if(item.product.id === this.mouvmentLine.product.id) {
+      if (item.product.id === this.mouvmentLine.product.id) {
         const index = this.mouvment.mouvmentLines.indexOf(item);
-        if(index != -1) {
+        if (index !== -1) {
           this.mouvment.mouvmentLines.splice(index, 1);
           this.modalRef.close();
         }
@@ -145,9 +145,9 @@ export class NewApprovisionComponent implements OnInit {
   removeItem(portableItem) {
     this.mouvment.mouvmentLines.forEach(item => {
       item.productsItem.forEach(pitem => {
-        if(pitem.serial === portableItem.serial) {
+        if (pitem.serial === portableItem.serial) {
           const index = item.productsItem.indexOf(pitem);
-          if(index != -1) {
+          if (index !== -1) {
             item.productsItem.splice(index, 1);
           }
         }
@@ -166,6 +166,8 @@ export class NewApprovisionComponent implements OnInit {
       this.productServices.getAllPortableItemsOfPortable(this.mouvmentLine.product.id).subscribe(resp => {
         this.listPortableItem = resp.json();
       });
+    } else {
+      this.mouvmentLine = new MouvmentLine();
     }
     this.modalRef = this.modalService.open(content, {size: 'lg'});
     this.modalRef.result.then((result) => {

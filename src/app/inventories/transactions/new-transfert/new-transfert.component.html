@@ -1,7 +1,7 @@
 <div class="card bg-transparent">
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary" (click)="saveMouvment()" [routerLink]="['/inventories/transactions']" [disabled]="mouvment.priceTotal== 0">
+      <button class="btn btn-primary" (click)="saveMouvment()" [disabled]="mouvment.priceTotal== 0">
         Save
       </button>
       <button class="btn btn-primary" [routerLink]="['/inventories/transactions']">Cancel</button>
@@ -43,7 +43,7 @@
       <div class="col">
         <span class="mr-3">Transactions Products</span>
         <button class="btn btn-secondary btn-sm" (click)="open(formAddProduct)">Add</button>
-        <button class="btn btn-danger btn-sm ml-3" (click)="removeMouvment()" [disabled]="mouvment.mouvmentLines.length == 0">Clear All</button>
+        <button class="btn btn-danger btn-sm ml-3" (click)="removeMouvment()" [disabled]="mouvment.mouvmentLines?.length == 0">Clear All</button>
       </div>
       <div class="col text-right">
         <strong class="h5">Total : {{mouvment.priceTotal | currency:'XAF':'symbol':'0.0-0':'fr-CM'}}</strong>
@@ -73,10 +73,10 @@
           <td>{{ mouvLine.priceTotal }}</td>
           <td>{{ mouvLine.note }}</td>
           <td>
-            <button class="btn btn-primary btn-sm bt" (click)="open(formAddItem, mouvLine)">Add Item</button>
+            <button class="btn btn-primary btn-sm mt-1" (click)="open(formAddItem, mouvLine)">Add Item</button>
             <!--<button class="btn btn-warning btn-sm bt" (click)="open(formAddProduct, mouvLine)">edit</button>-->
-            <button class="btn btn-danger btn-sm bt" (click)="removeMouvmentLine(mouvLine)">Remove</button>
-            <button class="btn btn-info btn-sm bt" (click)="open(formMouvLineDetails, mouvLine)">Details</button>
+            <button class="btn btn-danger btn-sm mt-1" (click)="removeMouvmentLine(mouvLine)">Remove</button>
+            <button class="btn btn-info btn-sm mt-1" (click)="open(formMouvLineDetails, mouvLine)">Details</button>
           </td>
         </tr>
         </tbody>
@@ -135,29 +135,15 @@
   <div class="modal-body">
     <div class="card">
       <div class="card-body">
-        <div class="row form-group">
-          <div class="col">
-            <input type="text" name="term" [(ngModel)]="term" class="form-control" placeholder="Search...">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col">
-            <select multiple name="listItem" id="itemsList" [(ngModel)]="listItemSel" class="form-control" size="10" [compareWith]="compareFn">
-              <option [ngValue]="item" *ngFor="let item of listPortableItem | filter : term | sortBy: 'serial'">{{item.reference}} - {{item.serial}}</option>
-            </select>
-            <div class="text-right mt-1">
-              <button class="btn btn-secondary btn-sm" [disabled]="listItemSel.length == 0" (click)="addItems()">Push <i class="fa fa-chevron-right"></i></button>
-            </div>
-          </div>
-          <div class="col">
-            <select multiple name="listItemSelected" [(ngModel)]="listItemSelRemoved" class="form-control" id="itemsListSelected" size="10" [compareWith]="compareFn">
-              <option *ngFor="let item of listItemSelRemoved" [ngValue]="item">{{item.reference}} - {{item.serial}}</option>
-            </select>
-            <div class="text-right mt-1">
-              <button class="btn btn-warning btn-sm" [disabled]="listItemSelRemoved.length == 0" (click)="clearSelectedItem()">Remove</button>
-            </div>
-          </div>
-        </div>
+        <ng-multiselect-dropdown
+          [placeholder]="'Serials Numbers'"
+          [data]="listPortableItem"
+          [(ngModel)]="mouvmentLine.productsItem"
+          [settings]="dropdownSettings"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+        >
+        </ng-multiselect-dropdown>
       </div>
     </div>
   </div>

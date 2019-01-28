@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <div class="card-header">Products Details</div>
-      <div class="card-body">
+      <div class="card-header">Products Details (in Number of products)</div>
+      <div class="card-body" *ngIf="dashboardConform(single)">
         <div>
           <ngx-charts-advanced-pie-chart
             class="chart-container"
@@ -19,17 +19,18 @@
   </div>
   <div class="col-12">
     <div class="card">
-      <div class="card-header">Product Item Details</div>
-      <div class="card-body">
+      <div class="card-header">Entrepot Details (in Number of products available)</div>
+      <div class="card-body" *ngIf="dashboardConform(entrepotDescription)">
         <div>
-          <ngx-charts-pie-grid
+          <ngx-charts-advanced-pie-chart
             class="chart-container"
             [scheme]="colorScheme"
-            (legendLabelClick)="onLegendLabelClick($event)"
-            [results]="single"
+            [results]="entrepotDescription"
+            (legendLabelClick)="onLegendLabelEntrepotClick($event)"
+            [gradient]="gradient"
             [tooltipDisabled]="tooltipDisabled"
-            (select)="select($event)">
-          </ngx-charts-pie-grid>
+            (select)="selectEntrepot($event)">
+          </ngx-charts-advanced-pie-chart>
         </div>
       </div>
     </div>

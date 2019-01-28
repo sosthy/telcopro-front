@@ -21,12 +21,16 @@ export abstract class FormController {
   }
 
   isUnValid(nameInput, errorType?) {
-    if (errorType) {
-      return !this.form.controls[nameInput].valid
-        && this.form.controls[nameInput].touched
-        && this.form.controls[nameInput].hasError(errorType);
+    if (this.controlExits(nameInput)) {
+      if (errorType) {
+        return !this.form.controls[nameInput].valid
+          && this.form.controls[nameInput].touched
+          && this.form.controls[nameInput].hasError(errorType);
+      }
+      return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
+    } else {
+      return true;
     }
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
   defaultForm(...controls: Array<string>) {
     if (!this.formInit()) {

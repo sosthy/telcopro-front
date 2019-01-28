@@ -1,11 +1,14 @@
 
 <div class="d-flex justify-content-between mb-5">
   <div>
-    <button class="btn btn-primary" (click)="open(formUser)">Add User</button>
+    <button class="btn btn-primary" (click)="open(formUser)">
+      <i class="fa fa-plus-circle fa-lg mr-1"></i>Add User
+    </button>
   </div>
   <div class="u-search">
     <form>
-      <div class="form-group">
+      <div class="form-group input-group">
+        <div class="input-group-addon bg-search"><i class="fa fa-search fa-lg"></i></div>
         <input type="search" placeholder="Search" class="form-control" [(ngModel)] ="motcle" name="search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="bouton" (click)="searchUser()" style="display:none"><span class="fa fa-search"></span></button>
       </div>
@@ -22,15 +25,15 @@
         </button>
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="downMenu">
           <a class="dropdown-item" href="javascript:;" (click)="open(formUser, usr, 1)">
-            <i class="icon icon-basic-settings mr-3"></i>
+            <i class="fa fa-edit fa-lg mr-1"></i>
             <span>Edit</span>
           </a>
           <a class="dropdown-item" href="javascript:;" (click)="open(deleteUserConfirmation, usr, 2)">
-            <i class="icon icon-basic-postcard mr-3"></i>
+            <i class="fa fa-trash fa-lg mr-1"></i>
             <span>Delete</span>
           </a>
           <a class="dropdown-item" href="javascript:;" (click)="open(userDetails, usr, 3)">
-            <i class="icon icon-basic-message-multiple mr-3"></i>
+            <i class="fa fa-info-circle fa-lg mr-3"></i>
             <span>Details</span>
           </a>
         </div>

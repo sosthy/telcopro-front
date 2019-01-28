@@ -18,7 +18,7 @@
 
 <div class="row" *ngIf=" listEntrepot.length != 0">
   <div class="col-sm-6 col-md-4 col-lg-3 justify-content-center" *ngFor="let entrepot of listEntrepot">
-    <a [ngClass]="occupationVisibility(entrepot)" [title]="occupationMessage(entrepot)" class="card card-body card-widget card-inverse bg-white" (click)="viewEmplacements(entrepot)">
+    <a [ngClass]="occupationVisibility(entrepot)" placement="top" [ngbTooltip]="occupationMessage(entrepot)" class="card card-body card-widget card-inverse bg-white" (click)="viewEmplacements(entrepot)">
       <div class="pl-3 pr-3 col-sm-12">
         <p class="ff-headers mb-2 text-uppercase">
           <strong>

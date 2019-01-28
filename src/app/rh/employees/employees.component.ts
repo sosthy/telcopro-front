@@ -5,8 +5,8 @@ import {WorkSpaceService} from '../../services/workSpace.services';
 import {WorkSpace} from '../../models/workSpace.model';
 import {ModalDismissReasons, NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {ResourceService} from '../../services/resource.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
+import {FormController} from '../../services/form-controller.services';
 
 @Component({
   selector: 'app-employees',
@@ -14,7 +14,7 @@ import {MAX_LENGHT_CARD_TEXT} from '../../models/config.model';
   styleUrls: ['./employees.component.scss']
 })
 
-export class EmployeesComponent implements OnInit {
+export class EmployeesComponent extends FormController implements OnInit {
   listEmployees = Array<Employee>();
   filter = 'None';
   keyWords = '';
@@ -28,13 +28,11 @@ export class EmployeesComponent implements OnInit {
   employeeFile: any = File;
   image = [];
   imageName = [];
-  form: FormGroup;
   MAX_LENGHT_CARD_TEXT = MAX_LENGHT_CARD_TEXT;
-  constructor(private fb: FormBuilder,
-              private modalService: NgbModal,
+  constructor(private modalService: NgbModal,
               public employeeService: EmployeeService,
               public resourceService: ResourceService,
-              public workSpaceService: WorkSpaceService) { }
+              public workSpaceService: WorkSpaceService) { super(); }
 
   ngOnInit() {
     this.getImages();
@@ -107,10 +105,11 @@ export class EmployeesComponent implements OnInit {
       }  else if (mode === 4) {
         this.modalTitle = 'Confirm registration Employee';
       } else {
-        this.modalTitle = 'New Employee';
+        this.modalTitle = 'Add Employee';
+        this.initForm();
       }
     } else {
-      this.modalTitle = 'New Employee';
+      this.modalTitle = 'Add Employee';
       this.initForm();
     }
     this.modalRef = this.modalService.open(content, {backdrop: 'static'});
@@ -196,29 +195,13 @@ export class EmployeesComponent implements OnInit {
     }
   }
   initForm() {
-    if (!this.form || this.modalTitle === 'New Employee') {
-      this.form = this.fb.group({
-        'name': [null, Validators.required],
-        'surname': [null, Validators.compose([Validators.required])],
-        'cni': [null, Validators.compose([Validators.required])],
-        'birthday': [null, Validators.compose([Validators.required])],
-        'website': [null, Validators.compose([Validators.required])],
-        'phone': [null, Validators.compose([Validators.required])],
-        'poste': [null, Validators.compose([Validators.required])],
-        'hiringDate': [null, Validators.compose([Validators.required])],
-        'workSpace': [null, Validators.compose([Validators.required])]
-      });
+    if (!super.formInit()) {
+      super.defaultForm('name', 'surname', 'cni', 'birthday', 'website', 'phone', 'poste', 'hiringDate', 'workSpace');
+    } else if (this.modalTitle === 'Add Employee') {
+      super.resetForm();
     }
     if (this.modalTitle === 'Edit Employee') {
-      for (const i in this.form.controls) {
-        this.form.controls[i].markAsTouched();
-      }
+      super.markFormControlsAsTouched();
     }
-  }
-  arrangeClass(nameInput) {
-    return  this.isUnValid(nameInput) ? 'is-invalid' : (this.form.controls[nameInput].touched ? 'is-valid' : '');
-  }
-  isUnValid(nameInput) {
-    return !this.form.controls[nameInput].valid && this.form.controls[nameInput].touched;
   }
 }

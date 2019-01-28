@@ -8,8 +8,8 @@ export let single = [
     value: 49
   },
   {
-    name: 'France',
-    value: 36
+    name: 'Cameroon',
+    value: 50
   },
   {
     name: 'United Kingdom',
