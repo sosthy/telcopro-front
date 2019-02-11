@@ -29,8 +29,13 @@
         </p>
         <small class="d-block">
               <span class="d-inline-block text-truncate">
-                  Location : {{ entrepot.localisation }}
+                  Location : {{ entrepot.location }}
               </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              Phone : {{entrepot.phone}}
+          </span>
         </small>
         <small class="d-block">
               <span class="d-inline-block text-truncate">
@@ -117,13 +122,49 @@
           <div class="form-group row">
             <label for="location-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Location:</label>
             <div class="col-sm-9 col-md-8 col-lg-9">
-              <input [ngClass]="arrangeClass('location')" class="form-control" type="text" [(ngModel)]="entrepot.localisation" id="location-text-input" formControlName="location">
+              <input [ngClass]="arrangeClass('location')" class="form-control" type="text" [(ngModel)]="entrepot.location" id="location-text-input" formControlName="location">
               <div class="text-danger mt-2" *ngIf="isUnValid('location')">
                 Location field is required.
               </div>
+              <div class="text-warning mt-2" *ngIf="entrepot.location.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> The location may be truncated when displaying.
+              </div>
             </div>
-            <div class="text-warning mt-2" *ngIf="entrepot.localisation.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
-              <i class="fa fa-warning"></i> The location may be truncated when displaying.
+          </div>
+          <div class="form-group row">
+            <label for="location-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Email:</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('email')" class="form-control" [(ngModel)]="entrepot.email" type="email" formControlName="email">
+              <div class="text-danger mt-2" *ngIf="isUnValid('email')">
+                Email of work space is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="entrepot.email.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> The email may be truncated when displaying.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="location-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Phone:</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('phone')" class="form-control" [(ngModel)]="entrepot.phone" type="text" formControlName="phone">
+              <div class="text-danger mt-2" *ngIf="isUnValid('phone')">
+                Phone of work space is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="entrepot.phone.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> The phone may be truncated when displaying.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="location-text-input" class="col-sm-3 col-md-4 col-lg-3 col-form-label">Website:</label>
+            <div class="col-sm-9 col-md-8 col-lg-9">
+              <input [ngClass]="arrangeClass('website')" class="form-control" [(ngModel)]="entrepot.website" type="text" formControlName="website">
+              <div class="text-danger mt-2" *ngIf="isUnValid('website')">
+                Website of work space is required
+              </div>
+              <div class="text-warning mt-2" *ngIf="entrepot.website.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+                <i class="fa fa-warning"></i> The website may be truncated when displaying.
+              </div>
             </div>
           </div>
           <div class="form-group row">

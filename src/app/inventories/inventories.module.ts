@@ -11,6 +11,7 @@ import {RecipientsModule} from './recipients/recipients.module';
 import {EntrepotModule} from './entrepots/entrepots.module';
 import { ProductsModule } from './products/products.module';
 import {TransactionModule} from './transactions/transactions.module';
+import {CommandeModule} from './commandes/commandes.module';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {TransactionModule} from './transactions/transactions.module';
     ConfigurationModule,
     RecipientsModule,
     EntrepotModule,
-    TransactionModule
+    TransactionModule,
+    CommandeModule
   ],
   declarations: [ ],
 })

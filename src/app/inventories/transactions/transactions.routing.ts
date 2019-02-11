@@ -32,13 +32,13 @@ export const TRANSACTIONSROUTES: Routes = [
           heading: 'New Approvision'
         }
       }, {
-        path: 'new-livraison',
+        path: 'commandes-livraison',
         component: NewLivraisonComponent,
         data : {
           heading: 'New Livraison'
         }
       }, {
-        path: 'new-transfert',
+        path: 'commande-transfert',
         component: NewTransfertComponent,
         data : {
           heading: 'New Transfert'

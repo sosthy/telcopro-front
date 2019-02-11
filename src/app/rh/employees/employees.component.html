@@ -219,7 +219,7 @@
                     <span *ngIf="employee.workSpace.name != ''">{{employee.workSpace.name}}</span>
                   </button>
                   <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                    <button type="button" class="dropdown-item" title="Location: {{workSpace.localisation}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpacesView">{{workSpace.name}}</button>
+                    <button type="button" class="dropdown-item" title="Location: {{workSpace.location}}" (click)="employee.workSpace = workSpace" *ngFor="let workSpace of workSpacesView">{{workSpace.name}}</button>
                   </div>
                 </div>
                 <input type="text" [(ngModel)]="employee.workSpace.name" formControlName="workSpace" hidden>

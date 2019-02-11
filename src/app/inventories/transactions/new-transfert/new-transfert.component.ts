@@ -179,7 +179,7 @@ export class NewTransfertComponent implements OnInit {
         }
         this.mouvment.quantity += ml.quantity;
     });
-    this.mouvment.entrepotSource = new GenericEntrepot(this.mouvment.user.workSpace);
+    // this.mouvment.entrepotSource = new GenericEntrepot(this.mouvment.user.workSpace);
     this.mouvment.recipient = null;
     this.transactionService.saveMouvment(this.mouvment).subscribe(resp => {
       this.router.navigateByUrl('/inventories/transactions');

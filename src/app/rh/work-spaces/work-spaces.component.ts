@@ -117,7 +117,7 @@ export class WorkSpacesComponent extends FormController implements OnInit {
   }
   initForm() {
     if (!super.formInit()) {
-      super.defaultForm('name', 'localisation');
+      super.defaultForm('name', 'location', 'email', 'phone', 'website');
     } else if (this.modalTitle === 'Add Work Space') {
       super.resetForm();
     }

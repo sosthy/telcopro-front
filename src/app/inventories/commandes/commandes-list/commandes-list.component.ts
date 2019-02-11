@@ -2,18 +2,19 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalDismissReasons, NgbModal, NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
-import {TransactionService} from '../transaction.service';
-import {MouvmentType} from '../../../models/manage-stocks/mouvment-type.model';
 import {Recipient} from '../../../models/manage-stocks/recipient.model';
-import {Mouvment} from '../../../models/manage-stocks/mouvment.model';
+import {Commande} from '../../../models/manage-stocks/commande.model';
+import {CommandeService} from '../commande.service';
+import {MouvmentType} from '../../../models/manage-stocks/mouvment-type.model';
+import {TransactionService} from '../../transactions/transaction.service';
 import {ResourceService} from '../../../services/resource.service';
 
 @Component({
-  selector: 'app-transaction-list',
-  templateUrl: './transactions-list.component.html',
-  styleUrls: ['./transactions-list.component.scss']
+  selector: 'app-commandes-list',
+  templateUrl: './commandes-list.component.html',
+  styleUrls: ['./commandes-list.component.scss']
 })
-export class TransactionsListComponent implements OnInit {
+export class CommandesListComponent implements OnInit {
 
   acc: any;
   modalRef: any;
@@ -21,11 +22,12 @@ export class TransactionsListComponent implements OnInit {
   listMouvmentType: Array<MouvmentType> = new Array();
   textMessage = 'Loading.... Please wait!';
   listRecipient: Array<Recipient> = new Array();
-  listMouvment: Array<Mouvment> = new Array();
-  mouvment: Mouvment = new Mouvment();
+  listCommande: Array<Commande> = new Array();
+  commande: Commande = new Commande();
 
   constructor(public modalService: NgbModal,
               public router: Router,
+              public commandeService: CommandeService,
               public resourceService: ResourceService,
               public transactionService: TransactionService) {}
 
@@ -34,8 +36,8 @@ export class TransactionsListComponent implements OnInit {
   }
 
   init() {
-    this.transactionService.getAllMouvment().subscribe(resp => {
-      this.listMouvment = resp;
+    this.commandeService.getAllCommande().subscribe(resp => {
+      this.listCommande = resp;
     });
 
     this.transactionService.getAllType().subscribe(resp => {
@@ -43,9 +45,9 @@ export class TransactionsListComponent implements OnInit {
     });
   }
 
-  open(content, mouvment?: Mouvment) {
-    if (mouvment) {
-      this.mouvment = mouvment;
+  open(content, commande?: Commande) {
+    if (commande) {
+      this.commande = commande;
     }
     this.modalRef = this.modalService.open(content);
     this.modalRef.result.then((result) => {
@@ -65,16 +67,16 @@ export class TransactionsListComponent implements OnInit {
     }
   }
 
-  newMouvmentForm() {
-    this.router.navigateByUrl('/inventories/transactions/register');
+  newCommandeForm() {
+    this.router.navigateByUrl('/inventories/commandes/register');
   }
 
   makeApprovision() {
-    this.router.navigateByUrl('/inventories/transactions/commandes-approvision');
+    this.router.navigateByUrl('/inventories/commandes/commandes-approvision');
   }
 
   makeTransfert() {
-    this.router.navigateByUrl('/inventories/transactions/commandes-transfert');
+    this.router.navigateByUrl('/inventories/commandes/commandes-transfert');
   }
 
   public beforeChange($event: NgbPanelChangeEvent) {
@@ -87,25 +89,26 @@ export class TransactionsListComponent implements OnInit {
   }
 
   newLivraison() {
-    this.router.navigateByUrl('/inventories/transactions/commandes-livraison');
+    this.router.navigateByUrl('/inventories/commandes/commandes-livraison');
   }
 
-  onEditMouvment(mouvment) {
-    if (mouvment.mouvmentType.name === 'APPROVISIONNEMENT') {
-      this.router.navigate(['inventories/transactions/commandes-approvision'], { queryParams: {reference: mouvment.reference} });
-    } else if (mouvment.mouvmentType.name === 'LIVRAISON') {
-      this.router.navigate(['inventories/transactions/commandes-livraison'], {queryParams: {reference: mouvment.reference}});
+  onEditCommande(commande) {
+    if (commande.commandeType.name === 'APPROVISIONNEMENT') {
+      this.router.navigate(['inventories/commandes/commandes-approvision'], { queryParams: {reference: commande.reference} });
+    } else if (commande.commandeType.name === 'LIVRAISON') {
+      this.router.navigate(['inventories/commandes/commandes-livraison'], {queryParams: {reference: commande.reference}});
     }
 
   }
 
-  onDeleteMouvment() {
-    this.transactionService.deleteMouvment(this.mouvment).subscribe(resp => {
+  onDeleteCommande() {
+    this.commandeService.deleteCommande(this.commande).subscribe(resp => {
       if (resp) {
-        this.listMouvment.forEach(item => {
-          if (item.reference === this.mouvment.reference) {
-            const index = this.listMouvment.indexOf(item);
-            if (index !== -1) {this.listMouvment.splice(index, 1);
+        this.listCommande.forEach(item => {
+          if (item.reference === this.commande.reference) {
+            const index = this.listCommande.indexOf(item);
+            if (index !== -1) {
+              this.listCommande.splice(index, 1);
             }
           }
         });
@@ -113,12 +116,14 @@ export class TransactionsListComponent implements OnInit {
       }
     });
   }
-
   download(fileName) {
-    const fullName = fileName + '.pdf';
+    // const fullName = fileName + '.pdf';
+    const fullName = 'test.pdf';
     this.resourceService.downloadFile(fullName).subscribe((resp) => {
+      console.log(resp);
       const file = new Blob([resp['_body']], { type: 'application/pdf' });
-      window.open(URL.createObjectURL(file));
+      console.log(file);
+      window.open(URL.createObjectURL(file), '_blank');
     });
   }
 }

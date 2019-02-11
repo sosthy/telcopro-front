@@ -29,7 +29,7 @@
       </div>
       <div class="form-group col-sm-12 col-md-6 col-lg-4 col-xl-3">
         <label for="idblabla3">Workspace Receiver Name:</label>
-        <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="mouvment.entrepotRecipient" id="idblabla3">
+        <select class="custom-select form-control mb-2 mr-sm-2 mb-sm-0" [(ngModel)]="mouvment.entrepotReceiver" id="idblabla3">
           <option *ngFor="let workSpace of workSpaces" [ngValue]="workSpace">{{ workSpace.name }}</option>
         </select>
       </div>

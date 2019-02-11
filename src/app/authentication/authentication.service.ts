@@ -61,9 +61,9 @@ export class AuthenticationService {
 
   getHeadersDownload(): RequestOptions {
     const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    headers.append('Content-Type', 'application/pdf');
     headers.append('Authorization', this.getToken());
-    headers.append('response-Type', 'blob');
+    headers.append('responseType', 'blob');
     const options = new RequestOptions({headers: headers});
     return options;
   }

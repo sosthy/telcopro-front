@@ -12,4 +12,7 @@ export class ResourceService {
   download(fileName: string) {
     return this.http.get(TELCOPRO_URL + '/resources/download-file/' + fileName, this.auth.getHeaders());
   }
+  downloadFile(fileName: string) {
+    return this.http.get(TELCOPRO_URL + '/resources/download-pdf-file/' + fileName, this.auth.getHeadersDownload());
+  }
 }

@@ -29,6 +29,13 @@ const STOCKSMENUITEMS = [
     children: []
   },
   {
+    state: 'commandes',
+    name: 'Commandes',
+    type: 'link',
+    icon: ' fa fa-handshake-o fa-lg', // fa-map-o
+    children: []
+  },
+  {
     state: 'transactions',
     name: 'TRANSACTIONS',
     type: 'link',

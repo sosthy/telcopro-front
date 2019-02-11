@@ -5,6 +5,7 @@ import {ConfigurationComponent} from './configuration/configuration.component';
 import {RecipientsComponent} from './recipients/recipients.component';
 import {EntrepotComponent} from './entrepots/entrepots.component';
 import {TransactionComponent} from "./transactions/transactions.component";
+import {CommandeComponent} from './commandes/commandes.component';
 
 
 export const InventoriesRoutes: Routes = [{
@@ -32,6 +33,10 @@ export const InventoriesRoutes: Routes = [{
   path: 'transactions',
   component: TransactionComponent,
   loadChildren: './transactions/transactions.module#TransactionModule'
+}, {
+  path: 'commandes',
+  component: CommandeComponent,
+  loadChildren: './commandes/commandes.module#CommandeModule'
 },
   {
   path: '**',

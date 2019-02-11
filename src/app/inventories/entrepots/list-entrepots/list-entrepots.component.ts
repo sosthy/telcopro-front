@@ -109,7 +109,7 @@ export class EntrepotListComponent extends  FormController implements OnInit {
   }
   initForm() {
     if (!super.formInit()) {
-      super.defaultForm('entrepotName', 'location');
+      super.defaultForm('entrepotName', 'location', 'email', 'phone', 'website');
       super.newFormControl('volsecur', Validators.compose([Validators.required, Validators.min(1)]));
     }
     if (!this.entrepot.id) {

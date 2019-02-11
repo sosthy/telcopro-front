@@ -46,7 +46,12 @@
         </p>
         <small class="d-block">
           <span class="d-inline-block text-truncate">
-              {{workSpace.localisation}}
+              {{workSpace.location}}
+          </span>
+        </small>
+        <small class="d-block">
+          <span class="d-inline-block text-truncate">
+              {{workSpace.phone}}
           </span>
         </small>
         <small class="d-block">
@@ -85,12 +90,42 @@
           </div>
           <div class="form-group">
             <label class="control-label">Localisation:</label>
-            <input [ngClass]="arrangeClass('localisation')" class="form-control" [(ngModel)]="workSpace.localisation" type="text" formControlName="localisation">
-            <div class="text-danger mt-2" *ngIf="isUnValid('localisation')">
+            <input [ngClass]="arrangeClass('location')" class="form-control" [(ngModel)]="workSpace.location" type="text" formControlName="location">
+            <div class="text-danger mt-2" *ngIf="isUnValid('location')">
               The localisation of work space is required
             </div>
-            <div class="text-warning mt-2" *ngIf="workSpace.localisation.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+            <div class="text-warning mt-2" *ngIf="workSpace.location.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
               <i class="fa fa-warning"></i> The localisation may be truncated when displaying.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Email:</label>
+            <input [ngClass]="arrangeClass('email')" class="form-control" [(ngModel)]="workSpace.email" type="email" formControlName="email">
+            <div class="text-danger mt-2" *ngIf="isUnValid('email')">
+              The email of work space is required
+            </div>
+            <div class="text-warning mt-2" *ngIf="workSpace.email.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+              <i class="fa fa-warning"></i> The email may be truncated when displaying.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Phone:</label>
+            <input [ngClass]="arrangeClass('phone')" class="form-control" [(ngModel)]="workSpace.phone" type="text" formControlName="phone">
+            <div class="text-danger mt-2" *ngIf="isUnValid('phone')">
+              The phone of work space is required
+            </div>
+            <div class="text-warning mt-2" *ngIf="workSpace.phone.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+              <i class="fa fa-warning"></i> The phone may be truncated when displaying.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Website:</label>
+            <input [ngClass]="arrangeClass('website')" class="form-control" [(ngModel)]="workSpace.website" type="text" formControlName="website">
+            <div class="text-danger mt-2" *ngIf="isUnValid('website')">
+              The Website of work space is required
+            </div>
+            <div class="text-warning mt-2" *ngIf="workSpace.website.length > (MAX_LENGHT_CARD_TEXT * 2) - 4">
+              <i class="fa fa-warning"></i> The website may be truncated when displaying.
             </div>
           </div>
         </div>
@@ -118,15 +153,33 @@
           <p></p>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3">Name</label>
+          <label class="col-sm-3">Name: </label>
           <div class="col-sm-9">
             <label><strong>{{workSpace.name}}</strong></label>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-3">Localisation</label>
+          <label class="col-sm-3">Localisation: </label>
           <div class="col-sm-9">
-            <label><strong>{{workSpace.localisation}}</strong></label>
+            <label><strong>{{workSpace.location}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3">Email: </label>
+          <div class="col-sm-9">
+            <label><strong>{{workSpace.email}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3">Phone: </label>
+          <div class="col-sm-9">
+            <label><strong>{{workSpace.phone}}</strong></label>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-3">Website </label>
+          <div class="col-sm-9">
+            <label><strong>{{workSpace.website}}</strong></label>
           </div>
         </div>
       </div>
